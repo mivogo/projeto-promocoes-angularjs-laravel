@@ -32,7 +32,7 @@ class JumboSpider(scrapy.Spider):
         if "gr" or "GR" or "G" in str:
             unidade = "gr"
 
-        # Se tiver uma soma para qualquer a quantidade total faz a conta aqui e guarda no quantidade
+        # Se tiver uma soma para qualquer a quantidade total faz a conta aqui e guarda no quantidade.
         if "+" in str:
             num1 = float(str.split('+',1)[0])
             num2 = float(str.split('+',1)[1].split(' ',1)[0])

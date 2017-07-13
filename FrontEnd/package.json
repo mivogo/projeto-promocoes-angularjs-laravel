@@ -1,0 +1,22 @@
+{
+  "name": "promocoes",
+  "version": "1.0.0",
+  "description": "projeto pesti",
+  "main": "karma.conf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.6.5",
+    "angular-route": "^1.6.5"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.6.5",
+    "jasmine-core": "^2.6.4",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.0"
+  }
+}

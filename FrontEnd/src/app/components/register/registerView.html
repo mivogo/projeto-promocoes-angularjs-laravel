@@ -1,0 +1,19 @@
+<div class="col-sm-8 col-sm-offset-8">
+	<div class="form">
+		<h3>Registo de Novo Utilizador</h3>
+		<p class="message">Registe-se para poder aceder a mais funcionalidades</p>
+		<form>
+			<div class="form-group">
+			<input type="text" class="form-control" placeholder="Name" ng-model="name">
+			</div>
+			<div class="form-group">
+				<input type="email" class="form-control" placeholder="Email" ng-model="email">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" placeholder="Password" ng-model="password">
+			</div>
+			<button class="btn btn-primary btn-modal" ng-click="register()">Registar</button>
+			<p class="message">Já está registado? <a href="#" ng-click="loginForm()">Iniciar sessão</a></p>
+		</form>
+	</div>
+</div>

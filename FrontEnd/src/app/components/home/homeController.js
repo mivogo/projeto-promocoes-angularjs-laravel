@@ -1,6 +1,6 @@
 /**
-* Controls the Home
+* Home Controller
 */
 app.controller('HomeController', function ($scope, $location, $http) {
-console.log("Home Controller reporting for duty.");
+	console.log("Home Controller reporting for duty.");
 });

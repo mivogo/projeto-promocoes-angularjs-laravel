@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<base href="/">
+	<base href="/" />
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +18,7 @@
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/angular.min.js"></script>
-<script src="assets/js/angular-route.min.js"></script>
+<script src="assets/js/angular-ui-router.min.js"></script>
 <script src="assets/js/ui-bootstrap.js"></script>
 <script src="assets/js/ui-bootstrap-tpls.js"></script>
 
@@ -33,10 +33,13 @@
 
 <script src="app/shared/header/headerController.js"></script>
 <script src="app/shared/footer/footerController.js"></script>
+<script src="app/shared/filterbar/filterController.js"></script>
+
+<script src="app/shared/filterbar/filterService.js"></script>
 
 <body data-ng-app="promocoesWebApp">
 	<div header></div>
-	<div data-ng-view class="view-content"></div>
+	<div ui-view class="view-content"></div>
 	<div footer></div>
 </body>
 

@@ -1,9 +1,9 @@
 /**
 * Header Controller
 */
-app.controller('HeaderController', function ($scope, $location, $http, $uibModal, $rootScope) {
+app.controller('HeaderController', function ($scope, $location, $http, $uibModal, $rootScope,$state) {
 	
-	console.log("Header Controller reporting for duty.");
+	//console.log("Header Controller reporting for duty.");
 
 	$scope.isActive = function (viewLocation) { 
 		return viewLocation === $location.path();
@@ -50,8 +50,11 @@ app.controller('HeaderController', function ($scope, $location, $http, $uibModal
 	};
 
 	$scope.changeView = function(view){
-		$location.path(view); // path not hash
-		console.log("SEARCH TERM IN HEADER CTRL: "+$scope.search.term);
+		if($scope.search.term){
+			$state.go(view,{q: $scope.search.term});
+		}else{
+
+		}
 	};
 
 });

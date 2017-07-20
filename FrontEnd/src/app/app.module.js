@@ -1,7 +1,33 @@
 /**
 * Main AngularJS Web Application
 */
-var app = angular.module('promocoesWebApp', ['ui.router','ui.bootstrap']);
+'use strict';
+
+var app = angular.module('promocoesWebApp', ['ui.router','ui.bootstrap','satellizer','toastr']);
+
+
+/**
+* Helper auth functions
+*/
+var skipIfLoggedIn = function($q, $auth) {
+  var deferred = $q.defer();
+  if ($auth.isAuthenticated()) {
+    deferred.reject();
+  } else {
+    deferred.resolve();
+  }
+  return deferred.promise;
+};
+
+var loginRequired = function($q, $location, $auth) {
+  var deferred = $q.defer();
+  if ($auth.isAuthenticated()) {
+    deferred.resolve();
+  } else {
+    $location.path('/login');
+  }
+  return deferred.promise;
+};
 
 app.directive("header", function() {
   return {
@@ -32,30 +58,3 @@ app.directive("filterbar", function() {
     controller: 'FilterController'
   };
 });
-
-
-app.service('FilterbarService', function () {
-
-  var service = this;
-
-  // on startup, no menu items are defined. Modules can use addSidebar to add their sidebaritems
-  service.filterbarItems = [];
-
-  // remove all menu bar items
-  service.clearFilterbarItems = function() {
-    service.filterbarItems = [];
-  }
-
-  // add a menu item
-  service.addFilterbarItem = function(item) {
-
-    service.filterbarItems.push(item);
-
-    console.log("FILTERBAR SERVICE RECEIVED: " + item);
-
-    // sort by order parameter
-    service.filterbarItems.sort(function (a, b) { 
-      return (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0); 
-    });
-  };
-})

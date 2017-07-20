@@ -1,6 +1,8 @@
 /**
 * Filterbar Service
 */
+'use strict';
+
 app.service('FilterbarService', function () {
 
   var service = this;

@@ -1,13 +1,19 @@
 /**
 * Header Controller
 */
-app.controller('HeaderController', function ($scope, $location, $http, $uibModal, $rootScope,$state) {
+'use strict';
+
+app.controller('HeaderController', function ($scope, $location, $http, $uibModal, $rootScope, $state, AuthService) {
 	
 	//console.log("Header Controller reporting for duty.");
 
 	$scope.isActive = function (viewLocation) { 
 		return viewLocation === $location.path();
 	};
+
+	$scope.isAuthenticated = function (){
+		return AuthService.isAuthenticated();
+	}
 
 	$rootScope.$on("CallRegisterForm", function(){
 		$scope.modalInstance.close();
@@ -19,23 +25,29 @@ app.controller('HeaderController', function ($scope, $location, $http, $uibModal
 		$scope.loginForm();
 	});
 
+	$rootScope.$on("CloseModalForm",function(){
+		$scope.modalInstance.close();
+	});
+
 	$scope.loginForm = function(){
-		modal = $uibModal.open({
-			templateUrl: 'app/components/auth/authView.html',
-			controller: 'AuthController'
+		var modal = $uibModal.open({
+			allowAnonymous: true,
+			templateUrl: 'app/components/login/loginView.html',
+			controller: 'LoginController'
 		});
 
 		$scope.modalInstance = modal;
 
 		modal.result.then(function () {
-            // Redirect to the logged-in area of your site
+            $scope.user = AuthService.currentUser();
         }, function () {
             // optional function. Do something if the user cancels.
         });
 	};
 
 	$scope.registerForm = function(){
-		modal = $uibModal.open({
+		var modal = $uibModal.open({
+			allowAnonymous: true,
 			templateUrl: 'app/components/register/registerView.html',
 			controller: 'RegisterController'
 		});
@@ -47,6 +59,11 @@ app.controller('HeaderController', function ($scope, $location, $http, $uibModal
         }, function () {
             // optional function. Do something if the user cancels.
         });
+	};
+
+	$scope.logout = function(){
+		AuthService.logout();
+		$scope.user = null;
 	};
 
 	$scope.changeView = function(view){

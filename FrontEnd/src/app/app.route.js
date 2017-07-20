@@ -1,8 +1,15 @@
 /**
 * Routes Configuration
 */
-app.config(function($locationProvider, $stateProvider) {
+'use strict';
+
+app.config(function($locationProvider, $urlRouterProvider, $stateProvider,$authProvider) {
 	$locationProvider.html5Mode({enabled:true});
+	$authProvider.loginUrl = 'http://localhost:8000/api/login';
+	$authProvider.signupUrl = 'http://localhost:8000/api/register';
+	$urlRouterProvider.otherwise('/404');
+
+
 	var homeState = {
 		name: 'home',
 		url: '/',

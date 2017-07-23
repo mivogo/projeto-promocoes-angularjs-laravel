@@ -3,7 +3,7 @@
 */
 'use strict';
 
-app.controller('HeaderController', function ($scope, $location, $http, $uibModal, $rootScope, $state, AuthService) {
+app.controller('HeaderController', function ($scope, $location, $http, $rootScope, $state, AuthService, ModalService) {
 	
 	//console.log("Header Controller reporting for duty.");
 
@@ -12,54 +12,21 @@ app.controller('HeaderController', function ($scope, $location, $http, $uibModal
 	};
 
 	$scope.isAuthenticated = function (){
-		return AuthService.isAuthenticated();
+		if(AuthService.isAuthenticated()){
+			$scope.user = AuthService.currentUser();
+			return true;
+		}
+		return false;
 	}
 
-	$rootScope.$on("CallRegisterForm", function(){
-		$scope.modalInstance.close();
-		$scope.registerForm();
-	});
-
-	$rootScope.$on("CallLoginForm", function(){
-		$scope.modalInstance.close();
-		$scope.loginForm();
-	});
-
-	$rootScope.$on("CloseModalForm",function(){
-		$scope.modalInstance.close();
-	});
-
 	$scope.loginForm = function(){
-		var modal = $uibModal.open({
-			allowAnonymous: true,
-			templateUrl: 'app/components/login/loginView.html',
-			controller: 'LoginController'
-		});
-
-		$scope.modalInstance = modal;
-
-		modal.result.then(function () {
-            $scope.user = AuthService.currentUser();
-        }, function () {
-            // optional function. Do something if the user cancels.
-        });
+		ModalService.loginForm();
 	};
 
 	$scope.registerForm = function(){
-		var modal = $uibModal.open({
-			allowAnonymous: true,
-			templateUrl: 'app/components/register/registerView.html',
-			controller: 'RegisterController'
-		});
-
-		$scope.modalInstance = modal;
-
-		modal.result.then(function () {
-            // Redirect to the logged-in area of your site
-        }, function () {
-            // optional function. Do something if the user cancels.
-        });
+		ModalService.registerForm();
 	};
+
 
 	$scope.logout = function(){
 		AuthService.logout();

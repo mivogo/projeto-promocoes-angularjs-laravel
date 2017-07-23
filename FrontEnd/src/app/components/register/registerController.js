@@ -3,11 +3,11 @@
 */
 'use strict';
 
-app.controller('RegisterController', function ($scope, $location, $http, $rootScope, $state, $auth, toastr) {
+app.controller('RegisterController', function ($scope, $location, $http, $rootScope, $state, $auth, toastr, AuthService, ModalService) {
 	console.log("Register Controller reporting for duty.");
 
 	$scope.loginForm = function() {
-		$rootScope.$emit("CallLoginForm", {});
+		ModalService.CallLoginForm();
 	}
 
 	$scope.register = function() {
@@ -20,11 +20,23 @@ app.controller('RegisterController', function ($scope, $location, $http, $rootSc
 
 		$auth.signup(user)
 		.then(function(response) {
-			$rootScope.$emit("CloseModalForm", {});
-			AuthService.register(response,user.email);
+			ModalService.CloseModalForm();
+			AuthService.register(response.data);
 		})
-		.catch(function(response) {
-			toastr.error(response.data);
+		.catch(function(error) {
+			var str =" ";
+
+			if(error.status <= 0){
+				str+="\nOcorreu um erro na ligação ao servidor";
+			}else{
+				if(error.data.email){
+					str+=error.data;
+				}else{
+					str+="\nEmail ou password inválidos";
+				}
+			}
+
+			toastr.error(str, "Erro:");
 		});
 	};
 });

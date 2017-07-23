@@ -6,29 +6,6 @@
 var app = angular.module('promocoesWebApp', ['ui.router','ui.bootstrap','satellizer','toastr']);
 
 
-/**
-* Helper auth functions
-*/
-var skipIfLoggedIn = function($q, $auth) {
-  var deferred = $q.defer();
-  if ($auth.isAuthenticated()) {
-    deferred.reject();
-  } else {
-    deferred.resolve();
-  }
-  return deferred.promise;
-};
-
-var loginRequired = function($q, $location, $auth) {
-  var deferred = $q.defer();
-  if ($auth.isAuthenticated()) {
-    deferred.resolve();
-  } else {
-    $location.path('/login');
-  }
-  return deferred.promise;
-};
-
 app.directive("header", function() {
   return {
     restrict: 'A',

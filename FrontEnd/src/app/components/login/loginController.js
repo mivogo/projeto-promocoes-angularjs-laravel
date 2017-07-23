@@ -3,13 +3,12 @@
 */
 'use strict';
 
-app.controller('LoginController', function ($scope, $location, $http, $rootScope, $auth, $state, toastr, AuthService) {
+app.controller('LoginController', function ($scope, $location, $http, $rootScope, $auth, $state, toastr, AuthService, ModalService) {
 	console.log("Login Controller reporting for duty.");
 
 	$scope.registerForm = function() {
-		$rootScope.$emit("CallRegisterForm", {});
+		ModalService.CallRegisterForm();
 	}
-
 
 	$scope.login = function() {
 
@@ -20,20 +19,24 @@ app.controller('LoginController', function ($scope, $location, $http, $rootScope
 
         // Use Satellizer's $auth service to login
         $auth.login(credentials)
-        .then(function() {
-        	$rootScope.$emit("CloseModalForm", {});
-            AuthService.login(credentials.email);
-
+        .then(function(response) {
+        	ModalService.CloseModalForm();
+            AuthService.login(response.data);
         })
         .catch(function(error) {
         	var str =" ";
-        	if(error.data.email){
-        		str+="\nEmail inválido ou não registado";
-        	}
-        	else{
-        		str+="\nEmail ou password inválidos"
-        	}
-        	toastr.error(error.data, "Erro:");
-        });
+
+            if(error.status <= 0){
+                str+="\nOcorreu um erro na ligação ao servidor";
+            }else{
+                if(error.data.email){
+                  str+="\nEmail inválido ou não registado";
+                }else{
+                  str+="\nEmail ou password inválidos";
+                }
+            }
+
+          toastr.error(str, "Erro:");
+      });
     }
 });

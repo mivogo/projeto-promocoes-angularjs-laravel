@@ -13,7 +13,7 @@
       </div>
 
       <div id="navbar" class="navbar-collapse collapse">
-        <div class="col-sm-8 col-lg-8">
+        <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
           <form class="navbar-form" role="search">
             <div class="input-group search-field">
               <input type="text" class="form-control" placeholder="Procurar um produto, marca ou categoria..." name="srch-term" id="srch-term" ng-model="search.term">
@@ -24,19 +24,29 @@
           </form>
         </div>
 
-        <ul  ng-if="!isAuthenticated()" class="nav navbar-nav navbar-right">
-          <li><a href="#" ng-click="loginForm()">Login</a></li>
-          <li><a href="#" ng-click="registerForm()">Register</a></li>
-          <li class="cart-icon"><a href="../navbar-static-top/"></a></li>
-        </ul>
+        <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
+          <ul ng-if="!isAuthenticated()" class="nav navbar-nav navbar-right">
+            <li><a href="javascript:void(0)" ng-click="loginForm()">Login</a></li>
+            <li><a href="javascript:void(0)" ng-click="registerForm()">Register</a></li>
+            <li><a class="fa fa-shopping-cart" href="../navbar-static-top/"></a></li>
+          </ul>
 
-        <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-        <li><a href="#" ng-click="">Bem-vindo, {{user}}</a></li>
-          <li><a href="#" ng-click="logout()">Logout</a></li>
-          <li class="cart-icon"><a href="../navbar-static-top/"></a></li>
-        </ul>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
+              <li class="nav-item dropdown profile-dropdown-name">
+                <a aria-haspopup="true" class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-expanded="true">Bem-vindo, {{user}}<b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu profile-dropdown-menu">
+                  <li class="nav-item dropdown"><a class="dropdown-item" href="/profile" ng-click=""><i class="fa fa-fw fa-user"></i> Editar Perfil</a></li>
+                  <li class="nav-item dropdown"><a class="dropdown-item" href="javascript:void(0)" ng-click="logout()"><i class="fa fa-fw fa-power-off"></i> Sair</a></li>
+                </ul>
+              </li>
+              <li><a class="fa fa-shopping-cart" href="../navbar-static-top/"></a></li>
+            </ul>
+          </div>
+        </div>
 
-      </div><!--/.nav-collapse -->
+      </div>
     </div>
   </nav>
 </header>

@@ -18,6 +18,57 @@
 	outline: none;
 }
 
+.profile-dropdown-menu{
+	width: 100%;
+}
+
+.profile-dropdown-name{
+	max-width: 305px;
+}
+
+.profile-card{
+	margin-top: 20px;
+}
+
+.profile-title{
+	background-color: #eee;
+	color: #777;
+}
+
+.profile-title h1,h2,h3{
+	margin: 10px 0;
+}
+
+.profile-title i{
+	margin-right: 15px;
+}
+
+.profile-avatar .btn{
+    margin-top: 20px;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: none;
+    background: #c7ca48;
+    width: 65%;
+    border: 0;
+    padding: 10px;
+    color: #FFFFFF;
+    font-size: 12px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+
+.profile-avatar button:active {
+	outline: none !important;
+	background: #b4bb46;
+}
+
+.profile-avatar img{
+	max-width: 100px;
+	max-height: 100px;
+}
+
 .page-404-wrapper{
 	margin-top: 95px;
 }
@@ -215,4 +266,9 @@
 	background-image: url("../img/icons/E-Commerce_shopping-cart.png");
 	background-repeat: no-repeat;
 	background-position: 50% 10px;
+}
+
+
+.modal-content{
+	border: 0;
 }

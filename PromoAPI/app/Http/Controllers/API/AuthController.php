@@ -38,6 +38,8 @@ class AuthController extends Controller
 		}
 
 		return response()->json([
+			'name' => $newUser->name,
+			'email' => $newUser->email,
 			'token' => $this->jwtauth->fromUser($newUser)
 			]);
 	}
@@ -53,9 +55,14 @@ class AuthController extends Controller
 			if (!$token) {
 				return response()->json(['invalid_email_or_password'], 422);
 			}
+			$user = $this->jwtauth->toUser($token);
 		} catch (JWTAuthException $e) {
 			return response()->json(['failed_to_create_token'], 500);
 		}
-		return response()->json(compact('token'));
+		return response()->json([
+			'name' => $user->name,
+			'email' => $user->email,
+			'token' => $token
+			]);
 	}
 }

@@ -27,4 +27,15 @@ class Product extends Model
 		return $this->belongsTo('App\Model\Brand');
 	}
 
+	public function retailer()
+	{
+		return $this->belongsToMany('App\Model\Retailer')
+		->withTimestamps();
+	}
+
+	public function price()
+	{
+		return $this->hasOne('App\Model\Price');
+	}
+
 }

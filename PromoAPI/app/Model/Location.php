@@ -10,4 +10,9 @@ class Location extends Model
 	{
 		return $this->hasMany('App\Model\Profile');
 	}
+
+	public function store()
+	{
+		return $this->hasMany('App\Model\Store');
+	}
 }

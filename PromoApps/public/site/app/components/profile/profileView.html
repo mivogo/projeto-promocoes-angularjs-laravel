@@ -1,0 +1,63 @@
+<div class="container">
+
+  <div class="panel panel-default profile-card col-sm-12 col-lg-12">
+    <div class="row">
+      <div class="panel-heading profile-title col-sm-12 col-lg-12 col-sm-12 col-xs-12">
+        <h3><i class="fa fa-user fa-fw"></i>Editar Perfil</h3>
+      </div>
+    </div>
+    <div class="panel-body profile-body col-sm-12 col-lg-12">
+      <div class="form-group panel-body profile-avatar col-lg-2 col-md-2 col-sm-12 col-xs-12 pull-left">
+        <div class="row text-center">
+          <img src="/assets/img/user-avatar.jpg" alt="Avatar">
+        </div>
+        <div class="row text-center">
+          <button class="btn" data-ng-click="updateProfile()">Alterar</button>
+        </div>
+      </div>
+
+      <div class="form-group col-lg-10 col-md-10 col-sm-12 col-xs-12 pull-right">
+        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <label for="name">Nome</label><input type="text" name="name" id="name" class="form-control" placeholder="Nome" data-ng-model="name">
+        </div>
+        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <label for="email">Email</label><input type="email" name="email" id="email" class="form-control" placeholder="Email" readonly="readonly" required="required" data-ng-model="email">
+        </div>
+        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <div>
+            <label for="current_pass">Password</label>
+          </div>
+          <div class="profile-password">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 profile-password-padding">
+              <input type="password" name="current_pass" id="current_pass" class="form-control" placeholder="************" required="required" value="" disabled="disabled">
+            </div>
+            <button class="btn profile-password col-lg-6 col-md-6 col-sm-12 col-xs-12" data-ng-click="changePassword()">Alterar Password</button>
+          </div>
+        </div>
+        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <div>
+            <label for="zipcode">Código Postal</label>
+          </div>
+          <div class="profile-zip">
+            <input type="text" class="form-control profile-zip zipone" placeholder = "0000" pattern ="[0-9]{4}" data-ng-model="zipone">
+            <label>-</label>
+            <input class="form-control profile-zip ziptwo" type="text" placeholder = "000" pattern ="[0-9]{3}" data-ng-model="ziptwo">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="panel panel-default col-lg-4 col-md-4 col-sm-12 col-xs-12 side pull-left">
+      Left (Side)
+    </div>
+
+    <div class="panel panel-default col-lg-4 col-md-4 col-sm-12 col-xs-12 main">
+      Middle
+    </div>
+
+    <div class="panel panel-default col-lg-4 col-md-4 col-sm-12 col-xs-12 side pull-right">
+      Right (Side)
+    </div>
+  </div>
+</div>

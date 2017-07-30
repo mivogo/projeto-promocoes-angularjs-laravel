@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
+# encoding: utf-8
 import csv
 from time import sleep
-
 from scrapy import Spider
 from scrapy.http import Request
 from scrapy.selector import Selector

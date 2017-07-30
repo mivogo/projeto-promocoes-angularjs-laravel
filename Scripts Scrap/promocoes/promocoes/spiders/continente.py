@@ -38,7 +38,7 @@ class ContinenteSpider(Spider):
         # print "Debug: "+last_page_number
         # Load page with selenium so we can see the real next pages
         self.driver.get(response.url)
-        sleep(10)
+        sleep(5)
 
         for page in range(int(last_page_number)):
 
@@ -47,7 +47,7 @@ class ContinenteSpider(Spider):
 
             self.driver.execute_script(
                 "window.scrollTo(0, document.body.scrollHeight);")
-            sleep(10)
+            sleep(5)
 
             # Iterate over products found and parse them to parse_product function
             # product_urls = response.xpath('//*[@class="title"]/a/@href').extract()
@@ -128,7 +128,7 @@ class ContinenteSpider(Spider):
             try:
                 self.driver.find_element_by_xpath(
                     u'//div[text()="Próxima"]').click()
-                sleep(10)
+                sleep(5)
 
             except NoSuchElementException:
                 # If there are any urls left from the list of urls it proceeds
@@ -139,7 +139,7 @@ class ContinenteSpider(Spider):
                     yield Request(next_url)
 
     def parse_unit_type(self, str):
-        f = open('result.txt', 'w')
+
         if "emb." in str:
             new_str = str.split('emb.')[1].split('#', 1)[0]
         elif "garrafa" in str:
@@ -152,31 +152,92 @@ class ContinenteSpider(Spider):
             new_str = str.split('1 un=')[1].split('#', 1)[0]
         elif "1 un  =" in str:
             new_str = str.split('1 un  =')[1].split('#', 1)[0]
+        elif "emb," in str:
+            new_str = str.split('emb,')[1].split('#', 1)[0]
         elif u"Quantidade Mínima =" in str:
             new_str = str.split(u'Quantidade Mínima =')[1].split('#', 1)[0]
         else:
-            f.write('Teste 1: ' + str.encode('utf-8'))
             new_str = str
-        f.close()
 
         print("\n New_Str")
         print(new_str)
 
         f = open('result.txt', 'w')
         if "gr" in new_str:
-            return [float(new_str.split("gr")[0].replace(",", ".").strip()),"gr"]
+            number_aux = new_str.split("gr")[0].replace(",", ".").strip()
+            if "x" in number_aux:
+                number_1 = float(number_aux.split("x")[0])
+                number_2 = float(number_aux.split("x")[1])
+                number = number_1 * number_2
+                return [float(number), "gr"]
+            if "X" in number_aux:
+                number_1 = float(number_aux.split("X")[0])
+                number_2 = float(number_aux.split("X")[1])
+                number = number_1 * number_2
+                return [float(number), "gr"]
+            else:
+                number = float(number_aux)
+                return [float(number),"gr"]
         if "kg" in new_str:
-            return [float(new_str.split("kg")[0].replace(",", ".").strip()), "kg"]
+            number_aux = new_str.split("kg")[0].replace(",", ".").strip()
+            if "x" in number_aux:
+                number_1 = float(number_aux.split("x")[0])
+                number_2 = float(number_aux.split("x")[1])
+                number = number_1 * number_2
+                return [float(number), "kg"]
+            if "X" in number_aux:
+                number_1 = float(number_aux.split("X")[0])
+                number_2 = float(number_aux.split("X")[1])
+                number = number_1 * number_2
+                return [float(number), "kg"]
+            else:
+                number = float(number_aux)
+                return [float(number), "kg"]
         elif "ml" in new_str:
-            return [float(new_str.split("ml")[0].replace(",", ".").strip()), "ml"]
+            number_aux = new_str.split("ml")[0].replace(",", ".").strip()
+            if "x" in number_aux:
+                number_1 = float(number_aux.split("x")[0])
+                number_2 = float(number_aux.split("x")[1])
+                number = number_1 * number_2
+                return [float(number), "ml"]
+            if "X" in number_aux:
+                number_1 = float(number_aux.split("X")[0])
+                number_2 = float(number_aux.split("X")[1])
+                number = number_1 * number_2
+                return [float(number), "ml"]
+            else:
+                number = float(number_aux)
+                return [float(number), "ml"]
         elif "lt" in new_str:
-            return [float(new_str.split("lt")[0].replace(",", ".").strip()), "l"]
+            number_aux = new_str.split("lt")[0].replace(",", ".").strip()
+            if "x" in number_aux:
+                number_1 = float(number_aux.split("x")[0])
+                number_2 = float(number_aux.split("x")[1])
+                number = number_1 * number_2
+                return [float(number), "l"]
+            if "X" in number_aux:
+                number_1 = float(number_aux.split("X")[0])
+                number_2 = float(number_aux.split("X")[1])
+                number = number_1 * number_2
+                return [float(number), "l"]
+            else:
+                number = float(number_aux)
+                return [float(number), "l"]
         elif "cl" in new_str:
-            return [float(new_str.split("cl")[0].replace(",", ".").strip()), "cl"]
-        else:
-            f.write('Teste 2: ' + new_str.encode('utf-8'))
-
-        f.close()
+            number_aux = new_str.split("cl")[0].replace(",", ".").strip()
+            if "x" in number_aux:
+                number_1 = float(number_aux.split("x")[0])
+                number_2 = float(number_aux.split("x")[1])
+                number = number_1 * number_2
+                return [float(number), "cl"]
+            if "X" in number_aux:
+                number_1 = float(number_aux.split("X")[0])
+                number_2 = float(number_aux.split("X")[1])
+                number = number_1 * number_2
+                return [float(number), "cl"]
+            else:
+                number = float(number_aux)
+                return [float(number), "cl"]
 
         return 'none'
 

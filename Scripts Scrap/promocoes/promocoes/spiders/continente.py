@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# encoding: utf-8
 import csv
 from time import sleep
 from scrapy import Spider
@@ -6,6 +6,7 @@ from scrapy.http import Request
 from scrapy.selector import Selector
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from pyvirtualdisplay import Display
 
 def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
     csv_reader = csv.reader(utf8_data, dialect=dialect, **kwargs)
@@ -49,7 +50,9 @@ class ContinenteSpider(Spider):
     ]
 
     def __init__(self):
-        self.driver = webdriver.Chrome('/home/pedro/Documents/chromedriver')
+        self.display = Display(visible=0, size=(1920, 1080))
+        self.display.start()
+        self.driver = webdriver.Chrome('./chromedriver')
 
     def parse(self, response):
         # with this we get number 60, so we will iterate over 60 pages of
@@ -63,7 +66,6 @@ class ContinenteSpider(Spider):
 
         page_number = 0
 
-        # print "Debug: "+last_page_number
         # Load page with selenium so we can see the real next pages
         self.driver.get(response.url)
         sleep(5)
@@ -151,11 +153,6 @@ class ContinenteSpider(Spider):
 
                 }
 
-            print "\nCurrent Url: %d\n" % self.current_url
-
-            print "Page Number %d" % page_number
-            print "Last Page Number %d" % int(last_page_number)
-
             if (self.current_url + 1) < len(self.urls) and (page_number == int(last_page_number)):
                 self.current_url += 1
                 next_url = self.urls[self.current_url][2]
@@ -240,9 +237,6 @@ class ContinenteSpider(Spider):
             return weight
 
     def parse_unit_type(self, str):
-        print("STR")
-        print(str)
-
         weight = self.get_weight_type_weight_first(str)
         if (weight[0] == "None"):
             new_str = self.cut_first_part(str)
@@ -252,3 +246,4 @@ class ContinenteSpider(Spider):
     def close(self, reason):
         # closing driver instance once finished with scraping
         self.driver.quit()
+        self.display.stop()

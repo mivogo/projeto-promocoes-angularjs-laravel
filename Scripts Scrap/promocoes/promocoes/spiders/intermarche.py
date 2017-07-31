@@ -111,6 +111,7 @@ class IntermarcheSpider(Spider):
             except:
                 pass
 
+
         if ((self.current_url + 1) < len(self.urls)):
             self.current_url += 1
             next_url = self.urls[self.current_url][2]

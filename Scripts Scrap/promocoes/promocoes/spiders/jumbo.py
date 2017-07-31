@@ -27,7 +27,9 @@ class JumboSpider(Spider):
     def __init__(self):
         self.display = Display(visible=0, size=(1920, 1080))
         self.display.start()
-        self.driver = webdriver.Chrome('./chromedriver')
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--no-sandbox')
+        self.driver = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=chrome_options)
 
     def parse(self, response):
 
@@ -63,43 +65,46 @@ class JumboSpider(Spider):
             products = response.xpath('//div[@class="product-item-border"]')
 
             for product in products:
-                price_per_weight = product.xpath(
-                    './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-quantity-price", " " ))]/text()').extract_first().split(
-                    u"€")[1].split("/")[0].replace(",", ".")
-                type_of_weight = product.xpath(
-                    './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-quantity-price", " " ))]/text()').extract_first().split(
-                    u"€")[1].split("/")[1]
-                price = product.xpath(
-                    './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-price", " " ))]/text()').extract()[
-                    0].strip().split(u"€")[1].replace(",", ".")
-                link = "https://www.jumbo.pt" + \
-                       product.xpath(
-                           './/div[@class="product-item-header"]/a/@href').extract_first()
-                weight = self.extract_quantity(product.xpath(
-                    "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[2]").extract_first())
-                if weight[0] == "None":
+                try:
+                    price_per_weight = product.xpath(
+                        './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-quantity-price", " " ))]/text()').extract_first().split(
+                        u"€")[1].split("/")[0].replace(",", ".")
+                    type_of_weight = product.xpath(
+                        './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-quantity-price", " " ))]/text()').extract_first().split(
+                        u"€")[1].split("/")[1]
+                    price = product.xpath(
+                        './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-price", " " ))]/text()').extract()[
+                        0].strip().split(u"€")[1].replace(",", ".")
+                    link = "https://www.jumbo.pt" + \
+                           product.xpath(
+                               './/div[@class="product-item-header"]/a/@href').extract_first()
                     weight = self.extract_quantity(product.xpath(
-                        "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first())
-                if weight[0] == "None":
-                    weight = self.calculate_quantity(
-                        price, price_per_weight, type_of_weight)
-                yield {
-                    'Name': product.xpath(
-                        "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first(),
-                    'Price': price,
-                    'Image': product.xpath(".//img[@class='product-item-image visible-print']/@src").extract_first(),
-                    'Link': link,
-                    'Brand': product.xpath(
-                        './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-brand", " " ))]/text()').extract_first(
-                        default='Jumbo'),
-                    'Category': self.urls[self.current_url][0],
-                    'Sub-Category': self.urls[self.current_url][1],
-                    'Weight': weight[0],
-                    'Weight_Type': weight[1],
-                    'Price_per_weight': price_per_weight,
-                    'Type_of_weight': type_of_weight,
-                    'ID': product.xpath('.//input[@name="Id"]/@value').extract_first()
-                }
+                        "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[2]").extract_first())
+                    if weight[0] == "None":
+                        weight = self.extract_quantity(product.xpath(
+                            "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first())
+                    if weight[0] == "None":
+                        weight = self.calculate_quantity(
+                            price, price_per_weight, type_of_weight)
+                    yield {
+                        'Name': product.xpath(
+                            "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first(),
+                        'Price': price,
+                        'Image': product.xpath(".//img[@class='product-item-image visible-print']/@src").extract_first(),
+                        'Link': link,
+                        'Brand': product.xpath(
+                            './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-brand", " " ))]/text()').extract_first(
+                            default='Jumbo'),
+                        'Category': self.urls[self.current_url][0],
+                        'Sub-Category': self.urls[self.current_url][1],
+                        'Weight': weight[0],
+                        'Weight_Type': weight[1],
+                        'Price_per_weight': price_per_weight,
+                        'Type_of_weight': type_of_weight,
+                        'ID': product.xpath('.//input[@name="Id"]/@value').extract_first()
+                    }
+                except:
+                    pass
 
             if (self.current_url + 1) < len(self.urls) and (page_number == int(last_page_number)):
                 self.current_url += 1

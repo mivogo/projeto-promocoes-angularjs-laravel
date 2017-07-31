@@ -52,7 +52,9 @@ class IntermarcheSpider(Spider):
     def __init__(self):
         self.display = Display(visible=0, size=(1920, 1080))
         self.display.start()
-        self.driver = webdriver.Chrome('./chromedriver')
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--no-sandbox')
+        self.driver = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=chrome_options)
 
     def parse(self, response):
 

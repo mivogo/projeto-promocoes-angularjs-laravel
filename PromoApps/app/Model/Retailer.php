@@ -12,11 +12,10 @@ class Retailer extends Model
 		->withTimestamps();
 	}
 
-	public function price()
+	public function productretailer()
 	{
-		return $this->hasMany('App\Model\Price');
+		return $this->hasMany('App\Model\ProductRetailer');
 	}
-
 
 	public function store()
 	{

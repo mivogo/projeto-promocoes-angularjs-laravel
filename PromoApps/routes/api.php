@@ -25,4 +25,8 @@ Route::group(['middleware' => 'cors'], function () {
 	
 	Route::get('/details', 'API\ProfileController@details');
 	Route::post('/update', 'API\ProfileController@update');
+
+	Route::post('/products', 'API\ProductController@createFromList');
+	Route::get('/products', 'API\ProductController@showAll');
+	Route::get('/products/{id}', 'API\ProductController@showProduct');
 });

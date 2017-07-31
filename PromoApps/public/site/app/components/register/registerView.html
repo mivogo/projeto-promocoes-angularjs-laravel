@@ -20,7 +20,7 @@
 				<input type="password" class="form-control" name="password" placeholder="Password" data-ng-model="password" required pwstr>
 				<span style="color:red" data-ng-show="registerForm.password.$dirty && registerForm.password.$invalid">
 					<span data-ng-show="registerForm.password.$error.required">Introduza a password.</span>
-					<span data-ng-show="registerForm.password.$error.pwd">Password tem de conter pelo menos uma letra e um número e 6 ou mais caracteres.</span>
+					<span data-ng-show="registerForm.password.$error.pwd">Password tem de conter pelo menos uma letra, um número e 6 ou mais caráteres.</span>
 				</span>
 			</div>
 			<button data-ng-disabled="registerForm.email.$dirty && registerForm.email.$invalid || registerForm.password.$pristine || registerForm.email.$pristine || registerForm.nome.$pristine || registerForm.password.$dirty && registerForm.password.$invalid ||registerForm.nome.$dirty && registerForm.nome.$invalid" class="btn btn-primary btn-modal" class="btn btn-primary btn-modal" data-ng-click="register()">Registar</button>

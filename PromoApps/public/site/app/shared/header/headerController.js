@@ -34,8 +34,9 @@ app.controller('HeaderController', function ($scope, $location, $http, $rootScop
 	};
 
 	$scope.changeView = function(view){
-		if($scope.search.term){
-			$state.go(view,{q: $scope.search.term});
+		if($scope.searchterm){
+			$state.go(view,{q: $scope.searchterm});
+			$scope.searchterm = null;
 		}else{
 
 		}

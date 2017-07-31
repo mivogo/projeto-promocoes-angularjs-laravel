@@ -25,7 +25,6 @@ class AuthController extends Controller
 	{
 		$this->user = $user;
 		$this->jwtauth = $jwtauth;
-
 	}
 
 	public function register(Request $request)

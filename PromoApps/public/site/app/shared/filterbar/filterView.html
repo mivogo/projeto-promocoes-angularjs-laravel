@@ -6,26 +6,33 @@
 
         <ul class="nav nav-pills nav-stacked category-menu">
             <li>
-                <a href="category.html">Men <span class="badge pull-right">42</span></a>
-                <ul>
-                    <li data-ng-repeat="item in filterbarItemService.filterbarItems">{{item.Title}}</li>
-                </ul>
+                <span class="badge">Marca</span> 
+                <div class="filter-check">
+                    <table>             
+                        <tr data-ng-repeat="b in brands | unique:'brand'">
+                            <td>
+                                <label class="checkbox"><input type="checkbox" data-ng-model="b.checked" data-ng-click="updateBrand(b.brand,$index,brands,b.checked)" ng-disabled="brands.length==1"/></label>
+                                <span>{{b.brand}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </li>
             <li class="active">
-                <a href="category.html">Ladies  <span class="badge pull-right">123</span></a>
-                <ul>
-                    <li><a href="category.html">T-shirts</a>
-                    </li>
-                    <li><a href="category.html">Skirts</a>
-                    </li>
-                    <li><a href="category.html">Pants</a>
-                    </li>
-                    <li><a href="category.html">Accessories</a>
-                    </li>
-                </ul>
+                <span class="badge">Categoria</span> 
+                <div class="filter-check">
+                    <table>
+                        <tr ng-repeat="cat in categories | unique:'category'">
+                            <td>
+                                <label class="checkbox"> <input type="checkbox" data-ng-model="cat.checked" data-ng-click="updateCategory(cat.category,$index,categories,cat.checked)" ng-disabled="categories.length==1" /></label>
+                                <span>{{cat.category}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </li>
             <li>
-                <a href="category.html">Kids  <span class="badge pull-right">11</span></a>
+                <a href="category.html">Kids <span class="badge pull-right">11</span></a>
                 <ul>
                     <li><a href="category.html">T-shirts</a>
                     </li>

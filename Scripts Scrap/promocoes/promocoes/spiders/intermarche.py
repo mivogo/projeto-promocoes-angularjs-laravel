@@ -24,21 +24,6 @@ class IntermarcheSpider(Spider):
     urls = list(reader)
     current_url = 0
 
-    list_of_terms = [
-        "emb.",
-        "garrafa",
-        "pack",
-        "1 un =",
-        "1 un=",
-        "1 un  =",
-        "emb,",
-        u"Quantidade Mínima =",
-        u"Quantidade mínima =",
-        u"1 porção =",
-        u"1 porção =",
-        "1 Bola ="
-    ]
-
     list_of_units = [
         ["un", "un"],
         ["Un", "un"],

@@ -36,7 +36,8 @@ class ContinenteSpider(Spider):
         u"Quantidade mínima =",
         u"1 porção =",
         u"1 porção =",
-        "1 Bola ="
+        "1 Bola =",
+        "1 bola ="
     ]
 
     list_of_units = [

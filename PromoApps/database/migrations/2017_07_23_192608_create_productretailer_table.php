@@ -17,6 +17,7 @@ class CreateProductRetailerTable extends Migration
             $table->increments('id');
             $table->double('price');
             $table->double('price_per_weight');
+            $table->string('type_of_weight');
             $table->integer('pid');
             $table->text('image');
             $table->text('link');

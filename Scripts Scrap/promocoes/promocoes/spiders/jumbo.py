@@ -134,7 +134,7 @@ class JumboSpider(Spider):
 
             try:
                 self.driver.get(self.urls[self.current_url][2] + "#/?page=" + str(page_number + 1))
-                sleep(self.self_time)
+                sleep(self.sleep_time)
 
             except NoSuchElementException:
                 pass

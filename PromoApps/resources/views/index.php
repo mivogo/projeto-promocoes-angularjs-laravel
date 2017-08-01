@@ -27,6 +27,8 @@
 
 <script src="site/app/app.module.js"></script>
 <script src="site/app/app.route.js"></script>
+<script src="site/app/app.filter.js"></script>
+
 
 <script src="site/app/components/home/homeController.js"></script>
 <script src="site/app/components/404/404Controller.js"></script>

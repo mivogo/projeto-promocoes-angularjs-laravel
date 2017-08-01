@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-	public function subcategory()
-	{
-		return $this->hasOne('App\Model\SubCategory');
-	}
 
 	public function favoritelist()
 	{
@@ -20,6 +16,11 @@ class Product extends Model
 	public function rating()
 	{
 		return $this->hasMany('App\Model\Rating');
+	}
+
+	public function subcategory()
+	{
+		return $this->belongsTo('App\Model\SubCategory','sub_category_id');
 	}
 
 	public function brand()
@@ -33,9 +34,9 @@ class Product extends Model
 		->withTimestamps();
 	}
 
-	public function price()
+	public function productretailer()
 	{
-		return $this->hasOne('App\Model\Price');
+		return $this->hasMany('App\Model\ProductRetailer');
 	}
 
 }

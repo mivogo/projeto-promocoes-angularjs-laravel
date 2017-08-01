@@ -133,9 +133,8 @@ class JumboSpider(Spider):
                 yield Request(next_url)
 
             try:
-                self.driver.find_element_by_xpath(
-                    '//li[@class="next"]/a').click()
-                sleep(self.sleep_time)
+                self.driver.get(self.urls[self.current_url][2] + "#/?page=" + str(page_number + 1))
+                sleep(self.self_time)
 
             except NoSuchElementException:
                 pass

@@ -45,13 +45,13 @@ class IntermarcheSpider(Spider):
 
         # Load page with selenium so we can see the real next pages
         self.driver.get(response.url)
-        sleep(self.time)
+        sleep(self.self_time)
 
         response = Selector(text=self.driver.page_source)
 
         self.driver.execute_script(
             "window.scrollTo(0, document.body.scrollHeight);")
-        sleep(self.time)
+        sleep(self.self_time)
 
         # Iterate over products found and parse them to parse_product function
         # product_urls = response.xpath('//*[@class="title"]/a/@href').extract()

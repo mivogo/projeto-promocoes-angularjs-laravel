@@ -30,3 +30,115 @@ Mercearia,Doçaria,https://www.jumbo.pt/Frontoffice/mercearia_doce/fruta_em_cons
 Mercearia,Doçaria,https://www.jumbo.pt/Frontoffice/mercearia_doce/leite_condensado_e_preparado_para_bolos
 Mercearia,Doçaria,https://www.jumbo.pt/Frontoffice/mercearia_doce/pastilhas_chupas_e_rebucados
 Mercearia,"Mel, Doces e Cremes para barrar",https://www.jumbo.pt/Frontoffice/mercearia_doce/mel_compotas_e_marmelada
+Bebidas,Água,https://www.jumbo.pt/Frontoffice/bebidas/aguas
+Bebidas,Refrigerantes,https://www.jumbo.pt/Frontoffice/bebidas/refrigerantes
+Bebidas,Energéticas,https://www.jumbo.pt/Frontoffice/bebidas/energeticos_e_isotonicos
+Bebidas,Sumos e néctares,https://www.jumbo.pt/Frontoffice/bebidas/sumos_e_nectares
+Bebidas,Cervejas,https://www.jumbo.pt/Frontoffice/bebidas/cervejas
+Bebidas,Vinhos,https://www.jumbo.pt/Frontoffice/bebidas/vinho_marca
+Bebidas,Vinhos,https://www.jumbo.pt/Frontoffice/bebidas/vinho_mesa
+Bebidas,Vinhos licorosos e aperitivos,https://www.jumbo.pt/Frontoffice/bebidas/vinhos_licorosos_e_aperitivos
+Bebidas,Champanhes e espumantes,https://www.jumbo.pt/Frontoffice/bebidas/champanhes_e_espumantes
+Bebidas,Espirituosas,https://www.jumbo.pt/Frontoffice/bebidas/bebidas_espirituosas
+Lacticínios,Leite,https://www.jumbo.pt/Frontoffice/produtos_lacteos/leites_e_soja
+Lacticínios,Natas e Margarinas Culinárias,https://www.jumbo.pt/Frontoffice/produtos_lacteos/natas_bechamel_e_chantilly
+Lacticínios,Natas e Margarinas Culinárias,https://www.jumbo.pt/Frontoffice/produtos_lacteos/margarinas
+Lacticínios,Manteigas e Cremes de Barrar,https://www.jumbo.pt/Frontoffice/produtos_lacteos/manteigas_e_cremes
+Lacticínios,Ovos,https://www.jumbo.pt/Frontoffice/produtos_lacteos/ovos
+Lacticínios,Iogurtes,https://www.jumbo.pt/Frontoffice/produtos_lacteos/iogurtes
+Lacticínios,Queijos,https://www.jumbo.pt/Frontoffice/produtos_lacteos/queijos
+Lacticínios,Sobremesas e Polpas de Fruta,https://www.jumbo.pt/Frontoffice/produtos_lacteos/sobremesas_sumos_e_polpas_de_fruta
+Congelados,Refeições,https://www.jumbo.pt/Frontoffice/congelados/refeicoes
+Congelados,Carnes,https://www.jumbo.pt/Frontoffice/congelados/carne
+Congelados,Peixes,https://www.jumbo.pt/Frontoffice/congelados/peixe
+Congelados,Marisco,https://www.jumbo.pt/Frontoffice/congelados/marisco
+Congelados,Legumes e Frutas ,https://www.jumbo.pt/Frontoffice/congelados/legumes_e_frutas
+Congelados,Gelados e Sobremesas,https://www.jumbo.pt/Frontoffice/congelados/gelados_e_sobremesas
+Bebé,Alimentação e Acessórios,https://www.jumbo.pt/Frontoffice/bebe_e_crianca/alimentacao_e_acessorios
+Bebé,Pré-Mamã e Mamã,https://www.jumbo.pt/Frontoffice/bebe_e_crianca/gravida_e_pre-mama
+Bebé,Higiene Bebé e Criança,https://www.jumbo.pt/Frontoffice/bebe_e_crianca/higiene_bebe_e_crianca
+Bebé,Puericultura,https://www.jumbo.pt/Frontoffice/bebe_e_crianca/passeio
+Bebé,Puericultura,https://www.jumbo.pt/Frontoffice/bebe_e_crianca/mobiliario_e_equipamento
+Higiene e Beleza,Higiene Homem,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/higiene_e_cuidado_homem
+Higiene e Beleza,Higiene Oral,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/higiene_oral
+Higiene e Beleza,Higiene Corporal,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/gel_de_banho_e_sabonete
+Higiene e Beleza,Cabelo,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/produtos_para_cabelo
+Higiene e Beleza,Cabelo,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/amaciadores_e_mascaras_de_cabelo
+Higiene e Beleza,Cabelo,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/champo_e_coloracao
+Higiene e Beleza,Produtos cosméticos,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/perfumes_e_maquilhagem/acessorios_beleza
+Higiene e Beleza,Produtos cosméticos,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/perfumes_e_maquilhagem/maquilhagem_labios
+Higiene e Beleza,Produtos cosméticos,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/perfumes_e_maquilhagem/maquilhagem_olhos
+Higiene e Beleza,Produtos cosméticos,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/perfumes_e_maquilhagem/maquilhagem_rosto
+Higiene e Beleza,Produtos cosméticos,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/cremes_de_rosto
+Higiene e Beleza,Perfumaria e Desodorizantes,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/perfumes_e_maquilhagem/perfumes_crianca
+Higiene e Beleza,Perfumaria e Desodorizantes,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/perfumes_e_maquilhagem/perfumes_homem
+Higiene e Beleza,Perfumaria e Desodorizantes,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/perfumes_e_maquilhagem/perfumes_senhora
+Higiene e Beleza,Perfumaria e Desodorizantes,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/desodorizantes
+Higiene e Beleza,"Produtos para mãos, pés e Unhas",https://www.jumbo.pt/Frontoffice/beleza_e_higiene/cuidados_de_saude/tratamento_maos_e_pes
+Higiene e Beleza,Cuidados de Saúde,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/cuidados_de_saude/algodao_e_cotonetes
+Higiene e Beleza,Cuidados de Saúde,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/cuidados_de_saude/cuidados_dermatologicos
+Higiene e Beleza,Cuidados de Saúde,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/cuidados_de_saude/preservativos_lubrificantes_e_outros
+Higiene e Beleza,Cuidados de Saúde,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/cuidados_de_saude/primeiros_socorros
+Higiene e Beleza,Produtos para depilação,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/depilatorios
+Higiene e Beleza,Higiene Intíma Feminina,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/pensos_higienicos_e_tampoes
+Higiene e Beleza,Produtos para incontinência,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/incontinencia
+Higiene e Beleza,Produtos para Sol,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/cremes_de_corpo_e_produtos_solares
+Higiene e Beleza,Papel higiénico e lenços papel,https://www.jumbo.pt/Frontoffice/beleza_e_higiene/papel_higienico_e_lencos_papel
+Limpeza,Casa,https://www.jumbo.pt/Frontoffice/limpeza_da_casa_e_roupa/limpeza_casa
+Limpeza,Roupa,https://www.jumbo.pt/Frontoffice/limpeza_da_casa_e_roupa/limpeza_da_roupa
+Limpeza,Tratamento da Roupa,https://www.jumbo.pt/Frontoffice/limpeza_da_casa_e_roupa/tratamento_da_roupa
+Animais,Cães,https://www.jumbo.pt/Frontoffice/produtos_para_animais/cao
+Animais,Gatos,https://www.jumbo.pt/Frontoffice/produtos_para_animais/gato
+Animais,Aves,https://www.jumbo.pt/Frontoffice/produtos_para_animais/aves
+Animais,Roedores,https://www.jumbo.pt/Frontoffice/produtos_para_animais/roedores
+Animais,Peixes e Tartarugas,https://www.jumbo.pt/Frontoffice/produtos_para_animais/peixes_e_tartarugas
+Casa,Cozinha,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/artigos_de_mesa
+Casa,Cozinha,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/copos
+Casa,Cozinha,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/guardanapos
+Casa,Cozinha,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/palhinhas_palitos_espetos
+Casa,Cozinha,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/pratos
+Casa,Cozinha,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/rolos_de_cozinha
+Casa,Cozinha,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/tacas
+Casa,Cozinha,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/talheres
+Casa,Cozinha,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/toalhas
+Casa,Cozinha,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/tachos_panelas_e_frigideiras
+Casa,Cozinha,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/utensilios_de_cozinha
+Casa,Quarto,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/almofadas
+Casa,Quarto,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/colchoes_individuais
+Casa,Quarto,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/edredons_de_fantasia_e_colchas
+Casa,Quarto,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/protetores_de_colchao_e_fronhas
+Casa,Quarto,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/velas_e_difusores
+Casa,Quarto,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/lencois_individuais_e_jogos_de_cama
+Casa,Quarto,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/decoracao_casa
+Casa,Quarto,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/colchoes_casal
+Casa,Quarto,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/edredons_brancos_e_capas_de_edredon
+Casa,Banho,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/toalhas_e_roupoes_de_banho
+Casa,Banho,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/acessorios_wc
+Casa,Banho,https://www.jumbo.pt/Frontoffice/casa_e_decoracao/tapetes/tapete_casa_de_banho
+Casa,Escritório,https://www.jumbo.pt/Frontoffice/papelaria_e_material_escolar/papel_e_cadernos
+Casa,Escritório,https://www.jumbo.pt/Frontoffice/papelaria_e_material_escolar/material_escolar_e_escritorio
+Casa,Escritório,https://www.jumbo.pt/Frontoffice/papelaria_e_material_escolar/organizacao
+Casa,Escritório,https://www.jumbo.pt/Frontoffice/papelaria_e_material_escolar/mochilas
+Casa,Bricolage e Jardim,https://www.jumbo.pt/Frontoffice/mobiliario_jardim_e_bricolage/mobiliario_de_jardim
+Casa,Bricolage e Jardim,https://www.jumbo.pt/Frontoffice/mobiliario_jardim_e_bricolage/piscinas
+Casa,Bricolage e Jardim,https://www.jumbo.pt/Frontoffice/mobiliario_jardim_e_bricolage/barbecue
+Casa,Bricolage e Jardim,https://www.jumbo.pt/Frontoffice/mobiliario_jardim_e_bricolage/bricolage
+Casa,Bricolage e Jardim,https://www.jumbo.pt/Frontoffice/mobiliario_jardim_e_bricolage/campismo
+Casa,Bricolage e Jardim,https://www.jumbo.pt/Frontoffice/mobiliario_jardim_e_bricolage/jardim
+Casa,Iluminação e Energia,https://www.jumbo.pt/Frontoffice/mobiliario_jardim_e_bricolage/lampadas_e_pilhas
+Casa,Garagem,https://www.jumbo.pt/Frontoffice/mobiliario_jardim_e_bricolage/manutencao_auto
+Casa,Pequenos Eletrodomésticos,https://www.jumbo.pt/Frontoffice/box_-_pequenos_domesticos_e_climatizacao/climatizacao
+Casa,Pequenos Eletrodomésticos,https://www.jumbo.pt/Frontoffice/box_-_pequenos_domesticos_e_climatizacao/pequeno_almoco
+Casa,Pequenos Eletrodomésticos,https://www.jumbo.pt/Frontoffice/box_-_pequenos_domesticos_e_climatizacao/cuidados_pessoais_femininos
+Casa,Pequenos Eletrodomésticos,https://www.jumbo.pt/Frontoffice/box_-_pequenos_domesticos_e_climatizacao/cuidados_pessoais_masculinos
+Casa,Pequenos Eletrodomésticos,https://www.jumbo.pt/Frontoffice/box_-_pequenos_domesticos_e_climatizacao/limpeza_casa
+Casa,Pequenos Eletrodomésticos,https://www.jumbo.pt/Frontoffice/box_-_pequenos_domesticos_e_climatizacao/maquinas_cafe
+Casa,Pequenos Eletrodomésticos,https://www.jumbo.pt/Frontoffice/box_-_pequenos_domesticos_e_climatizacao/preparacao_alimentos
+Casa,Pequenos Eletrodomésticos,https://www.jumbo.pt/Frontoffice/box_-_pequenos_domesticos_e_climatizacao/saude
+Casa,Pequenos Eletrodomésticos,https://www.jumbo.pt/Frontoffice/box_-_pequenos_domesticos_e_climatizacao/tratamento_roupa
+Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/artigos_para_festas
+Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/velas_aniversario
+Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/baloes_pinhatas
+Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/faixas_bandeirinhas
+Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/velas_aniversario
+Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/descartavel_crianca

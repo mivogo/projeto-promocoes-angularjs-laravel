@@ -1,0 +1,84 @@
+Animais	Aves
+Animais	Cães
+Animais	Gatos
+Animais	Peixes e Tartarugas
+Animais	Roedores
+Bebidas	Cervejas
+Bebidas	Champanhes e espumantes
+Bebidas	Energéticas
+Bebidas	Espirituosas
+Bebidas	Refrigerantes
+Bebidas	Sumos e néctares
+Bebidas	Vinhos
+Bebidas	Vinhos licorosos e aperitivos
+Bebidas	Água
+Bebé	Alimentação e Acessórios
+Bebé	Higiene Bebé e Criança
+Bebé	Pré-Mamã e Mamã
+Bebé	Puericultura
+Bebé	Vestuário
+Casa	Artigos de Festa
+Casa	Banho
+Casa	Bricolage e Jardim
+Casa	Cozinha
+Casa	Escritório
+Casa	Garagem
+Casa	Iluminação e Energia
+Casa	Lavandaria
+Casa	Mobiliário
+Casa	Pequenos Eletrodomésticos
+Casa	Quarto
+Casa	Sala
+Casa	Vestuário
+Congelados	Carnes
+Congelados	Gelados e Sobremesas
+Congelados	Legumes e Frutas
+Congelados	Marisco
+Congelados	Peixes
+Congelados	Refeições
+Frescos	Charcutaria e Queijos
+Frescos	Frutas
+Frescos	Legumes
+Frescos	Ovos
+Frescos	Padaria e Pastelaria
+Frescos	Peixaria
+Frescos	Refeições
+Frescos	Talho
+Higiene e Beleza	Cabelo
+Higiene e Beleza	Cuidados de Saúde
+Higiene e Beleza	Higiene Corporal
+Higiene e Beleza	Higiene Homem
+Higiene e Beleza	Higiene Intíma Feminina
+Higiene e Beleza	Higiene Oral
+Higiene e Beleza	Homem
+Higiene e Beleza	Papel higiénico e lenços papel
+Higiene e Beleza	Perfumaria e Desodorizantes
+Higiene e Beleza	Produtos cosméticos
+Higiene e Beleza	Produtos para depilação
+Higiene e Beleza	Produtos para incontinência
+Higiene e Beleza	Produtos para mãos, pés e Unhas
+Higiene e Beleza	Produtos para Sol
+Lacticínios	Iogurtes
+Lacticínios	Leite
+Lacticínios	Manteigas e Cremes de Barrar
+Lacticínios	Natas e Margarinas Culinárias
+Lacticínios	Ovos
+Lacticínios	Queijos
+Lacticínios	Sobremesas e Polpas de Fruta
+Limpeza	Casa
+Limpeza	Roupa
+Limpeza	Tratamento da Roupa
+Mercearia	Arroz, Massa e Farinha
+Mercearia	Azeite, Óleo e Vinagre
+Mercearia	Açúcar e Adoçante
+Mercearia	Batatas fritas e snacks
+Mercearia	Bolachas, biscoitos e bolos
+Mercearia	Cereais e barras
+Mercearia	Chá, Café e Bebidas quentes
+Mercearia	Conservas e patês
+Mercearia	Doçaria
+Mercearia	Feijão e Grão
+Mercearia	Mel, Doces e Cremes para barrar
+Mercearia	Molhos e temperos
+Mercearia	Sopas e refeições
+Mercearia	Tostas e Pão Ralado

@@ -89,7 +89,7 @@ class IntermarcheSpider(Spider):
                         'Type_of_weight': type_of_weight,
                         'Weight': weight[0],
                         'Weight_Type': weight[1],
-                        'Brand': product.xpath('./div[@class="vignette_info"]/p[@class="js-marque"]/text()').extract_first(),
+                        'Brand': product.xpath('./div[@class="vignette_info"]/p[@class="js-marque"]/text()').extract_first(default='Intermarche'),
                         'Link': self.urls[self.current_url][2],
                         'ID': product.xpath('./div[@class="vignette_footer js-vignette_footer js-vignette_produit_info"]/@idproduit').extract_first()
                     }

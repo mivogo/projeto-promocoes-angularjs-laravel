@@ -150,7 +150,7 @@ class ContinenteSpider(Spider):
                     'Weight': weight[0],
                     'Weight_Type': weight[1],
                     'Brand': product.xpath(
-                        './/*[@class="containerDescription"]/*[@class="type"]/text()').extract_first(),
+                        './/*[@class="containerDescription"]/*[@class="type"]/text()').extract_first(default='Continente'),
                     'Link': link,
                     'ID': id
 

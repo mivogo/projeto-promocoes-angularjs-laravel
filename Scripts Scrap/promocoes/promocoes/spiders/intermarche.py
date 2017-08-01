@@ -19,7 +19,7 @@ class IntermarcheSpider(Spider):
     start_urls = (
         'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10152-porco',
     )
-
+    self_time = 3
     reader = unicode_csv_reader(open("intermarche_sites.csv"))
     urls = list(reader)
     current_url = 0
@@ -45,13 +45,13 @@ class IntermarcheSpider(Spider):
 
         # Load page with selenium so we can see the real next pages
         self.driver.get(response.url)
-        sleep(5)
+        sleep(self.time)
 
         response = Selector(text=self.driver.page_source)
 
         self.driver.execute_script(
             "window.scrollTo(0, document.body.scrollHeight);")
-        sleep(5)
+        sleep(self.time)
 
         # Iterate over products found and parse them to parse_product function
         # product_urls = response.xpath('//*[@class="title"]/a/@href').extract()
@@ -77,11 +77,12 @@ class IntermarcheSpider(Spider):
                     price_per_weight = price_aux.split(u"€")[0].strip().replace(",", ".")
                     type_of_weight =  price_aux.split("/")[1].strip().lower()
 
-                if price is not "None" or price_aux is not "None":
+                image = product.xpath('./div[@class="vignette_img transition js-ouvrir_fiche "]/img/@src').extract_first()
+                if image:
                     weight = self.calculate_quantity(price,price_per_weight,type_of_weight)
                     yield {
-                        'Name': product.xpath('./div[@class="vignette_info"]/p[2]/text()').extract_first().strip(),
-                        'Image': product.xpath('./div[@class="vignette_img transition js-ouvrir_fiche "]/img/@src').extract_first(),
+                        'Name': self.name_cleanup(product.xpath('./div[@class="vignette_info"]/p[2]/text()').extract_first().strip()).replace('"',"'"),
+                        'Image': image,
                         'Category': self.urls[self.current_url][0],
                         'Sub-Category': self.urls[self.current_url][1],
                         'Price': price,
@@ -101,6 +102,28 @@ class IntermarcheSpider(Spider):
             self.current_url += 1
             next_url = self.urls[self.current_url][2]
             yield Request(next_url)
+
+
+    def hasNumbers(self, inputString):
+        return any(char.isdigit() for char in inputString)
+
+    def name_cleanup(self,name):
+        splitted_name = name.split()
+        result_name = ""
+        if ',' in name:
+            return name.split(",")[0]
+
+        if self.hasNumbers(splitted_name[-1]):
+            limit_range = len(splitted_name)-1
+            for i in range(limit_range):
+                if result_name is "":
+                    result_name += splitted_name[i]
+                else:
+                    result_name += " " + splitted_name[i]
+            return result_name
+        return name
+
+
 
     def transform_unit(self,input_unit):
         for unit in self.list_of_units:

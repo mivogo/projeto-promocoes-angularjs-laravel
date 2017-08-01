@@ -2,7 +2,14 @@ Frescos,Talho,https://www.jumbo.pt/Frontoffice/produtos_frescos/talho
 Frescos,Peixaria,https://www.jumbo.pt/Frontoffice/produtos_frescos/peixaria
 Frescos,Legumes,https://www.jumbo.pt/Frontoffice/produtos_frescos/legumes_frescos
 Frescos,Frutas,https://www.jumbo.pt/Frontoffice/produtos_frescos/fruta
-Frescos,Charcutaria e Queijos,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos
+Frescos,Charcutaria,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/alheira_farinheira_e_morcela
+Frescos,Charcutaria,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/chourico_bacon_e_outros
+Frescos,Charcutaria,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/enchidos_aves
+Frescos,Charcutaria,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/fiambre_aves
+Frescos,Charcutaria,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/fiambre_porco
+Frescos,Charcutaria,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/pates_salsichas_e_mortadela
+Frescos,Charcutaria,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/presunto
+Frescos,Charcutaria,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/enchidos_vegetarianos
 Frescos,Padaria e Pastelaria,https://www.jumbo.pt/Frontoffice/produtos_frescos/padaria_e_pastelaria
 Frescos,Refeições,https://www.jumbo.pt/Frontoffice/produtos_frescos/pronto_a_comer
 Mercearia,"Arroz, Massa e Farinha",https://www.jumbo.pt/Frontoffice/mercearia_salgada/arroz_e_massa
@@ -47,6 +54,14 @@ Lacticínios,Manteigas e Cremes de Barrar,https://www.jumbo.pt/Frontoffice/produ
 Lacticínios,Ovos,https://www.jumbo.pt/Frontoffice/produtos_lacteos/ovos
 Lacticínios,Iogurtes,https://www.jumbo.pt/Frontoffice/produtos_lacteos/iogurtes
 Lacticínios,Queijos,https://www.jumbo.pt/Frontoffice/produtos_lacteos/queijos
+Lacticínios,Queijos,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/sem_lactose_e_biologicos
+Lacticínios,Queijos,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/queijos_barra_e_fatiados
+Lacticínios,Queijos,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/queijos_nacionais
+Lacticínios,Queijos,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/queijos_p_culinaria_e_tabuas
+Lacticínios,Queijos,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/queijomagrofresco_requeijaomozzarella
+Lacticínios,Queijos,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/queijos_importados
+Lacticínios,Queijos,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/queijo_para_barrar
+Lacticínios,Queijos,https://www.jumbo.pt/Frontoffice/produtos_frescos/charcutaria_e_queijos/queijo_para_criancas
 Lacticínios,Sobremesas e Polpas de Fruta,https://www.jumbo.pt/Frontoffice/produtos_lacteos/sobremesas_sumos_e_polpas_de_fruta
 Congelados,Refeições,https://www.jumbo.pt/Frontoffice/congelados/refeicoes
 Congelados,Carnes,https://www.jumbo.pt/Frontoffice/congelados/carne
@@ -140,5 +155,4 @@ Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa
 Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/velas_aniversario
 Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/baloes_pinhatas
 Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/faixas_bandeirinhas
-Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/velas_aniversario
 Casa,Artigos de Festa,https://www.jumbo.pt/Frontoffice/artigos_de_cozinha_e_mesa/guardanapos_e_descartaveis/descartavel_crianca

@@ -19,7 +19,7 @@ class ContinenteSpider(Spider):
     start_urls = (
         'https://www.continente.pt/stores/continente/pt-pt/public/Pages/subcategory.aspx?cat=Frescos-Carne-Talho(eCsf_WebProductCatalog_MegastoreContinenteOnline_Continente_EUR_Colombo_PT)',
     )
-
+    self_time = 3
     reader = unicode_csv_reader(open("continente_sites.csv"))
     urls = list(reader)
     current_url = 0
@@ -71,7 +71,7 @@ class ContinenteSpider(Spider):
 
         # Load page with selenium so we can see the real next pages
         self.driver.get(response.url)
-        sleep(5)
+        sleep(self.time)
 
         for page in range(int(last_page_number)):
 
@@ -80,7 +80,7 @@ class ContinenteSpider(Spider):
 
             self.driver.execute_script(
                 "window.scrollTo(0, document.body.scrollHeight);")
-            sleep(5)
+            sleep(self.time)
 
             # Iterate over products found and parse them to parse_product function
             # product_urls = response.xpath('//*[@class="title"]/a/@href').extract()
@@ -140,7 +140,7 @@ class ContinenteSpider(Spider):
 
                 yield {
                     'Name': product.xpath(
-                        './/*[@class="containerDescription"]/*[@class="title"]/a/text()').extract_first().strip(),
+                        './/*[@class="containerDescription"]/*[@class="title"]/a/text()').extract_first().strip().replace('"',"'"),
                     'Image': image,
                     'Category': self.urls[self.current_url][0],
                     'Sub-Category': self.urls[self.current_url][1],
@@ -162,8 +162,8 @@ class ContinenteSpider(Spider):
                 yield Request(next_url)
 
             try:
-                self.driver.find_element_by_xpath('//div[@class="next"]').click()
-                sleep(5)
+                self.driver.get(self.urls[self.current_url][2]+"#/?page="+str(page_number+1))
+                sleep(self.time)
 
             except NoSuchElementException:
                 pass

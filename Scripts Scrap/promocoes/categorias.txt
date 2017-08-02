@@ -29,7 +29,6 @@ Casa	Mobiliário
 Casa	Pequenos Eletrodomésticos
 Casa	Quarto
 Casa	Sala
-Casa	Vestuário
 Congelados	Carnes
 Congelados	Gelados e Sobremesas
 Congelados	Legumes e Frutas

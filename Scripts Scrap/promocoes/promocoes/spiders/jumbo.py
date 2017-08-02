@@ -15,6 +15,7 @@ def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
     for row in csv_reader:
         yield [unicode(cell, 'utf-8') for cell in row]
 
+
 class JumboSpider(Spider):
     name = 'jumbo'
     allowed_domains = ['jumbo.pt']
@@ -25,7 +26,7 @@ class JumboSpider(Spider):
     reader = unicode_csv_reader(open("jumbo_sites.csv"))
     urls = list(reader)
     current_url = 0
-    sleep_time = 3
+    sleep_time = 5
 
     def __init__(self):
         self.display = Display(visible=0, size=(1920, 1080))
@@ -68,64 +69,71 @@ class JumboSpider(Spider):
             products = response.xpath('//div[@class="product-item-border"]')
 
             for product in products:
-                #try:
-                weight = ["None","None"]
-                price_per_weight = product.xpath(
-                    './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-quantity-price", " " ))]/text()').extract_first()
+                try:
+                    weight = ["None", "None"]
+                    price_per_weight = product.xpath(
+                        './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-quantity-price", " " ))]/text()').extract_first()
 
-                if price_per_weight:
-                    price_per_weight = price_per_weight.split(u"€")[1].split("/")[0].replace(",", ".")
+                    if price_per_weight:
+                        price_per_weight = price_per_weight.split(u"€")[1].split("/")[0].replace(",", ".")
 
-                type_of_weight = product.xpath(
-                    './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-quantity-price", " " ))]/text()').extract_first()
-                if type_of_weight:
-                    type_of_weight = type_of_weight.split(u"€")[1].split("/")[1]
-                else:
-                    print(self.name_cleanup(product.xpath( "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first()).replace( '"', "'"))
-                    type_of_weight = "Un"
-                    price_per_weight = "None"
-                    weight = ["1","Un"]
+                    type_of_weight = product.xpath(
+                        './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-quantity-price", " " ))]/text()').extract_first()
+                    if type_of_weight:
+                        type_of_weight = type_of_weight.split(u"€")[1].split("/")[1]
+                    else:
+                        print(self.name_cleanup(product.xpath(
+                            "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first()).replace(
+                            '"', "'"))
+                        type_of_weight = "Un"
+                        price_per_weight = "None"
+                        weight = ["1", "Un"]
 
-                price = product.xpath(
-                    './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-price", " " ))]/text()').extract()[
-                    0].strip().split(u"€")[1].replace(",", ".")
-                link = "https://www.jumbo.pt" + \
-                       product.xpath(
-                           './/div[@class="product-item-header"]/a/@href').extract_first()
+                    price = product.xpath(
+                        './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-price", " " ))]/text()').extract()[
+                        0].strip().split(u"€")[1].replace(",", ".")
+                    link = "https://www.jumbo.pt" + \
+                           product.xpath(
+                               './/div[@class="product-item-header"]/a/@href').extract_first()
 
-                name = "None"
-                if weight[0] == "None":
-                    name = self.name_cleanup(product.xpath( "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first()).replace( '"', "'")
-                else:
-                    name = product.xpath( "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first().replace( '"', "'").strip()
-                
-                if weight[0] == "None":
-                    weight = self.extract_quantity(product.xpath(
-                        "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[2]").extract_first())
-                if weight[0] == "None":
-                    weight = self.extract_quantity(product.xpath(
-                        "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first())
-                if weight[0] == "None":
-                    weight = self.calculate_quantity(
-                        price, price_per_weight, type_of_weight)
-                yield {
-                    'Name': name,
-                    'Price': price,
-                    'Image': product.xpath(".//img[@class='product-item-image visible-print']/@src").extract_first(),
-                    'Link': link,
-                    'Brand': product.xpath(
-                        './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-brand", " " ))]/text()').extract_first(
-                        default='Jumbo'),
-                    'Category': self.urls[self.current_url][0],
-                    'Sub-Category': self.urls[self.current_url][1],
-                    'Weight': weight[0],
-                    'Weight_Type': weight[1],
-                    'Price_per_weight': price_per_weight,
-                    'Type_of_weight': type_of_weight,
-                    'ID': product.xpath('.//input[@name="Id"]/@value').extract_first()
-                }
-                #except:
-                 #   pass
+                    name = "None"
+                    if weight[0] == "None":
+                        name = self.name_cleanup(product.xpath(
+                            "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first()).replace(
+                            '"', "'")
+                    else:
+                        name = product.xpath(
+                            "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first().replace(
+                            '"', "'").strip()
+
+                    if weight[0] == "None":
+                        weight = self.extract_quantity(product.xpath(
+                            "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[2]").extract_first())
+                    if weight[0] == "None":
+                        weight = self.extract_quantity(product.xpath(
+                            "(./div[@class='row']/div[@class='product-item-header-column col-xs-8 col-sm-12']/div[@class='product-item-header']/a/h3/text())[1]").extract_first())
+                    if weight[0] == "None":
+                        weight = self.calculate_quantity(
+                            price, price_per_weight, type_of_weight)
+                    yield {
+                        'Name': name,
+                        'Price': price,
+                        'Image': product.xpath(
+                            ".//img[@class='product-item-image visible-print']/@src").extract_first(),
+                        'Link': link,
+                        'Brand': product.xpath(
+                            './/*[contains(concat( " ", @class, " " ), concat( " ", "product-item-brand", " " ))]/text()').extract_first(
+                            default='Jumbo'),
+                        'Category': self.urls[self.current_url][0],
+                        'Sub-Category': self.urls[self.current_url][1],
+                        'Weight': weight[0],
+                        'Weight_Type': weight[1],
+                        'Price_per_weight': price_per_weight,
+                        'Type_of_weight': type_of_weight,
+                        'ID': product.xpath('.//input[@name="Id"]/@value').extract_first()
+                    }
+                except:
+                    pass
 
             if (self.current_url + 1) < len(self.urls) and (page_number == int(last_page_number)):
                 self.current_url += 1
@@ -139,7 +147,7 @@ class JumboSpider(Spider):
             except NoSuchElementException:
                 pass
 
-    def name_cleanup(self,name):
+    def name_cleanup(self, name):
 
         splitted_name = name.split()
         result_name = ""
@@ -149,7 +157,7 @@ class JumboSpider(Spider):
                 for char in name:
                     if char.isdigit():
                         break
-                    first_digit_position +=1
+                    first_digit_position += 1
                 return name[0:first_digit_position]
             elif "(" in name:
                 name = name.split("(")[0]
@@ -159,21 +167,20 @@ class JumboSpider(Spider):
                     print(name_part)
                     print("Result_name")
                     print(result_name)
-                    if("Kg" in name_part):
+                    if ("Kg" in name_part):
                         break
                     if result_name is "":
                         result_name += name_part
                     else:
-                        result_name +=" "+ name_part
+                        result_name += " " + name_part
                 if result_name == "":
-                    return name.replace(":Kg","")
+                    return name.replace(":Kg", "")
                 return result_name
 
             return name.strip()
 
         except:
             return name.strip()
-
 
     def only_numerics(self, seq):
         return filter(type(seq).isdigit, seq)

@@ -20,7 +20,7 @@ class JumboSpider(Spider):
     name = 'jumbo'
     allowed_domains = ['jumbo.pt']
     start_urls = (
-        'https://www.jumbo.pt/Frontoffice/produtos_frescos/talho#pn=1',
+        'https://www.jumbo.pt/Frontoffice/produtos_frescos/talho',
     )
 
     reader = unicode_csv_reader(open("jumbo_sites.csv"))
@@ -34,7 +34,6 @@ class JumboSpider(Spider):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--no-sandbox')
         self.driver = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=chrome_options)
-
     def parse(self, response):
 
         self.driver.get(response.url)
@@ -126,7 +125,7 @@ class JumboSpider(Spider):
                             default='Jumbo'),
                         'Category': self.urls[self.current_url][0],
                         'Sub-Category': self.urls[self.current_url][1],
-                        'Weight': weight[0],
+                        'Weight': str(weight[0]),
                         'Weight_Type': weight[1],
                         'Price_per_weight': price_per_weight,
                         'Type_of_weight': type_of_weight,
@@ -141,10 +140,15 @@ class JumboSpider(Spider):
                 yield Request(next_url)
 
             try:
-                self.driver.get(self.urls[self.current_url][2] + "#/?page=" + str(page_number + 1))
+                self.driver.get(self.urls[self.current_url][2] + "#?pn=" + str(page_number + 1))
+                #self.driver.find_element_by_xpath(u'//li[@class="next"]/a').click()
                 sleep(self.sleep_time)
 
-            except NoSuchElementException:
+            except:
+                if (self.current_url + 1) < (len(self.urls)):
+                    self.current_url += 1
+                    next_url = self.urls[self.current_url][2]
+                    yield Request(next_url)
                 pass
 
     def name_cleanup(self, name):

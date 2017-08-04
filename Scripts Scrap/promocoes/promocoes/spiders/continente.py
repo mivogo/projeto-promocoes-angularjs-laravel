@@ -19,7 +19,7 @@ class ContinenteSpider(Spider):
     start_urls = (
         'https://www.continente.pt/stores/continente/pt-pt/public/Pages/subcategory.aspx?cat=Frescos-Carne-Talho(eCsf_WebProductCatalog_MegastoreContinenteOnline_Continente_EUR_Colombo_PT)',
     )
-    sleep_time = 3
+    sleep_time = 5
     reader = unicode_csv_reader(open("continente_sites.csv"))
     urls = list(reader)
     current_url = 0
@@ -138,6 +138,11 @@ class ContinenteSpider(Spider):
                 if(weight[0]=="None" and price is not "None" and price_per_weight is not "None" and type_of_weight is not "None"):
                     weight = self.calculate_quantity(price,price_per_weight,type_of_weight)
 
+                brand = product.xpath(
+                        './/*[@class="containerDescription"]/*[@class="type"]/text()').extract_first(default='Continente').strip().replace("\n","")
+                if brand is "":
+                    brand = "Continente"
+
                 yield {
                     'Name': product.xpath(
                         './/*[@class="containerDescription"]/*[@class="title"]/a/text()').extract_first().strip().replace('"',"'"),
@@ -147,10 +152,9 @@ class ContinenteSpider(Spider):
                     'Price': price,
                     'Price_per_weight': price_per_weight,
                     'Type_of_weight': type_of_weight,
-                    'Weight': weight[0],
+                    'Weight': str(weight[0]),
                     'Weight_Type': weight[1],
-                    'Brand': product.xpath(
-                        './/*[@class="containerDescription"]/*[@class="type"]/text()').extract_first(default='Continente'),
+                    'Brand': brand,
                     'Link': link,
                     'ID': id
 
@@ -165,7 +169,11 @@ class ContinenteSpider(Spider):
                 self.driver.get(self.urls[self.current_url][2]+"#/?page="+str(page_number+1))
                 sleep(self.sleep_time)
 
-            except NoSuchElementException:
+            except:
+                if (self.current_url + 1) < (len(self.urls)):
+                    self.current_url += 1
+                    next_url = self.urls[self.current_url][2]
+                    yield Request(next_url)
                 pass
 
     def calculate_quantity(self, Price, Price_per_weight, Type_of_weight):

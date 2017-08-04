@@ -16,6 +16,7 @@ app.controller('SearchController', function ($scope, $location, $http, $rootScop
 		"value": 10, 
 		"values": [10, 20, 40] 
 	};
+
 	$scope.data = [];
 	$scope.q = '';
 
@@ -85,7 +86,6 @@ app.controller('SearchController', function ($scope, $location, $http, $rootScop
 			return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
 		});
 		$('#' + selectId).html(soptions).prepend(foption);              
-
 	}
 
 });

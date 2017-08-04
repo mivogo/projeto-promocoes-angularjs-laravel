@@ -33,6 +33,35 @@ var loginRequired = function($q, $location, $auth, ModalService) {
 	return deferred.promise;
 };
 
+var retailerRequest = function(ProductFactory, FilterbarService){
+	return 	ProductFactory.retailers()            
+	.then(function (response) {
+		var retailers = response.data;
+		var first = true;
+		FilterbarService.clearRetailerListItems();
+		angular.forEach(retailers, function(item){
+			item.img = 'site/assets/img/'+item.name+".svg";
+			FilterbarService.addRetailerListItem(item);  
+			if(first && !FilterbarService.retailer){
+				FilterbarService.setRetailer(item);
+			}
+			first = false;
+		})
+
+	}, function (error) {
+		console.log('Unable to load profile data: ' + error);
+	});
+}
+
+var productRequest = function(ProductFactory, FilterbarService){
+	return 	ProductFactory.products(FilterbarService.retailer)            
+	.then(function (response) {
+		console.log(response.data);
+	}, function (error) {
+		console.log('Unable to load profile data: ' + error);
+	});
+}
+
 var profileRequest = function(ProfileFactory){
 	return ProfileFactory.getProfile()            
 	.then(function (response) {
@@ -46,7 +75,10 @@ var homeState = {
 	name: 'home',
 	url: '/',
 	templateUrl: 'site/app/components/home/homeView.html',
-	controller: 'HomeController'
+	controller: 'HomeController',
+	resolve: {
+		retailerRequest: retailerRequest,
+	}
 }
 
 var errorState = {
@@ -60,7 +92,11 @@ var searchState = {
 	name: 'search',
 	url: '/search?q=:term',
 	templateUrl: 'site/app/components/search/searchView.html',
-	controller: 'SearchController'
+	controller: 'SearchController',
+	resolve: {
+		retailerRequest: retailerRequest,
+		productRequest : productRequest,
+	}
 }
 
 var profileState = {

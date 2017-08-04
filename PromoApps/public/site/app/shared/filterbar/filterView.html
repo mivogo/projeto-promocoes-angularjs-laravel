@@ -1,49 +1,61 @@
-<div class="panel panel-default sidebar-menu">
-    <div class="panel-heading">
-        <h3 class="panel-title">Categories</h3>
-    </div>
-    <div class="panel-body">
+<div class="row">
+    <div class="panel panel-default sidebar-menu">
+        <div class="panel-body">
+            <ui-select data-ng-model="retailer.selected" theme="bootstrap" tagging="tagHandler" search-enabled="false" data-ng-change="retailerChanged()">
+                <ui-select-match>
+                    <img class="ui-select-img" data-ng-src="{{$select.selected.img}}"/>
+                </ui-select-match>
+                <ui-select-choices repeat="retailer in retailers">
+                    <img class="ui-select-img" data-ng-src="{{retailer.img}}"/>
+                </ui-select-choices>
+            </ui-select> 
+        </div>
+        <div class="panel-heading">
+            <h3 class="panel-title">Filtros</h3>
+        </div>
+        <div class="panel-body">
 
-        <ul class="nav nav-pills nav-stacked category-menu">
-            <li>
-                <span class="badge">Marca</span> 
-                <div class="filter-check">
-                    <table>             
-                        <tr data-ng-repeat="b in brands | unique:'brand'">
-                            <td>
-                                <label class="checkbox"><input type="checkbox" data-ng-model="b.checked" data-ng-click="updateBrand(b.brand,$index,brands,b.checked)" ng-disabled="brands.length==1"/></label>
-                                <span>{{b.brand}}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
-            <li class="active">
-                <span class="badge">Categoria</span> 
-                <div class="filter-check">
-                    <table>
-                        <tr ng-repeat="cat in categories | unique:'category'">
-                            <td>
-                                <label class="checkbox"> <input type="checkbox" data-ng-model="cat.checked" data-ng-click="updateCategory(cat.category,$index,categories,cat.checked)" ng-disabled="categories.length==1" /></label>
-                                <span>{{cat.category}}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
-            <li>
-                <a href="category.html">Kids <span class="badge pull-right">11</span></a>
-                <ul>
-                    <li><a href="category.html">T-shirts</a>
-                    </li>
-                    <li><a href="category.html">Skirts</a>
-                    </li>
-                    <li><a href="category.html">Pants</a>
-                    </li>
-                    <li><a href="category.html">Accessories</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+            <ul class="nav nav-pills nav-stacked category-menu">
+                <li>
+                    <span class="badge">Marca</span> 
+                    <div class="filter-check">
+                        <table>             
+                            <tr data-ng-repeat="b in brands | unique:'brand'">
+                                <td>
+                                    <label class="checkbox"><input type="checkbox" data-ng-model="b.checked" data-ng-click="updateBrand(b.brand,$index,brands,b.checked)" ng-disabled="brands.length==1"/></label>
+                                    <span>{{b.brand}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+                <li class="active">
+                    <span class="badge">Categoria</span> 
+                    <div class="filter-check">
+                        <table>
+                            <tr ng-repeat="cat in categories | unique:'category'">
+                                <td>
+                                    <label class="checkbox"> <input type="checkbox" data-ng-model="cat.checked" data-ng-click="updateCategory(cat.category,$index,categories,cat.checked)" ng-disabled="categories.length==1" /></label>
+                                    <span>{{cat.category}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+                <li>
+                    <a href="category.html">Kids <span class="badge pull-right">11</span></a>
+                    <ul>
+                        <li><a href="category.html">T-shirts</a>
+                        </li>
+                        <li><a href="category.html">Skirts</a>
+                        </li>
+                        <li><a href="category.html">Pants</a>
+                        </li>
+                        <li><a href="category.html">Accessories</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

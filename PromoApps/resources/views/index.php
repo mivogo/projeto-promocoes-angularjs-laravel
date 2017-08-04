@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="site/assets/css/font-awesome.min.css">
 	<link rel="stylesheet" href="site/assets/css/style.css">
 	<link rel="stylesheet" href="site/assets/css/angular-toastr.min.css">
+	<link rel="stylesheet" href="site/assets/css/select.min.css">
 </head>
 
 <script src="site/assets/libs/jquery.min.js"></script>
@@ -24,11 +25,12 @@
 <script src="site/assets/libs/ui-bootstrap-tpls.js"></script>
 <script src="site/assets/libs/satellizer.min.js"></script>
 <script src="site/assets/libs/angular-toastr.tpls.min.js"></script>
+<script src="site/assets/libs/select.min.js"></script>
+<script src="site/assets/libs/angular-cookies.min.js"></script>
 
 <script src="site/app/app.module.js"></script>
 <script src="site/app/app.route.js"></script>
 <script src="site/app/app.filter.js"></script>
-
 
 <script src="site/app/components/home/homeController.js"></script>
 <script src="site/app/components/404/404Controller.js"></script>
@@ -48,6 +50,7 @@
 
 <script src="site/app/factories/profile/profileRequestFactory.js"></script>
 <script src="site/app/factories/auth/authRequestFactory.js"></script>
+<script src="site/app/factories/product/productRequestFactory.js"></script>
 
 <body data-ng-app="promocoesWebApp">
 	<div header></div>

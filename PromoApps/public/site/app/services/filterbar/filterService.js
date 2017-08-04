@@ -3,7 +3,7 @@
 */
 'use strict';
 
-app.service('FilterbarService', function () {
+app.service('FilterbarService', function ($cookies) {
 
   var service = this;
 
@@ -11,12 +11,18 @@ app.service('FilterbarService', function () {
   service.filterbarItems = [];
   service.brandListItems = [];
   service.categoryListItems = [];
+  service.retailerListItems = [];
   service.brand = '';
   service.category = '';
+  service.retailer = $cookies.getObject('myRetailer');
 
   // remove all menu bar items
   service.clearFilterbarItems = function() {
     service.filterbarItems = [];
+  }
+
+  service.clearRetailerListItems = function() {
+    service.retailerListItems = [];
   }
 
   // add a menu item
@@ -43,6 +49,10 @@ app.service('FilterbarService', function () {
     }
   }
 
+  service.addRetailerListItem = function(item){
+    service.retailerListItems.push(item);
+  }
+
   service.addCategoryListItem = function(item){
     var exists = false;
     angular.forEach(service.categoryListItems, function(value, key){
@@ -56,12 +66,21 @@ app.service('FilterbarService', function () {
     }
   }
 
+  service.setRetailer = function (retailer){
+    $cookies.putObject('myRetailer', retailer);
+    service.retailer = retailer;
+  }
+
   service.setBrand = function(brand){
     service.brand = brand;
   }
 
   service.setCategory = function(category){
     service.category = category;
+  }
+
+  service.getRetailer = function (){
+    return service.retailer;
   }
 
   service.getBrand = function(){

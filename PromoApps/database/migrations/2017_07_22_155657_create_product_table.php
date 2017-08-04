@@ -18,6 +18,8 @@ class CreateProductTable extends Migration
             $table->string('name');
             $table->double('weight');
             $table->string('weight_type');
+            $table->boolean('active');
+            $table->string('relatedNames');
             $table->timestamps();
 
             $table->integer('brand_id')->unsigned()->nullable();

@@ -11,7 +11,12 @@
 |
 */
 
-Route::any('{path?}', function()
+Route::get('/', function () 
 {
-    return view("index");
-})->where("path", ".+");
+	return View::make('index');
+});
+
+Route::any('{catchall}', function()
+{
+	return View::make('index');
+})->where('catchall', '.*');

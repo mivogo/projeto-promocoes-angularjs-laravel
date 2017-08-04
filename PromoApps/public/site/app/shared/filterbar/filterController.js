@@ -3,11 +3,14 @@
 */
 'use strict';
 
-app.controller('FilterController', function ($scope, $location, $http, $rootScope, FilterbarService) {
+app.controller('FilterController', function ($scope, $location, $state, $http, $rootScope, FilterbarService) {
 	console.log("Filter Controller reporting for duty.");
 
 	$scope.brands = FilterbarService.brandListItems;
 	$scope.categories = FilterbarService.categoryListItems;
+	$scope.retailers = FilterbarService.retailerListItems;
+	$scope.retailer = {}; 
+	$scope.retailer.selected = FilterbarService.retailer;
 
 	$scope.updateCategory = function(category, position, entitie, state){
 		if(state){
@@ -31,6 +34,15 @@ app.controller('FilterController', function ($scope, $location, $http, $rootScop
 		}
 
 		broadcastSearchPageReset();
+	}
+
+	$scope.retailerChanged = function(){
+		FilterbarService.setRetailer($scope.retailer.selected);
+		$state.reload();
+	}
+
+	$scope.tagHandler = function (tag){
+		return null;
 	}
 
 	function updateSelection(position, entitie) {

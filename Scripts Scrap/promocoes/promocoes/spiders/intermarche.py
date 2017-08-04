@@ -19,7 +19,7 @@ class IntermarcheSpider(Spider):
     start_urls = (
         'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10152-porco',
     )
-    self_time = 3
+    self_time = 5
     reader = unicode_csv_reader(open("intermarche_sites.csv"))
     urls = list(reader)
     current_url = 0
@@ -88,7 +88,7 @@ class IntermarcheSpider(Spider):
                         'Price': price,
                         'Price_per_weight': price_per_weight,
                         'Type_of_weight': type_of_weight,
-                        'Weight': weight[0],
+                        'Weight': str(weight[0]),
                         'Weight_Type': weight[1],
                         'Brand': product.xpath('./div[@class="vignette_info"]/p[@class="js-marque"]/text()').extract_first(default='Intermarche'),
                         'Link': self.urls[self.current_url][2],

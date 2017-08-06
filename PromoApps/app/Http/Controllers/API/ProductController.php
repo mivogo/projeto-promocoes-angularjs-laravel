@@ -136,7 +136,8 @@ class ProductController extends Controller
 	{
 		ini_set('max_execution_time', 900);
 
-		$productRetailers = ProductRetailer::with('product')->with('retailer')->where('retailer_id',$retailerid)->where('active',true)->get();
+		$productRetailers = ProductRetailer::with('product')->with('retailer')->where('retailer_id',$retailerid)->where('active',true)->paginate();
+		$productRetailers -> withPath('');
 		return response()->json((new ProductTransformer)->transformArrayWithRetailer($productRetailers));
 	}
 

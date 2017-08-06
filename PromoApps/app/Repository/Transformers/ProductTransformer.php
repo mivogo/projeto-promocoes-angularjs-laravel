@@ -46,6 +46,7 @@ class ProductTransformer extends Transformer{
 		$brand = $product->brand;
 		$retailer = $info->retailer;
 		return [
+		'id' => $info->id,
 		'name' => preg_replace('/\s+/', ' ', $product->name),
 		'price' => $info->price,
 		'base_price' => $info->base_price,

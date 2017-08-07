@@ -5,7 +5,7 @@ import CardSection from './CardSection';
 import Button from './Button';
 
 const ProductDetail = ({ product }) => {
-  const { name, category, image, link, price, subcategory } = product;
+  const { name, category, image, link, price, weight, weight_type, price_weight, type_weight, subcategory } = product;
   const {
     thumbnailStyle,
     headerContentStyle,
@@ -15,6 +15,8 @@ const ProductDetail = ({ product }) => {
   } = styles;
 
   const newPrice = price.toString().replace('.', ',');
+  const newPriceWeight = price_weight.toString().replace('.', ',');
+
 
     return (
       <Card>
@@ -28,7 +30,8 @@ const ProductDetail = ({ product }) => {
           <View style={headerContentStyle}>
             <Text style={headerTextStyle}>{name}</Text>
             <Text>{category} > {subcategory}</Text>
-            <Text>{newPrice}€/un</Text>
+            <Text>{weight}{weight_type}</Text>
+            <Text>{newPrice}€/un ({newPriceWeight}€/{type_weight})</Text>
           </View>
         </CardSection>
         <View style={buttonStyle}>

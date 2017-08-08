@@ -1,5 +1,5 @@
 #!/bin/bash  
 echo "Cleaning Json files"
-rm intermarche.json
-rm continente.json
-rm jumbo.json
+rm intermarche.json*
+rm continente.json*
+rm jumbo.json*

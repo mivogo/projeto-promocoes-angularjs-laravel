@@ -149,7 +149,7 @@ class ContinenteSpider(Spider):
                     'Image': image,
                     'Category': self.urls[self.current_url][0],
                     'Sub-Category': self.urls[self.current_url][1],
-                    'Price': price,
+                    'Price': price_1,
                     'Price_per_weight': price_per_weight,
                     'Type_of_weight': type_of_weight,
                     'Weight': str(weight[0]),

@@ -21,6 +21,11 @@ app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchSer
 		return $http.post(urlBase + 'productsFromRetailer/'+rid,request);
 	};
 
+	productFactory.product = function (pid,prid) {
+
+		return $http.get(urlBase + 'products/'+pid+'&pr='+prid);
+	};
+
 	function buildRequest(){
 		var orderby = SearchService.selectedOrderOption.value;
 		var pageSize = SearchService.pageSize.value;

@@ -28,7 +28,7 @@ Route::group(['middleware' => 'cors'], function () {
 
 	Route::post('/products', 'API\ProductController@createFromList');
 	Route::get('/products', 'API\ProductController@showAll');
-	Route::get('/products/{id}', 'API\ProductController@showProduct');
+	Route::get('/products/{id}&pr={prid}', 'API\ProductController@showProduct');
 	Route::post('/productsFromRetailer/{id}', 'API\ProductController@showAllFromRetailer');
 
 	Route::get('/retailers', 'API\RetailerController@showAll');

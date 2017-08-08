@@ -3,11 +3,24 @@
 */
 'use strict';
 
-app.service('ModalService', function ($uibModal) {
+app.service('ModalService', function ($uibModal, SearchService, ProductFactory) {
 
   var service = this;
 
   var modalInstance;
+
+  var productRequest = function(){
+    var pid = SearchService.productid;
+    var prid = SearchService.productretailerid;
+
+    return ProductFactory.product(pid,prid)            
+    .then(function (response) {
+      return response.data;
+    }, function (error) {
+      console.log('Unable to load product data: ' + error.data);
+    });
+  }
+
 
   service.loginForm = function(){
     var modal = $uibModal.open({
@@ -21,7 +34,7 @@ app.service('ModalService', function ($uibModal) {
     modal.result.then(function () {
           // Redirect to the logged-in area of your site
         }, function () {
-          // optional function. Do something if the user cancels.
+          service.CloseModalForm();
         });
   };
 
@@ -36,10 +49,11 @@ app.service('ModalService', function ($uibModal) {
     modalInstance = modal;
 
     modal.result.then(function () {
-            // Redirect to the logged-in area of your site
-          }, function () {
-            // optional function. Do something if the user cancels.
-          });
+          // Redirect to the logged-in area of your site
+        }, function () {
+          service.CloseModalForm();
+        });
+
   };
 
   service.changePasswordForm = function(){
@@ -52,10 +66,31 @@ app.service('ModalService', function ($uibModal) {
     modalInstance = modal;
 
     modal.result.then(function () {
-            // Redirect to the logged-in area of your site
-          }, function () {
-            // optional function. Do something if the user cancels.
-          });
+          // Redirect to the logged-in area of your site
+        }, function () {
+          service.CloseModalForm();
+        });
+
+  };
+
+  service.productForm = function(){
+    var modal = $uibModal.open({
+      allowAnonymous: true,
+      templateUrl: 'site/app/components/product/productView.html',
+      controller: 'ProductController',
+      resolve: {
+        productRequest : productRequest,
+      }
+    });
+
+    modalInstance = modal;
+
+    modal.result.then(function () {
+          // Redirect to the logged-in area of your site
+        }, function () {
+          service.CloseModalForm();
+        });
+
   };
 
   service.CallRegisterForm = function(){

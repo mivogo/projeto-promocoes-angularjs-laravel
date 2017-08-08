@@ -39,6 +39,7 @@
 <script src="site/app/components/search/searchController.js"></script>
 <script src="site/app/components/profile/profileController.js"></script>
 <script src="site/app/components/password/passwordController.js"></script>
+<script src="site/app/components/product/productController.js"></script>
 
 <script src="site/app/shared/header/headerController.js"></script>
 <script src="site/app/shared/footer/footerController.js"></script>

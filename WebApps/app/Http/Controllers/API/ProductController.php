@@ -167,19 +167,52 @@ class ProductController extends Controller
 
 		$result = $query->paginate($request->item_amount);
 
-		$result->getCollection()->transform(function ($p, $key) {
-			return (new ProductTransformer)->transformWithRetailer($p->product,$p);
+		$result->getCollection()->transform(function ($p, $key) use ($retailerid) {
+			$product = $p->product;
+			$pr = ProductRetailer::where('product_id',$product->id)->where('retailer_id',$retailerid)->first();
+			return (new ProductTransformer)->transformWithRetailer($product,$pr);
 		});
 		
 		return response()->json($result);
 	}
 
 
-	public function showProduct($id)
-	{
+	public function showProduct($id, $prid)
+	{	
 		$product = Product::find($id);
-		$product->productRetailer;
-		return response()->json($product);
+		$productRetailer = ProductRetailer::find($prid);
+
+		$retailerid = $productRetailer->retailer_id;
+		$product->subcategory;
+
+		$existingProducts = Product::whereHas('productretailer',  function($query) use ($retailerid)  {
+			$query->where('retailer_id', $retailerid);
+		})->where('sub_category_id',$product->sub_category_id)->where('id','!=',$product->id)->get();
+
+		$productName = $product->name;
+		$relatedProducts = [];
+		if(!$existingProducts->isEmpty()){
+			foreach($existingProducts as $existingProduct){
+				$testResult = $this->bestResult($existingProduct,$productName);
+				if($testResult >= 0.50){
+					array_push($relatedProducts, $existingProduct);
+				}
+			}
+		}
+
+		$transformedProducts = [];
+		foreach($relatedProducts AS $p){
+			$pr = ProductRetailer::where('product_id',$p->id)->where('retailer_id',$retailerid)->first();
+			$new = (new ProductTransformer)->transformWithRetailer($p,$pr);
+			array_push($transformedProducts, $new);
+		}
+
+		$transformedProduct = (new ProductTransformer)->transformWithRetailerWithPrices($product,$productRetailer,$product->productretailer);
+
+		return response()->json([
+			'Product' => $transformedProduct,
+			'Related' => $transformedProducts
+			]);
 	}
 
 	private function createNewProduct($retailer,$brand,$item){

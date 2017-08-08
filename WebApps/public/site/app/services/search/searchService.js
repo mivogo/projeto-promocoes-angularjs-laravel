@@ -1,5 +1,5 @@
 /**
-* Filterbar Service
+* Search Service
 */
 'use strict';
 
@@ -26,6 +26,9 @@ app.service('SearchService', function ($cookies) {
   service.category = '';
   service.retailer = $cookies.getObject('myRetailer');
 
+  service.productid = null;
+  service.productretailerid = null;
+
   // remove all menu bar items
   service.clearFilterbarItems = function() {
     service.filterbarItems = [];
@@ -33,6 +36,11 @@ app.service('SearchService', function ($cookies) {
 
   service.clearRetailerListItems = function() {
     service.retailerListItems = [];
+  }
+
+  service.clearProductIds = function() {
+    service.productid = null;
+    service.productretailerid = null;
   }
 
   service.clearUrl = function() {
@@ -91,6 +99,14 @@ app.service('SearchService', function ($cookies) {
 
   service.setCategory = function(category){
     service.category = category;
+  }
+
+  service.setProductId = function(productid){
+    service.productid = productid;
+  }
+
+  service.setProductRetailerId = function(productretailerid){
+    service.productretailerid = productretailerid;
   }
 
   service.getRetailer = function (){

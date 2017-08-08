@@ -3,10 +3,11 @@
 */
 'use strict';
 
-app.controller('SearchController', function ($scope, $location, $http, $window, $rootScope, $state, $filter, FilterbarService, SearchService, productRequest) {
+app.controller('SearchController', function ($scope, $location, $http, $window, $rootScope, $state, $filter, FilterbarService, SearchService, productRequest, ModalService) {
 	console.log("Search Controller reporting for duty.");
 
 	SearchService.clearUrl();
+	SearchService.clearProductIds();
 
 	FilterbarService.clearBrandListItems();
 	FilterbarService.clearCategoryListItems();
@@ -58,8 +59,10 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 		return productRequest.last_page;                
 	}
 
-	$scope.openTab = function($link){
-		$window.open($link, '_blank');
+	$scope.productDetails = function(id,prid){
+		SearchService.setProductId(id);
+		SearchService.setProductRetailerId(prid);
+		ModalService.productForm();
 	}
 
 	$scope.resetCurrentPage = function(){

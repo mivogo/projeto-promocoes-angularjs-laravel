@@ -1,0 +1,23 @@
+<div class="col-sm-8 col-sm-offset-8">
+	<div class="form">
+		<h3>Alterar Password</h3>
+		<p class="message"></p>
+		<form name="passwordForm" validate>
+			<div class="form-group">
+				<input type="password" class="form-control" name="newpassword" placeholder="Nova Password" data-ng-model="newpassword" required pwstr>
+				<span style="color:red" data-ng-show="passwordForm.newpassword.$dirty && passwordForm.newpassword.$invalid">
+					<span data-ng-show="passwordForm.newpassword.$error.required">Introduza a nova password.</span>
+					<span data-ng-show="passwordForm.newpassword.$error.pwd">Password tem de conter pelo menos uma letra, um número e 6 ou mais caráteres.</span>
+				</span>
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" name="confirmpassword" placeholder="Confirmar Password" data-ng-model="confirmpassword" data-ng-pattern="newpassword" required pwstr>
+				<span style="color:red" data-ng-show="passwordForm.confirmpassword.$invalid && passwordForm.confirmpassword.$dirty">
+					<span data-ng-show="passwordForm.confirmpassword.$error.required">Confirme a nova password.</span>
+					<span data-ng-show="passwordForm.confirmpassword.$error.pattern">As passwords não são iguais.</span>
+				</span>
+			</div>
+			<button data-ng-disabled="passwordForm.newpassword.$pristine || passwordForm.confirmpassword.$pristine || passwordForm.confirmpassword.$dirty && passwordForm.confirmpassword.$invalid || passwordForm.newpassword.$dirty && passwordForm.newpassword.$invalid" class="btn btn-primary btn-modal" class="btn btn-primary btn-modal" data-ng-click="changePassword()">Alterar</button>
+		</form>
+	</div>
+</div>

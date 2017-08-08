@@ -49,6 +49,7 @@
 <script src="site/app/services/auth/authService.js"></script>
 <script src="site/app/services/modal/modalService.js"></script>
 <script src="site/app/services/search/searchService.js"></script>
+<script src="site/app/services/api/apiService.js"></script>
 
 <script src="site/app/factories/profile/profileRequestFactory.js"></script>
 <script src="site/app/factories/auth/authRequestFactory.js"></script>

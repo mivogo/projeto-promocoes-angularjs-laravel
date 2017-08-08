@@ -1,12 +1,12 @@
 'use strict';
 
-app.factory('AuthFactory', function($http, $auth) {
+app.factory('AuthFactory', function($http, $auth, APIService) {
 
-	var urlBase = 'http://localhost:8000/api/';
+	var urlBase = APIService.apiUrl();
 	var authFactory = {};
 
 	authFactory.changePassword = function (password) {
-		return $http.post(urlBase + 'password', password, {
+		return $http.post(urlBase + '/password', password, {
 			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
 		});
 	};

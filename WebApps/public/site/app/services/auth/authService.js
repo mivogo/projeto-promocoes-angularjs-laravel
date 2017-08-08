@@ -14,7 +14,6 @@ app.service('AuthService', function ($auth, $state, toastr) {
   service.login = function(response){
     toastr.success('Autenticação realizada com sucesso');
     service.changeUser(response.name);
-    //$location.path('/asdas');
   }
 
   service.register = function(response){

@@ -1,12 +1,12 @@
 'use strict';
 
-app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchService) {
+app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchService, APIService) {
 
-	var urlBase = 'http://localhost:8000/api/';
+	var urlBase = APIService.apiUrl();
 	var productFactory = {};
 
 	productFactory.retailers = function () {
-		return $http.get(urlBase + 'retailers');
+		return $http.get(urlBase + '/retailers');
 	};
 
 	productFactory.products = function () {
@@ -15,15 +15,14 @@ app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchSer
 		var request = buildRequest();
 
 		if(url){
-			return $http.post(url,request);
+			return $http.post(url, request);
 		}
 
-		return $http.post(urlBase + 'productsFromRetailer/'+rid,request);
+		return $http.post(urlBase+'/productsFromRetailer/'+rid,request);
 	};
 
 	productFactory.product = function (pid,prid) {
-
-		return $http.get(urlBase + 'products/'+pid+'&pr='+prid);
+		return $http.get(urlBase + '/products/'+pid+'&pr='+prid);
 	};
 
 	function buildRequest(){

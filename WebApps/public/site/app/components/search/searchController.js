@@ -29,6 +29,15 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	$scope.orderOptions = SearchService.orderOptions;
 	$scope.orderSelectedOption = SearchService.selectedOrderOption;
 
+	if(productRequest.to == null){
+		productRequest.to = 1;
+	}
+	
+	if(productRequest.from == null){
+		productRequest.from = 1;
+	}
+
+
 	for (var i=0; i<(productRequest.to-productRequest.from)+1; i++) {
 		var item = productRequest.data[i];
 		$scope.data.push({

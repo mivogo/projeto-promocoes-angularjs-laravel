@@ -32,7 +32,7 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory) 
     modalInstance = modal;
 
     modal.result.then(function () {
-          // Redirect to the logged-in area of your site
+          // Redirect
         }, function () {
           service.CloseModalForm();
         });
@@ -49,7 +49,7 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory) 
     modalInstance = modal;
 
     modal.result.then(function () {
-          // Redirect to the logged-in area of your site
+          // Redirect
         }, function () {
           service.CloseModalForm();
         });
@@ -66,7 +66,7 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory) 
     modalInstance = modal;
 
     modal.result.then(function () {
-          // Redirect to the logged-in area of your site
+          // Redirect
         }, function () {
           service.CloseModalForm();
         });
@@ -86,7 +86,7 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory) 
     modalInstance = modal;
 
     modal.result.then(function () {
-          // Redirect to the logged-in area of your site
+          // Redirect
         }, function () {
           service.CloseModalForm();
         });

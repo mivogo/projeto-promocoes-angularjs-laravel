@@ -13,6 +13,8 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $auth
 /*
 * Helper auth functions
 */
+
+
 var skipIfLoggedIn = function($q, $auth) {
 	var deferred = $q.defer();
 	if ($auth.isAuthenticated()) {
@@ -32,6 +34,7 @@ var loginRequired = function($q, $location, $auth, ModalService) {
 	}
 	return deferred.promise;
 };
+
 
 var retailerRequest = function(ProductFactory, FilterbarService){
 	return 	ProductFactory.retailers()            
@@ -56,6 +59,7 @@ var retailerRequest = function(ProductFactory, FilterbarService){
 var productRequest = function(ProductFactory){
 	return 	ProductFactory.products()            
 	.then(function (response) {
+		console.log(response.data);
 		return response.data;
 	}, function (error) {
 		console.log('Unable to load product data: ' + error.data);
@@ -95,7 +99,7 @@ var searchState = {
 	controller: 'SearchController',
 	resolve: {
 		retailerRequest: retailerRequest,
-		productRequest : productRequest,
+		productRequest: productRequest,
 	}
 }
 

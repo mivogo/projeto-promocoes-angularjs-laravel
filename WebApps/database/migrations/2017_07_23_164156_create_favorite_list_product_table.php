@@ -13,10 +13,10 @@ class CreateFavoriteListProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('favorite_list_products', function (Blueprint $table) {
-            $table->integer('favorite_list_id')->unsigned()->nullable();
-            $table->foreign('favorite_list_id')->references('id')
-            ->on('favorite_lists')->onDelete('cascade');
+        Schema::create('product_profile', function (Blueprint $table) {
+            $table->integer('profile_id')->unsigned()->nullable();
+            $table->foreign('profile_id')->references('id')
+            ->on('profiles')->onDelete('cascade');
 
             $table->integer('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')
@@ -34,7 +34,7 @@ class CreateFavoriteListProductTable extends Migration
     public function down()
     {
 
-        Schema::dropIfExists('favorite_list_products');
+        Schema::dropIfExists('product_profile');
 
     }
 }

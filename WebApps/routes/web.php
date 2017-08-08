@@ -19,4 +19,4 @@ Route::get('/', function ()
 Route::any('{catchall}', function()
 {
 	return View::make('index');
-})->where('catchall', '.*');
+})->where('catchall', '(?!api\/).*');

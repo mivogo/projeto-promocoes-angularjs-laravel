@@ -14,10 +14,10 @@ class Product extends Model
     	'relatedNames' => 'array',
     ];
     
-    public function favoritelist()
+    public function profile()
     {
-    	return $this->belongsToMany('App\Model\FavoriteList')
-    	->withTimestamps();
+        return $this->belongsToMany('App\Model\Profile')
+        ->withTimestamps();
     }
 
     public function rating()

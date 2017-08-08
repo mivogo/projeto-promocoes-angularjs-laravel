@@ -31,5 +31,9 @@ Route::group(['middleware' => 'cors'], function () {
 	Route::get('/products/{id}&pr={prid}', 'API\ProductController@showProduct');
 	Route::post('/productsFromRetailer/{id}', 'API\ProductController@showAllFromRetailer');
 
+	Route::post('/profile/favorites/{id}', 'API\FavoriteListController@addFavorite');
+	Route::post('/profile/favorites/delete/{id}', 'API\FavoriteListController@deleteFavorite');
+	Route::get('/profile/favorites', 'API\FavoriteListController@showFavorites');
+
 	Route::get('/retailers', 'API\RetailerController@showAll');
 });

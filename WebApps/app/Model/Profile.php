@@ -11,9 +11,10 @@ class Profile extends Model
 		return $this->belongsTo('App\Model\Location');
 	}
 
-	public function favoritelist()
+	public function product()
 	{
-		return $this->hasOne('App\Model\FavoriteList');
+		return $this->belongsToMany('App\Model\Product')
+		->withTimestamps();
 	}
 
 	public function shoppinglist()

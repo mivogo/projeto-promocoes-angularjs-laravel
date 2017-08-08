@@ -88,7 +88,9 @@ class ProductTransformer extends Transformer{
 
 		$prices = [];
 		foreach ($productretailers as $pr) {
-			array_push($prices, ['price' => $pr->price, 'hasDiscount'=> $pr->hasDiscount,'retailer' => $pr->retailer->name ]);
+			if($pr->retailer->id != $info->retailer->id){
+				array_push($prices, ['price' => $pr->price, 'hasDiscount'=> $pr->hasDiscount,'retailer' => $pr->retailer->name ]);
+			}
 		}
 		return [
 		'id' => $info->id,

@@ -36,4 +36,6 @@ Route::group(['middleware' => 'cors'], function () {
 	Route::get('/profile/favorites', 'API\FavoriteListController@showFavorites');
 
 	Route::get('/retailers', 'API\RetailerController@showAll');
+
+	Route::get('/categories', 'API\CategoryController@showAll');
 });

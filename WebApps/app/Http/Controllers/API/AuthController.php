@@ -48,7 +48,7 @@ class AuthController extends Controller
 			]);
 
 		if (!$newUser) {
-			return response()->json(['failed_to_create_new_user'], 500);
+			return response()->json(['error'=>'failed_to_create_new_user'], 500);
 		}
 
 		$profile = new Profile;
@@ -96,7 +96,7 @@ class AuthController extends Controller
 			$user->save();
 
 		} catch (JWTAuthException $e) {
-			return response()->json(['failed_to_create_token'], 500);
+			return response()->json(['error'=>'failed_to_create_token'], 500);
 		}
 
 		return response()->json((new UserTransformer)->transform($user));

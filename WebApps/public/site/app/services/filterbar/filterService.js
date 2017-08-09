@@ -36,6 +36,9 @@ app.service('FilterbarService', function ($cookies) {
     });
 
     if(!exists){
+      if(item.brand == service.brand){
+        item.checked = true;
+      }
       service.brandListItems.push(item);
       service.brandListItems.sort(function (a, b) { 
         return (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0); 

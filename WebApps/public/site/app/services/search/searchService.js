@@ -20,23 +20,9 @@ app.service('SearchService', function ($cookies) {
   ];
   service.selectedOrderOption = service.orderOptions[0];
 
-
-  service.retailerListItems = [];
-  service.brand = '';
-  service.category = '';
-  service.retailer = $cookies.getObject('myRetailer');
-
   service.productid = null;
   service.productretailerid = null;
 
-  // remove all menu bar items
-  service.clearFilterbarItems = function() {
-    service.filterbarItems = [];
-  }
-
-  service.clearRetailerListItems = function() {
-    service.retailerListItems = [];
-  }
 
   service.clearProductIds = function() {
     service.productid = null;
@@ -47,78 +33,12 @@ app.service('SearchService', function ($cookies) {
     service.url = null;
   }
 
-  // add a menu item
-  service.addFilterbarItem = function(item) {
-
-    service.filterbarItems.push(item);
-
-    // sort by order parameter
-    service.filterbarItems.sort(function (a, b) { 
-      return (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0); 
-    });
-  }
-
-  service.addBrandListItem = function(item){
-    var exists = false;
-    angular.forEach(service.brandListItems, function(value, key){
-      if(value.brand == item.brand){
-        exists = true;
-      }
-    });
-
-    if(!exists){
-      service.brandListItems.push(item);
-    }
-  }
-
-  service.addRetailerListItem = function(item){
-    service.retailerListItems.push(item);
-  }
-
-  service.addCategoryListItem = function(item){
-    var exists = false;
-    angular.forEach(service.categoryListItems, function(value, key){
-      if(value.category == item.category){
-        exists = true;
-      }
-    });
-
-    if(!exists){
-      service.categoryListItems.push(item);
-    }
-  }
-
-  service.setRetailer = function (retailer){
-    $cookies.putObject('myRetailer', retailer);
-    service.retailer = retailer;
-  }
-
-  service.setBrand = function(brand){
-    service.brand = brand;
-  }
-
-  service.setCategory = function(category){
-    service.category = category;
-  }
-
   service.setProductId = function(productid){
     service.productid = productid;
   }
 
   service.setProductRetailerId = function(productretailerid){
     service.productretailerid = productretailerid;
-  }
-
-  service.getRetailer = function (){
-    return service.retailer;
-  }
-
-  service.getBrand = function(){
-    return service.brand;
-  }
-
-  service.getCategory = function(){
-    return service.category;
   }
 
 });

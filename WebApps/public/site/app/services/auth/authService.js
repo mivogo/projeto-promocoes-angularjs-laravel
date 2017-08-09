@@ -39,4 +39,4 @@ app.service('AuthService', function ($auth, $state, toastr) {
     localStorage.setItem('user', user);
   }
 
-})
+});

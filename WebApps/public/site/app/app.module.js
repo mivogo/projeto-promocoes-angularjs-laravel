@@ -3,7 +3,7 @@
 */
 'use strict';
 
-var app = angular.module('promocoesWebApp', ['ui.router','ui.bootstrap','ui.select','ngCookies','satellizer','toastr']);
+var app = angular.module('promocoesWebApp', ['ui.router','ui.bootstrap','ui.select','ngCookies','satellizer','toastr','ngCart']);
 
 
 app.directive("header", function() {
@@ -13,6 +13,16 @@ app.directive("header", function() {
     scope: true,
     transclude : false,
     controller: 'HeaderController'
+  };
+});
+
+app.directive("menu", function() {
+  return {
+    restrict: 'A',
+    templateUrl: 'site/app/shared/menu/menuView.html',
+    scope: true,
+    transclude : false,
+    controller: 'MenuController'
   };
 });
 

@@ -59,10 +59,9 @@ var retailerRequest = function(ProductFactory, FilterbarService){
 var productRequest = function(ProductFactory){
 	return 	ProductFactory.products()            
 	.then(function (response) {
-		console.log(response.data);
 		return response.data;
 	}, function (error) {
-		console.log('Unable to load product data: ' + error.data);
+		console.log('Unable to load product data: ' + error);
 	});
 }
 
@@ -114,10 +113,19 @@ var profileState = {
 	}
 }
 
+var cartState = {
+	name: 'cart',
+	url: '/cart',
+	templateUrl: 'site/app/components/cart/cartView.html',
+	controller: 'CartController'
+}
+
 
 $stateProvider.state(homeState);
 $stateProvider.state(errorState);
 $stateProvider.state(searchState);
 $stateProvider.state(profileState);
+$stateProvider.state(cartState);
+
 });
 

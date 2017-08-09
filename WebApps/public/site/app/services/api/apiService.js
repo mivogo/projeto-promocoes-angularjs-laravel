@@ -11,4 +11,4 @@ app.service('APIService', function () {
     return 'http://localhost:8000/api';
   }
 
-})
+});

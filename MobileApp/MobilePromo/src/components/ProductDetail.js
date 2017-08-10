@@ -5,6 +5,8 @@ import CardSection from './CardSection';
 import Button from './Button';
 
 const ProductDetail = ({ product }) => {
+  console.log("ProductDetail");
+  console.log(this.product);
   const { name, category, image, link, price, weight, weight_type, price_weight, type_weight, subcategory } = product;
   const {
     thumbnailStyle,

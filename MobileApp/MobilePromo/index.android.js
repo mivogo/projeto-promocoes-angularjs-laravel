@@ -1,20 +1,31 @@
-// Android
-
-// Import  alibrary to help create a Component
 import React from 'react';
-import { AppRegistry, View } from 'react-native';
-import Header from './src/components/Header';
+import { AppRegistry, View } from "react-native";
+import { DrawerNavigator } from "react-navigation";
+import Header from './src/components/header';
 import Footer from './src/components/Footer';
 import ProductList from './src/components/ProductList';
+import FirstScreen from './src/components/SearchScreen';
+import SecondScreen from './src/components/Screen2';
 
-// Create a Component
-const App = () => (
-  <View style={{ flex: 1 }}>
-    <Header headerText={'Products'} />
-    <ProductList />
-    <Footer footerText={'Test'} />
-  </View>
+const DrawerExample = DrawerNavigator(
+  {
+    First: {
+        path: '/',
+        screen: FirstScreen
+    },
+    Second: {
+        path: '/sent',
+        screen: SecondScreen
+    }
+  },
+  {
+      initialRouteName: 'First',
+      drawerPosition: 'left',
+      contentOptions: {
+        activeTintColor: 'red',
+      }
+  }
 );
 
 //Render it to the device
-AppRegistry.registerComponent('MobilePromo', () => App);
+AppRegistry.registerComponent('MobilePromo', () => DrawerExample);

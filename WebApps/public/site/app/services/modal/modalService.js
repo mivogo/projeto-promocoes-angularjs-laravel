@@ -107,4 +107,4 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory) 
     modalInstance.close();
   }
 
-})
+});

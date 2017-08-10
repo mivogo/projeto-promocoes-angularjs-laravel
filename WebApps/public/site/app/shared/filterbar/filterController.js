@@ -20,8 +20,7 @@ app.controller('FilterController', function ($scope, $location, $state, $http, $
 		if(!state){
 			FilterbarService.setCategory('');
 		}
-
-		$state.reload();
+		$state.go('search', {}, { reload: true });
 	}
 
 	$scope.updateBrand = function(brand, position, entitie, state){
@@ -32,13 +31,12 @@ app.controller('FilterController', function ($scope, $location, $state, $http, $
 		if(!state){
 			FilterbarService.setBrand('');
 		}
-
-		$state.reload();
+		$state.go('search', {}, { reload: true });
 	}
 
 	$scope.retailerChanged = function(){
 		FilterbarService.setRetailer($scope.retailer.selected);
-		$state.reload();
+		$state.go('search', {}, { reload: true });
 	}
 
 	$scope.tagHandler = function (tag){

@@ -3,9 +3,11 @@
 */
 'use strict';
 
-app.controller('HeaderController', function ($scope, $location, $http, $rootScope, $state, AuthService, ModalService, SearchService) {
+app.controller('HeaderController', function ($scope, $location, $http, $rootScope, $state, AuthService, ModalService, SearchService, CartService) {
 	
 	//console.log("Header Controller reporting for duty.");
+
+	$scope.cart = CartService;
 
 	$scope.isActive = function (viewLocation) { 
 		return viewLocation === $location.path();

@@ -26,6 +26,7 @@ app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchSer
 	};
 
 	function buildRequest(){
+
 		var orderby = SearchService.selectedOrderOption.value;
 		var pageSize = SearchService.pageSize.value;
 		var search = SearchService.search;
@@ -39,7 +40,7 @@ app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchSer
 			brand: brand,
 			category: category
 		}
-
+		
 		return request;
 	}
 

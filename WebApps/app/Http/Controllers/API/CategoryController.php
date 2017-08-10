@@ -6,13 +6,13 @@ use Tymon\JWTAuth\JWTAuth;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Model\Retailer;
+use App\Model\Category;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Repository\Transformers\RetailerTransformer;
+use App\Repository\Transformers\CategoryTransformer;
 use JWTAuthException;
 
-class RetailerController extends Controller
+class CategoryController extends Controller
 {
 
 	private $user;
@@ -26,7 +26,7 @@ class RetailerController extends Controller
 
 	public function showAll()
 	{
-		$retailers = Retailer::all();
-		return response()->json((new RetailerTransformer)->transformArray($retailers));
+		$categories = Category::all();
+		return response()->json((new CategoryTransformer)->transformArray($categories));
 	}
 }

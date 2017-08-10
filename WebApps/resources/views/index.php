@@ -27,6 +27,8 @@
 <script src="site/assets/libs/angular-toastr.tpls.min.js"></script>
 <script src="site/assets/libs/select.min.js"></script>
 <script src="site/assets/libs/angular-cookies.min.js"></script>
+<script src="site/assets/libs/ngCart.min.js"></script>
+<script src="site/assets/libs/angular-locale_pt-pt.js"></script>
 
 <script src="site/app/app.module.js"></script>
 <script src="site/app/app.route.js"></script>
@@ -40,16 +42,19 @@
 <script src="site/app/components/profile/profileController.js"></script>
 <script src="site/app/components/password/passwordController.js"></script>
 <script src="site/app/components/product/productController.js"></script>
+<script src="site/app/components/cart/cartController.js"></script>
 
 <script src="site/app/shared/header/headerController.js"></script>
 <script src="site/app/shared/footer/footerController.js"></script>
 <script src="site/app/shared/filterbar/filterController.js"></script>
+<script src="site/app/shared/menu/menuController.js"></script>
 
 <script src="site/app/services/filterbar/filterService.js"></script>
 <script src="site/app/services/auth/authService.js"></script>
 <script src="site/app/services/modal/modalService.js"></script>
 <script src="site/app/services/search/searchService.js"></script>
 <script src="site/app/services/api/apiService.js"></script>
+<script src="site/app/services/cart/cartService.js"></script>
 
 <script src="site/app/factories/profile/profileRequestFactory.js"></script>
 <script src="site/app/factories/auth/authRequestFactory.js"></script>

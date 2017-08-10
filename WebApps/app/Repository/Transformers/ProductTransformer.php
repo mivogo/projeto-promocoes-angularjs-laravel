@@ -63,6 +63,7 @@ class ProductTransformer extends Transformer{
 		'subcategory' => $sub->name,
 		'category' => $sub->category->name,
 		'image' => $info->image,
+		'pid' => $info->pid,
 		'link' => $info->link
 		];	
 	}	

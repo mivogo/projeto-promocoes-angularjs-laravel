@@ -15,10 +15,9 @@ use App\Model\Retailer;
 use App\Model\Category;
 use App\Model\SubCategory;
 use App\Http\Requests;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Repository\Transformers\ProductTransformer;
+use App\Repository\Transformers\BrandTransformer;
 use JWTAuthException;
 use Validator;
 use DateTime;
@@ -75,19 +74,11 @@ class ProductController extends Controller
 			if(!empty($productRetailer)){
 
 				$inc++;
-				//return response()->json([$inc,$inc2,count($arr),intval($item['ID']),$productRetailer]);
 				$this->updateProductRetailer($productRetailer,$item);
 
 			}else{
 
-
-				$brand = Brand::where('name', $item['Brand'])->first();
-				if(empty($brand)){
-					$brand = Brand::create([
-						'name' => $item['Brand']
-						]);
-					$brand->save();
-				}
+				$brand = $this->findBrand($item['Brand']);
 
 				$existingProducts = Product::with('productretailer')->whereHas('productretailer',  function($query) use ($retailer)  {
 					$query->where('retailer_id','!=',$retailer->id);
@@ -108,11 +99,9 @@ class ProductController extends Controller
 
 				if(empty($selectedProduct)){
 					$inc2++;
-
 					$this->createNewProduct($retailer,$brand,$item);
 				}else{
 					$inc3++;
-
 					$this->addRetailerToProduct($retailer,$selectedProduct,$item);
 				}
 			}
@@ -154,26 +143,28 @@ class ProductController extends Controller
 			$order = 'price';
 		} 
 
-		$query = ProductRetailer::with(['product','retailer'])
+		$queryBrands = $this->brandsResult($retailerid,$request->search);
+		$brands = $queryBrands->distinct()->get();
+
+		$query = ProductRetailer::with(['product'])->select('product_retailers.*', 'products.name as pname', 'sub_categories.name as sname', 'categories.name as cname', 'brands.name as bname')
 		->join('products','product_id','=','products.id')
-		->join('sub_categories','products.sub_category_id','=','sub_categories.id')
-		->join('categories','sub_categories.category_id','=','categories.id')
-		->join('brands','brands.id','=','products.brand_id')
+		->join('sub_categories','sub_category_id','=','sub_categories.id')
+		->join('categories','category_id','=','categories.id')
+		->join('brands','brands.id','=','brand_id')
 		->where('retailer_id', $retailerid)
 		->where('product_retailers.active',true);
 
-		$query = $this->filterResult($request->brand,$request->category,$request->search,$query);
+		$query = $this->filterResult($request->brand,$request->category,$request->subcategory,$request->search,$query,$retailerid);
 		$query = $this->sortResult($request->search,$order,$direction,$query);
 
 		$result = $query->paginate($request->item_amount);
 
 		$result->getCollection()->transform(function ($p, $key) use ($retailerid) {
 			$product = $p->product;
-			$pr = ProductRetailer::where('product_id',$product->id)->where('retailer_id',$retailerid)->first();
-			return (new ProductTransformer)->transformWithRetailer($product,$pr);
+			return (new ProductTransformer)->transformWithRetailer($product,$p);
 		});
-		
-		return response()->json($result);
+
+		return response()->json(['products' => $result, 'brands' => (new BrandTransformer)->transformArray($brands)]);
 	}
 
 
@@ -218,20 +209,21 @@ class ProductController extends Controller
 	private function createNewProduct($retailer,$brand,$item){
 
 		SubCategory::unguard();
-		$subCategory = SubCategory::where('name',$item['Sub-Category'])->first();
+		Category::unguard();
+		$category = Category::where('name',$item['Category'])->first();
+		if(empty($category)){
+			$category = Category::create([
+				'name' => $item['Category']
+				]);
+
+			$category->save();
+		}
+
+		$subCategory = SubCategory::where('name',$item['Sub-Category'])->where('category_id',$category->id)->first();
 		if(empty($subCategory)){
 			$subCategory = SubCategory::create();
 			$subCategory->name = $item['Sub-Category'];
 
-			Category::unguard();
-			$category = Category::where('name',$item['Category'])->first();
-			if(empty($category)){
-				$category = Category::create([
-					'name' => $item['Category']
-					]);
-			}
-
-			$category->save();
 			$category->subcategory()->save($subCategory);
 			Category::reguard();
 
@@ -443,26 +435,26 @@ class ProductController extends Controller
 
 	private function sortResult($relevance,$order,$direction,$query){
 		if(strcmp($order, 'relevance') == 0){
-			$match = "MATCH (products.name) AGAINST (? IN BOOLEAN MODE)";
+			$match = "MATCH (pname) AGAINST (? IN BOOLEAN MODE)";
 			$query->orderByRaw($match . " DESC", [$relevance]);
 		}
 
 		if(strcmp($order, 'brand') == 0){
-			$query->orderBy('brands.name', 'asc');
+			$query->orderBy('bname', 'asc');
 		}
 
 		if(strcmp($order, 'name') == 0){
-			$query->orderBy('products.name', 'asc');
+			$query->orderBy('pname', 'asc');
 		}
 
 		if(strcmp($order, 'price') == 0){
-			$query->orderBy('price_per_weight', $direction);
+			$query->orderBy('price', $direction);
 		}
 
 		return $query;
 	}
 
-	private function filterResult($brand,$category,$search,$query){
+	private function filterResult($brand, $category, $subcategory, $search, $query, $retailerid){
 		if(!empty($brand)){
 			$query->where('brands.name', $brand);
 		}
@@ -471,13 +463,92 @@ class ProductController extends Controller
 			$query->where('categories.name', $category);
 		}
 
+		if(!empty($subcategory)){
+			$query->where('sub_categories.name', $subcategory);
+		}
+
 		if(!empty($search)){
-			$matchp = "MATCH (products.name) AGAINST (? IN BOOLEAN MODE)";
-			$matchb = "MATCH (brands.name) AGAINST (? IN BOOLEAN MODE)";
-			$matchc = "MATCH (categories.name) AGAINST (? IN BOOLEAN MODE)";
-			$query->whereRaw($matchp, [$search])->orWhereRaw($matchb, [$search])->orWhereRaw($matchc, [$search]);
+			$matchp = "MATCH (products.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
+			$matchb = "MATCH (brands.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
+			$matchc = "MATCH (categories.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
+			$query->whereRaw($matchp, [$search,$retailerid])->orWhereRaw($matchb, [$search,$retailerid])->orWhereRaw($matchc, [$search,$retailerid]);
 		}
 
 		return $query;
 	}
+
+	private function brandsResult($retailerid, $search){
+
+		$result = Brand::select('brands.name')
+		->join('products','brands.id','=','products.brand_id')
+		->join('product_retailers','product_retailers.product_id','=','products.id')
+		->join('sub_categories','sub_category_id','=','sub_categories.id')
+		->join('categories','category_id','=','categories.id')
+		->where('retailer_id', $retailerid)
+		->where('product_retailers.active',true);
+
+		if(!empty($search)){
+			$matchp = "MATCH (products.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
+			$matchb = "MATCH (brands.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
+			$matchc = "MATCH (categories.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
+
+			$result->whereRaw($matchp, [$search,$retailerid])->orWhereRaw($matchb, [$search,$retailerid])->orWhereRaw($matchc, [$search,$retailerid]);
+		}
+
+		return $result;
+	}
+
+	private function findBrand($_brand){
+		$brand = Brand::where('name',$_brand)->first();
+		if(empty($brand)){
+
+			$simple = strtolower(preg_replace("/[^a-zA-Z]+/", "", $_brand));
+
+			if(strlen($_brand)>5){
+				
+				$char = substr($_brand, 0, 1)."%";
+
+				$brands = Brand::whereRaw('brands.name LIKE ? and char_length(brands.name)>5',[$char])->get();
+
+				$found = null;
+				$compared = null;
+
+				if(!$brands->isEmpty()){
+					$currentResult = 0;
+
+					foreach ($brands as $b) {
+						if(strpos($b->simple, $simple)){
+							$found = $b;
+
+							if($found == null && strpos($simple, $b->simple)){
+								$found = $b;
+							}
+						}
+
+						$testResult = $this->swgAlgorithm->compare($b->simple,$simple);
+						if($testResult >= 0.9 && $testResult > $currentResult){
+							$currentResult = $testResult;
+							$compared = $b;
+						}
+					}
+				}
+
+				if($compared != null){
+					return $compared;
+				}
+
+				if($found != null){
+					return $found;
+				}
+			}
+
+			$brand = Brand::create([
+				'name' => $_brand,
+				'simple' => $simple
+				]);
+		}
+
+		return $brand;
+	}
+	
 }

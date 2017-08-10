@@ -1,3 +1,4 @@
+    <div menu></div>
 <div class="container clearfix">
 
     <div class="row">
@@ -17,7 +18,6 @@
 
         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 main">
             <div class="row">
-                <input data-ng-model="q" id="search" class="form-control" placeholder="Filter text">
                 <div class="form-group search-page-select-div col-sm-5 col-xs-5 pull-right">
                     <div class="search-page-select">
                         <select class="form-control search-page-select-select" data-ng-change="resetCurrentPage()" data-ng-options="o.name for o in orderOptions | orderBy:'name' :true" data-ng-model="orderSelectedOption"></select>
@@ -50,10 +50,18 @@
                             </a>
                             <div class="text">
                                 <h5><a href="detail.html">{{item.name}}</a></h5>
-                                <p class="price">{{item.price}} €</p>
+                                <p class="price">{{item.price | currency}}</p>
                                 <p class="buttons">
-                                    <a href="detail.html" class="btn btn-default">View detail</a>
-                                    <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    <a data-ng-show="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer"><i class="fa fa-shopping-cart"></i> Adicionar</a>
+                                    <div data-ng-show="cart.hasItem(item)" class="cart-update">
+                                        <span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item,-1)">-</span>
+                                        <span class="cart-info noselect">
+                                            <span class="cart-qty noselect">{{cart.itemQuantity(item)}}</span> 
+                                            <span class="noselect">|</span>
+                                            <span class="cart-price noselect">{{cart.itemPrice(item) | currency}}</span>
+                                        </span>
+                                        <span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item,1)">+</span>
+                                    </div>
                                 </p>
                             </div>
                         </div>
@@ -61,7 +69,7 @@
                 </div>
             </div>
             <div class="row text-center">
-            <div data-ng-show="numberOfPages() > 1">
+                <div data-ng-show="numberOfPages() > 1">
                     <button class="btn btn-primary" data-ng-disabled="currentPage == 1" data-ng-click="previousPage()">
                       <span>Anterior</span>      
                   </button>

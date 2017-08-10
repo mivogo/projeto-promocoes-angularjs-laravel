@@ -3,8 +3,10 @@
 */
 'use strict';
 
-app.controller('SearchController', function ($scope, $location, $http, $window, $rootScope, $state, $filter, FilterbarService, SearchService, productRequest, ModalService) {
+app.controller('SearchController', function ($scope, $location, $http, $window, $rootScope, $state, $filter, FilterbarService, SearchService, productRequest, ModalService, CartService) {
 	console.log("Search Controller reporting for duty.");
+
+	$scope.cart = CartService;
 
 	SearchService.clearUrl();
 	SearchService.clearProductIds();
@@ -12,9 +14,12 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	FilterbarService.clearBrandListItems();
 	FilterbarService.clearCategoryListItems();
 
-	$scope.currentPage = productRequest.current_page;
-	$scope.nextPageUrl = productRequest.next_page_url;
-	$scope.prevPageUrl = productRequest.prev_page_url;
+	var products = productRequest.products;
+	var brands = productRequest.brands;
+
+	$scope.currentPage = products.current_page;
+	$scope.nextPageUrl = products.next_page_url;
+	$scope.prevPageUrl = products.prev_page_url;
 
 	$scope.pageSize = {
 		"type": "select", 
@@ -29,17 +34,16 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	$scope.orderOptions = SearchService.orderOptions;
 	$scope.orderSelectedOption = SearchService.selectedOrderOption;
 
-	if(productRequest.to == null){
-		productRequest.to = 1;
-	}
-	
-	if(productRequest.from == null){
-		productRequest.from = 1;
+	if(products.to == null){
+		products.to = 1;
 	}
 
+	if(products.from == null){
+		products.from = 1;
+	}
 
-	for (var i=0; i<(productRequest.to-productRequest.from)+1; i++) {
-		var item = productRequest.data[i];
+	for (var i=0; i<(products.to-products.from)+1; i++) {
+		var item = products.data[i];
 		$scope.data.push({
 			id: item.id,
 			product_id: item.product_id,
@@ -52,9 +56,13 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 			link: item.link
 		});
 
-		FilterbarService.addBrandListItem({brand:$scope.data[i].brand});
 		FilterbarService.addCategoryListItem({category:$scope.data[i].category});
 	}
+
+	angular.forEach(brands, function(value, key) {
+		FilterbarService.addBrandListItem({brand:value.name});
+	});
+
 
 	$scope.brandFilter = function(){
 		return FilterbarService.getBrand();
@@ -65,7 +73,7 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	}
 
 	$scope.numberOfPages = function(){
-		return productRequest.last_page;                
+		return products.last_page;                
 	}
 
 	$scope.productDetails = function(id,prid){
@@ -77,7 +85,6 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	$scope.resetCurrentPage = function(){
 		SearchService.pageSize.value = $scope.pageSize.value;
 		SearchService.selectedOrderOption = $scope.orderSelectedOption;
-
 		$state.reload();
 	}
 
@@ -94,7 +101,7 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	$scope.$on('resetSearchCurrentPage', resetCurrentPage)
 
 	function resetCurrentPage($event){
-		$scope.currentPage = 0;
+		$state.reload();
 	}
 
 	function sortDropDownListByText(selectId) {

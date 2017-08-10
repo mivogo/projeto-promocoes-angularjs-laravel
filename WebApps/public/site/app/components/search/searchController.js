@@ -73,7 +73,7 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	}
 
 	$scope.numberOfPages = function(){
-		return productRequest.last_page;                
+		return products.last_page;                
 	}
 
 	$scope.productDetails = function(id,prid){

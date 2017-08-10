@@ -15,8 +15,6 @@ use App\Model\Retailer;
 use App\Model\Category;
 use App\Model\SubCategory;
 use App\Http\Requests;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Repository\Transformers\ProductTransformer;
 use App\Repository\Transformers\BrandTransformer;
@@ -80,13 +78,7 @@ class ProductController extends Controller
 
 			}else{
 
-				$brand = Brand::where('name', $item['Brand'])->first();
-				if(empty($brand)){
-					$brand = Brand::create([
-						'name' => $item['Brand']
-						]);
-					$brand->save();
-				}
+				$brand = $this->findBrand($item['Brand']);
 
 				$existingProducts = Product::with('productretailer')->whereHas('productretailer',  function($query) use ($retailer)  {
 					$query->where('retailer_id','!=',$retailer->id);
@@ -464,15 +456,15 @@ class ProductController extends Controller
 
 	private function filterResult($brand, $category, $subcategory, $search, $query, $retailerid){
 		if(!empty($brand)){
-			$query->where('bname', $brand);
+			$query->where('brands.name', $brand);
 		}
 
 		if(!empty($category)){
-			$query->where('cname', $category);
+			$query->where('categories.name', $category);
 		}
 
 		if(!empty($subcategory)){
-			$query->where('sname', $subcategory);
+			$query->where('sub_categories.name', $subcategory);
 		}
 
 		if(!empty($search)){
@@ -505,4 +497,58 @@ class ProductController extends Controller
 
 		return $result;
 	}
+
+	private function findBrand($_brand){
+		$brand = Brand::where('name',$_brand)->first();
+		if(empty($brand)){
+
+			$simple = strtolower(preg_replace("/[^a-zA-Z]+/", "", $_brand));
+
+			if(strlen($_brand)>5){
+				
+				$char = substr($_brand, 0, 1)."%";
+
+				$brands = Brand::whereRaw('brands.name LIKE ? and char_length(brands.name)>5',[$char])->get();
+
+				$found = null;
+				$compared = null;
+
+				if(!$brands->isEmpty()){
+					$currentResult = 0;
+
+					foreach ($brands as $b) {
+						if(strpos($b->simple, $simple)){
+							$found = $b;
+
+							if($found == null && strpos($simple, $b->simple)){
+								$found = $b;
+							}
+						}
+
+						$testResult = $this->swgAlgorithm->compare($b->simple,$simple);
+						if($testResult >= 0.9 && $testResult > $currentResult){
+							$currentResult = $testResult;
+							$compared = $b;
+						}
+					}
+				}
+
+				if($compared != null){
+					return $compared;
+				}
+
+				if($found != null){
+					return $found;
+				}
+			}
+
+			$brand = Brand::create([
+				'name' => $_brand,
+				'simple' => $simple
+				]);
+		}
+
+		return $brand;
+	}
+	
 }

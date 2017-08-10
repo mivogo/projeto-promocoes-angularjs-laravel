@@ -8,8 +8,6 @@ use App\User;
 use App\Model\Profile;
 use App\Model\Location;
 use App\Http\Requests;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Repository\Transformers\ProfileTransformer;
 use JWTAuthException;

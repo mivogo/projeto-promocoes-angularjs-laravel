@@ -14,7 +14,6 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $auth
 * Helper auth functions
 */
 
-
 var skipIfLoggedIn = function($q, $auth) {
 	var deferred = $q.defer();
 	if ($auth.isAuthenticated()) {
@@ -36,6 +35,22 @@ var loginRequired = function($q, $location, $auth, ModalService) {
 };
 
 
+var categoriesRequest = function(ProductFactory, MenuService){
+	return ProductFactory.categories()            
+	.then(function (response) {
+		var categories = response.data;
+		MenuService.clearCategoryItems();
+
+		angular.forEach(categories, function(item){
+			MenuService.addCategoryItem(item);
+		})
+
+	}, function (error) {
+		console.log('Unable to load subcategories data: ' + error);
+	});
+};
+
+
 var retailerRequest = function(ProductFactory, FilterbarService){
 	return 	ProductFactory.retailers()            
 	.then(function (response) {
@@ -54,7 +69,7 @@ var retailerRequest = function(ProductFactory, FilterbarService){
 	}, function (error) {
 		console.log('Unable to load retailer data: ' + error);
 	});
-}
+};
 
 var productRequest = function(ProductFactory){
 	return 	ProductFactory.products()            
@@ -63,7 +78,7 @@ var productRequest = function(ProductFactory){
 	}, function (error) {
 		console.log('Unable to load product data: ' + error);
 	});
-}
+};
 
 var profileRequest = function(ProfileFactory){
 	return ProfileFactory.getProfile()            
@@ -72,7 +87,7 @@ var profileRequest = function(ProfileFactory){
 	}, function (error) {
 		console.log('Unable to load profile data: ' + error);
 	});
-}
+};
 
 var homeState = {
 	name: 'home',
@@ -99,6 +114,7 @@ var searchState = {
 	resolve: {
 		retailerRequest: retailerRequest,
 		productRequest: productRequest,
+		categoriesRequest: categoriesRequest,
 	}
 }
 

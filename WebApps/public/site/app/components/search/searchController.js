@@ -11,11 +11,9 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	SearchService.clearUrl();
 	SearchService.clearProductIds();
 
-	FilterbarService.clearBrandListItems();
-	FilterbarService.clearCategoryListItems();
-
 	var products = productRequest.products;
 	var brands = productRequest.brands;
+	var categories = productRequest.categories;
 
 	$scope.currentPage = products.current_page;
 	$scope.nextPageUrl = products.next_page_url;
@@ -48,7 +46,13 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 			id: item.id,
 			product_id: item.product_id,
 			name: item.name,
-			price: item.price_weight,
+			price: item.price,
+			price_weight: item.price_weight,
+			price_weight_type: item.type_weight,
+			weight: item.weight,
+			weight_type: item.weight_type,
+			hasDiscount: item.hasDiscount,
+			base_price: item.base_price,
 			brand: item.brand,
 			subcategory: item.subcategory,
 			category: item.category,
@@ -56,12 +60,22 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 			link: item.link
 		});
 
-		FilterbarService.addCategoryListItem({category:$scope.data[i].category});
+
 	}
 
-	angular.forEach(brands, function(value, key) {
-		FilterbarService.addBrandListItem({brand:value.name});
-	});
+	if(categories.length > 0){
+		FilterbarService.clearCategoryListItems();
+		angular.forEach(categories, function(value, key) {
+			FilterbarService.addCategoryListItem({category:value});
+		});
+	}
+
+	if(brands.length > 0){
+		FilterbarService.clearBrandListItems();
+		angular.forEach(brands, function(value, key) {
+			FilterbarService.addBrandListItem({brand:value});
+		});
+	}
 
 
 	$scope.brandFilter = function(){

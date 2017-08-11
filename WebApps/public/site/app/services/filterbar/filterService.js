@@ -41,7 +41,7 @@ app.service('FilterbarService', function ($cookies) {
       }
       service.brandListItems.push(item);
       service.brandListItems.sort(function (a, b) { 
-        return (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0); 
+        return (a.brand > b.brand) ? 1 : ((b.brand > a.brand) ? -1 : 0); 
       });
     }
   }
@@ -59,9 +59,12 @@ app.service('FilterbarService', function ($cookies) {
     });
 
     if(!exists){
+      if(item.category == service.category){
+        item.checked = true;
+      }
       service.categoryListItems.push(item);
       service.categoryListItems.sort(function (a, b) { 
-        return (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0); 
+        return (a.category > b.category) ? 1 : ((b.category > a.category) ? -1 : 0); 
       });
     }
   }

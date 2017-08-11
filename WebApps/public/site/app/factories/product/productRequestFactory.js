@@ -9,6 +9,10 @@ app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchSer
 		return $http.get(urlBase + '/retailers');
 	};
 
+	productFactory.categories = function () {
+		return $http.get(urlBase + '/categories');
+	};
+
 	productFactory.products = function () {
 		var rid = FilterbarService.retailer.id;
 		var url = SearchService.url;

@@ -33,23 +33,20 @@
                 </div>
             </div>
             <div class="row">
-                <div data-ng-repeat="item in data | startFrom:0 | limitTo:pageSize.value">
+                <div data-ng-repeat="item in data | limitTo:pageSize.value">
                     <div class="search-page-item col-sm-6 col-xs-6">
                         <div class="product">
                             <div class="flip-container">
                                 <div class="flipper">
                                     <div class="front">
-                                        <a data-ng-href="{{item.link}}" data-ng-click="$event.preventDefault();productDetails(item.product_id,item.id)" class="pointer">
+                                        <a data-ng-click="productDetails(item.product_id,item.id)" class="pointer">
                                             <img data-ng-src="{{item.image}}" alt="" class="img-responsive">
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                            <a href="detail.html" class="invisible">
-                                <img src="img/product1.jpg" alt="" class="img-responsive">
-                            </a>
                             <div class="text">
-                                <h5><a href="detail.html">{{item.name}}</a></h5>
+                                <h5><a data-ng-click="productDetails(item.product_id,item.id)" class="pointer">{{item.name}}</a></h5>
                                 <p class="price">{{item.price | currency}}</p>
                                 <p class="buttons">
                                     <a data-ng-show="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer"><i class="fa fa-shopping-cart"></i> Adicionar</a>

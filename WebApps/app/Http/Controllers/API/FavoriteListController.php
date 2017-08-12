@@ -9,8 +9,6 @@ use App\Model\Profile;
 use App\Model\Location;
 use App\Model\Product;
 use App\Http\Requests;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Repository\Transformers\FavoriteListTransformer;
 use JWTAuthException;

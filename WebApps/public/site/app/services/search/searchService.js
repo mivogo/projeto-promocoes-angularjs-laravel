@@ -8,6 +8,8 @@ app.service('SearchService', function ($cookies) {
   var service = this;
 
   service.url = null;
+  service.search = '';
+  
   service.pageSize = {};
   service.pageSize.value = 10;
   service.pageSize.values = [10,20,40];
@@ -39,6 +41,14 @@ app.service('SearchService', function ($cookies) {
 
   service.setProductRetailerId = function(productretailerid){
     service.productretailerid = productretailerid;
+  }
+
+  service.setSearch = function(search){
+    service.search = search;
+  }
+
+  service.getSearch = function(){
+    return service.search;
   }
 
 });

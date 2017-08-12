@@ -5,7 +5,6 @@
 
 var app = angular.module('promocoesWebApp', ['ui.router','ui.bootstrap','ui.select','ngCookies','satellizer','toastr','ngCart']);
 
-
 app.directive("header", function() {
   return {
     restrict: 'A',
@@ -22,8 +21,7 @@ app.directive("menu", function() {
     templateUrl: 'site/app/shared/menu/menuView.html',
     scope: true,
     transclude : false,
-    controller: 'MenuController'
-  };
+    controller: 'MenuController'  };
 });
 
 app.directive("footer", function() {

@@ -5,6 +5,7 @@ class BrandTransformer extends Transformer{
 	
 	public function transform($brand){
 		return [
+		'id' => $brand->id,
 		'name' => preg_replace('/\s+/', ' ', $brand->name)
 		];	
 

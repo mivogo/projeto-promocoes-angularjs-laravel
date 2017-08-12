@@ -27,21 +27,36 @@ app.service('FilterbarService', function ($cookies) {
     service.categoryListItems = [];
   }
 
+  service.deselectBrands = function(){
+    angular.forEach(service.brandListItems, function(value, key){
+      value.checked = false;
+    });
+  }
+
+  service.deselectCategories = function(){
+    angular.forEach(service.categoryListItems, function(value, key){
+      value.checked = false;
+    });
+  }
+
   service.addBrandListItem = function(item){
     var exists = false;
     angular.forEach(service.brandListItems, function(value, key){
-      if(value.brand == item.brand){
+      if(value.name.toLowerCase() == item.name.toLowerCase()){
         exists = true;
+        if(item.checked == true){
+          value.checked = true;
+        }
       }
     });
 
     if(!exists){
-      if(item.brand == service.brand){
+      if(service.brand.name && item.name.toLowerCase() == service.brand.name.toLowerCase()){
         item.checked = true;
       }
       service.brandListItems.push(item);
       service.brandListItems.sort(function (a, b) { 
-        return (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0); 
+        return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); 
       });
     }
   }
@@ -53,15 +68,21 @@ app.service('FilterbarService', function ($cookies) {
   service.addCategoryListItem = function(item){
     var exists = false;
     angular.forEach(service.categoryListItems, function(value, key){
-      if(value.category == item.category){
+      if(value.name.toLowerCase() == item.name.toLowerCase()){
         exists = true;
+        if(item.checked == true){
+          value.checked = true;
+        }
       }
     });
 
     if(!exists){
+      if(service.category.name && item.name.toLowerCase() == service.category.name.toLowerCase()){
+        item.checked = true;
+      }
       service.categoryListItems.push(item);
       service.categoryListItems.sort(function (a, b) { 
-        return (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0); 
+        return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); 
       });
     }
   }

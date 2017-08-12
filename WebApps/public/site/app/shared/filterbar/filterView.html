@@ -14,16 +14,15 @@
             <h3 class="panel-title">Filtros</h3>
         </div>
         <div class="panel-body">
-
-            <ul class="nav nav-pills nav-stacked category-menu">
+            <ul class="nav nav-pills nav-stacked filter-menu">
                 <li>
                     <span class="badge">Marca</span> 
                     <div class="filter-check">
                         <table>             
                             <tr data-ng-repeat="b in brands | unique:'brand'">
                                 <td>
-                                    <label class="checkbox"><input type="checkbox" data-ng-model="b.checked" data-ng-checked="b.checked" data-ng-click="updateBrand(b.brand,$index,brands,b.checked)" data-ng-disabled="brands.length==1"/></label>
-                                    <span>{{b.brand}}</span>
+                                    <label class="checkbox"><input type="checkbox" data-ng-model="b.checked" data-ng-checked="b.checked" data-ng-click="updateBrand(b,$index,brands,b.checked)"/></label>
+                                    <span>{{b.name}}</span>
                                 </td>
                             </tr>
                         </table>
@@ -35,8 +34,8 @@
                         <table>
                             <tr ng-repeat="cat in categories | unique:'category'">
                                 <td>
-                                    <label class="checkbox"> <input type="checkbox" data-ng-model="cat.checked" data-ng-click="updateCategory(cat.category,$index,categories,cat.checked)" data-ng-disabled="categories.length==1" /></label>
-                                    <span>{{cat.category}}</span>
+                                    <label class="checkbox"> <input type="checkbox" data-ng-model="cat.checked" data-ng-checked="cat.checked" data-ng-click="updateCategory(cat,$index,categories,cat.checked)" /></label>
+                                    <span>{{cat.name}}</span>
                                 </td>
                             </tr>
                         </table>

@@ -4,6 +4,7 @@
 'use strict';
 
 app.controller('MenuController', function ($scope, $location, $http, $rootScope, $state, MenuService, SearchService, FilterbarService) {
+
 	console.log("Menu Controller reporting for duty.");
 
 	$scope.categories = MenuService.categoryItems;

@@ -6,8 +6,6 @@
 app.controller('SearchController', function ($scope, $location, $http, $window, $rootScope, $state, $filter, $stateParams, productRequest, FilterbarService, SearchService, ModalService, CartService, MenuService) {
 	console.log("Search Controller reporting for duty.");
 
-
-
 	$scope.cart = CartService;
 
 	SearchService.clearUrl();
@@ -63,7 +61,6 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 			image: item.image,
 			link: item.link
 		});
-
 
 	}
 

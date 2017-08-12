@@ -125,6 +125,7 @@ var searchState = {
 		retailerRequest: retailerRequest,
 		categoriesRequest: categoriesRequest,
 		productRequest: productRequest,
+		categoriesRequest: categoriesRequest,
 	}
 }
 

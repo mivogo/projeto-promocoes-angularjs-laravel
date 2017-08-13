@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppRegistry, View } from "react-native";
 import { DrawerNavigator } from "react-navigation";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Header from './src/components/header';
 import Footer from './src/components/Footer';
 import ProductList from './src/components/ProductList';

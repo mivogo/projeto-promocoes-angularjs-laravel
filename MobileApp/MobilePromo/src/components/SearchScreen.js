@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
-import { Text, View, Button, Image, Dimensions } from 'react-native';
+import { Text, View, Button, Image, Dimensions, TouchableHighlight, TouchableOpacity } from 'react-native';
+import Modal from 'react-native-modal';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Header from './header';
 import Footer from './Footer';
 import ProductList from './ProductList';
 
 class SearchScreen extends Component {
+
+  state = {
+    isModalVisible: false
+  }
+
+  _showModal = () => this.setState({ isModalVisible: true })
+
+  _hideModal = () => this.setState({ isModalVisible: false })
+
+
+
   static navigationOptions = {
     tabBarLabel: 'Screen 1',
     drawerIcon: ({tintColor}) => {
@@ -22,8 +34,17 @@ class SearchScreen extends Component {
   render() {
     return (
     <View style={{ flex: 1 }}>
-    <Header headerText={'Pedro'} navigation={this.props.navigation} />
-    <ProductList />
+    <TouchableOpacity onPress={this._showModal}>
+          <Text>Show Modal</Text>
+        </TouchableOpacity>
+        <Modal 
+          isVisible={this.state.isModalVisible}>
+          <View style={{alignSelf: "center", backgroundColor: "white", flex: 1 }}>
+              <Text>Hello!</Text>
+          </View>
+        </Modal>
+      <Header headerText={'Pedro'} navigation={this.props.navigation} />
+      <ProductList />
     <Footer footerText={'Test'} />
     </View>
     );

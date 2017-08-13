@@ -55,6 +55,7 @@
 <script src="site/app/services/search/searchService.js"></script>
 <script src="site/app/services/api/apiService.js"></script>
 <script src="site/app/services/cart/cartService.js"></script>
+<script src="site/app/services/menu/menuService.js"></script>
 
 <script src="site/app/factories/profile/profileRequestFactory.js"></script>
 <script src="site/app/factories/auth/authRequestFactory.js"></script>

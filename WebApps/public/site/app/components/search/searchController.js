@@ -3,7 +3,7 @@
 */
 'use strict';
 
-app.controller('SearchController', function ($scope, $location, $http, $window, $rootScope, $state, $filter, FilterbarService, SearchService, productRequest, ModalService, CartService) {
+app.controller('SearchController', function ($scope, $location, $http, $window, $rootScope, $state, $filter, $stateParams, productRequest, FilterbarService, SearchService, ModalService, CartService, MenuService) {
 	console.log("Search Controller reporting for duty.");
 
 	$scope.cart = CartService;
@@ -11,11 +11,11 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	SearchService.clearUrl();
 	SearchService.clearProductIds();
 
-	FilterbarService.clearBrandListItems();
-	FilterbarService.clearCategoryListItems();
+	MenuService.setSubcategory('');
 
 	var products = productRequest.products;
 	var brands = productRequest.brands;
+	var categories = productRequest.categories;
 
 	$scope.currentPage = products.current_page;
 	$scope.nextPageUrl = products.next_page_url;
@@ -48,7 +48,13 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 			id: item.id,
 			product_id: item.product_id,
 			name: item.name,
-			price: item.price_weight,
+			price: item.price,
+			price_weight: item.price_weight,
+			price_weight_type: item.type_weight,
+			weight: item.weight,
+			weight_type: item.weight_type,
+			hasDiscount: item.hasDiscount,
+			base_price: item.base_price,
 			brand: item.brand,
 			subcategory: item.subcategory,
 			category: item.category,
@@ -56,12 +62,47 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 			link: item.link
 		});
 
-		FilterbarService.addCategoryListItem({category:$scope.data[i].category});
 	}
 
-	angular.forEach(brands, function(value, key) {
-		FilterbarService.addBrandListItem({brand:value.name});
-	});
+	if(categories.length > 0){
+		FilterbarService.clearCategoryListItems();
+		angular.forEach(categories, function(value, key) {
+			FilterbarService.addCategoryListItem({name:value});
+		});
+	}
+
+	FilterbarService.setCategory('');
+	FilterbarService.deselectCategories();
+
+	if($stateParams.category){
+		var category = $stateParams.category;
+		FilterbarService.addCategoryListItem({name: category, checked: true});
+		FilterbarService.setCategory({name: category, checked: true});
+	}
+
+	if($stateParams.menuCategory){
+		var category = $stateParams.menuCategory;
+		category = category.replace(/-/g, ' ');
+		FilterbarService.addCategoryListItem({name: category, checked: true});
+		FilterbarService.setCategory({name: category, checked: true});
+	}
+
+
+	if(brands.length > 0){
+		FilterbarService.clearBrandListItems();
+		angular.forEach(brands, function(value, key) {
+			FilterbarService.addBrandListItem({name:value});
+		});
+	}
+
+	FilterbarService.setBrand('');
+	FilterbarService.deselectBrands();
+
+	if($stateParams.brand){
+		var brand = $stateParams.brand;
+		FilterbarService.addBrandListItem({name: brand, checked: true});
+		FilterbarService.setBrand({name: brand, checked: true});
+	}
 
 
 	$scope.brandFilter = function(){
@@ -98,7 +139,9 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 		$state.reload();
 	}
 
-	$scope.$on('resetSearchCurrentPage', resetCurrentPage)
+	$scope.$on('resetSearchCurrentPage', resetCurrentPage);
+
+	
 
 	function resetCurrentPage($event){
 		$state.reload();

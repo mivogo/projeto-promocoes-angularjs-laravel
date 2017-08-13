@@ -143,9 +143,6 @@ class ProductController extends Controller
 			$order = 'price';
 		} 
 
-		$queryBrands = $this->brandsResult($retailerid,$request->search);
-		$brands = $queryBrands->distinct()->get();
-
 		$query = ProductRetailer::with(['product'])->select('product_retailers.*', 'products.name as pname', 'sub_categories.name as sname', 'categories.name as cname', 'brands.name as bname')
 		->join('products','product_id','=','products.id')
 		->join('sub_categories','sub_category_id','=','sub_categories.id')
@@ -154,17 +151,40 @@ class ProductController extends Controller
 		->where('retailer_id', $retailerid)
 		->where('product_retailers.active',true);
 
-		$query = $this->filterResult($request->brand,$request->category,$request->subcategory,$request->search,$query,$retailerid);
-		$query = $this->sortResult($request->search,$order,$direction,$query);
+		$r_brand = $request->brand;
+		$r_category = $request->category;
+		$r_subcategory = $request->subcategory;
+		$r_search = $request->search;
 
+		$query = $this->filterResult($r_brand,$r_category,$r_subcategory,$r_search,$query,$retailerid);
+		$query = $this->sortResult($r_search,$order,$direction,$query);
+
+		$aux = $query->get();
 		$result = $query->paginate($request->item_amount);
+
+		$brands = array();
+
+		if(empty($r_brand)){
+			$brands = $this->uniqueCollection($aux,'bname');
+		}
+
+		$categories = array();
+
+		if(empty($r_category)){
+			$categories = $this->uniqueCollection($aux,'cname');
+		}
+
+		if(!empty($r_brand) && !empty($r_category)){
+			$brands = $this->uniqueCollection($aux,'bname');
+			$categories = $this->uniqueCollection($aux,'cname');
+		}
 
 		$result->getCollection()->transform(function ($p, $key) use ($retailerid) {
 			$product = $p->product;
 			return (new ProductTransformer)->transformWithRetailer($product,$p);
 		});
 
-		return response()->json(['products' => $result, 'brands' => (new BrandTransformer)->transformArray($brands)]);
+		return response()->json(['products' => $result, 'brands' => $brands, 'categories' => $categories]);
 	}
 
 
@@ -298,8 +318,8 @@ class ProductController extends Controller
 	private function updateProductRetailer($productRetailer,$item){
 		$product = $productRetailer->product;
 		if($product->active == false){
-			$product->active = true;
 
+			$product->active = true;
 			$product->save();
 		}
 
@@ -311,7 +331,7 @@ class ProductController extends Controller
 
 		$price = $productRetailer->price;
 
-		if($price==$newPrice){
+		if($price == $newPrice){
 			$days = $this->getDaysFromDateDiff($productRetailer);
 			if($days >= 7){
 				$productRetailer->price = $newPrice;
@@ -390,7 +410,7 @@ class ProductController extends Controller
 		}
 
 		$converted = 0.001 * $item['Weight'];
-		$item['Price'] = $item['Price_per_weight'] / $converted;
+		$item['Price_per_weight'] = $item['Price'] / $converted;
 
 		return $item;
 	}
@@ -455,6 +475,7 @@ class ProductController extends Controller
 	}
 
 	private function filterResult($brand, $category, $subcategory, $search, $query, $retailerid){
+
 		if(!empty($brand)){
 			$query->where('brands.name', $brand);
 		}
@@ -471,31 +492,37 @@ class ProductController extends Controller
 			$matchp = "MATCH (products.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
 			$matchb = "MATCH (brands.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
 			$matchc = "MATCH (categories.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
-			$query->whereRaw($matchp, [$search,$retailerid])->orWhereRaw($matchb, [$search,$retailerid])->orWhereRaw($matchc, [$search,$retailerid]);
+
+			$param = array();
+			array_push($param,$search);
+			array_push($param,$retailerid);
+
+			if(!empty($brand)){
+				$matchp = $matchp." and brands.name = ?";
+				$matchb = $matchb." and brands.name = ?";
+				$matchc = $matchc." and brands.name = ?";
+				array_push($param,$brand);
+			}
+
+			if(!empty($category)){
+				$matchp = $matchp." and categories.name = ?";
+				$matchb = $matchb." and categories.name = ?";
+				$matchc = $matchc." and categories.name = ?";
+				array_push($param, $category);
+			}
+
+			if(!empty($subcategory)){
+				$matchp = $matchp." and sub_categories.name = ?";
+				$matchb = $matchb." and sub_categories.name = ?";
+				$matchc = $matchc." and sub_categories.name = ?";
+				array_push($param, $subcategory);
+			}
+
+			$query->whereRaw($matchp, $param)->orWhereRaw($matchb, $param)->orWhereRaw($matchc, $param);
 		}
+
 
 		return $query;
-	}
-
-	private function brandsResult($retailerid, $search){
-
-		$result = Brand::select('brands.name')
-		->join('products','brands.id','=','products.brand_id')
-		->join('product_retailers','product_retailers.product_id','=','products.id')
-		->join('sub_categories','sub_category_id','=','sub_categories.id')
-		->join('categories','category_id','=','categories.id')
-		->where('retailer_id', $retailerid)
-		->where('product_retailers.active',true);
-
-		if(!empty($search)){
-			$matchp = "MATCH (products.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
-			$matchb = "MATCH (brands.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
-			$matchc = "MATCH (categories.name) AGAINST (? IN BOOLEAN MODE) and products.id = product_retailers.product_id and product_retailers.retailer_id = ?";
-
-			$result->whereRaw($matchp, [$search,$retailerid])->orWhereRaw($matchb, [$search,$retailerid])->orWhereRaw($matchc, [$search,$retailerid]);
-		}
-
-		return $result;
 	}
 
 	private function findBrand($_brand){
@@ -505,7 +532,7 @@ class ProductController extends Controller
 			$simple = strtolower(preg_replace("/[^a-zA-Z]+/", "", $_brand));
 
 			if(strlen($_brand)>5){
-				
+
 				$char = substr($_brand, 0, 1)."%";
 
 				$brands = Brand::whereRaw('brands.name LIKE ? and char_length(brands.name)>5',[$char])->get();
@@ -549,6 +576,16 @@ class ProductController extends Controller
 		}
 
 		return $brand;
+	}
+
+	private function uniqueCollection($collection, $uid){
+		$unique = $collection->unique($uid)->values();
+		$transformed = $unique->transform(function ($item) use ($uid)
+		{
+			return $item[$uid];
+		})->toArray();
+
+		return $transformed;
 	}
 	
 }

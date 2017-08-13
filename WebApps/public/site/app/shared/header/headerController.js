@@ -3,7 +3,7 @@
 */
 'use strict';
 
-app.controller('HeaderController', function ($scope, $location, $http, $rootScope, $state, AuthService, ModalService, SearchService, CartService) {
+app.controller('HeaderController', function ($scope, $location, $http, $rootScope, $state, AuthService, ModalService, SearchService, CartService, MenuService, FilterbarService) {
 	
 	//console.log("Header Controller reporting for duty.");
 
@@ -37,10 +37,15 @@ app.controller('HeaderController', function ($scope, $location, $http, $rootScop
 
 	$scope.changeView = function(view){
 		if($scope.searchterm){
-			SearchService.search = $scope.searchterm;
-			$state.go('search', {}, { reload: true });
+			SearchService.setSearch($scope.searchterm);
+			FilterbarService.setCategory('');
+			FilterbarService.setBrand('');
+			MenuService.setSubcategory('');
+
+			$state.go('search', {q: $scope.searchterm}, { reload: true });
 			$scope.searchterm = null;
 		}else{
+
 
 		}
 	};

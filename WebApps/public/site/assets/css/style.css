@@ -89,8 +89,26 @@
 	width: 49px;
 }
 
+
+.filter-menu .badge{
+	margin: 5px 0;
+}
+
 .filter-check{
-	padding-left: 35px;
+	padding-left: 20px;
+	max-height: 250px;
+	overflow-y: auto;
+	margin:5px 0;
+}
+
+.filter-check::-webkit-scrollbar {
+	width:10px; // manage scrollbar width here
+}
+.filter-check::-webkit-scrollbar * {
+	background:transparent; // manage scrollbar background color here
+}
+.filter-check::-webkit-scrollbar-thumb {
+	background:rgba(150,150,150,0.1) !important; // manage scrollbar thumb background color here
 }
 
 .search-page-select{
@@ -435,7 +453,7 @@
 }
 
 .nav-menu{
-	margin-top: 50px;
+	margin-top: 48px;
 }
 
 .nav-menu .navbar{
@@ -443,4 +461,26 @@
 	background-image: none;
 	box-shadow: none;
 	border-radius: 0;
+}
+
+.menu-table{
+	max-height: 100px;
+	min-width: 200px;
+	display: table;
+}
+
+.menu-table .cell{
+	display: table-cell;
+	list-style: none;
+	min-width: 160px;
+	padding: 5px 10px;
+	margin: 2px 0 0;
+}
+
+.menu-table .cell li{
+	padding: 5px 10px;
+}
+
+.menu-table .cell li a:hover{
+	text-decoration: none;
 }

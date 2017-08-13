@@ -1,21 +1,41 @@
 <div class="nav-menu">
-    <div class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
         <div class="container">
+
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menubar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="collapse navbar-collapse" id="js-navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#/">Home</a></li>
-                    <li><a ng-href="#/about">About</a></li>
-                    <li><a ng-href="#/">Contact</a></li>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+
+            <div id="menubar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar" data-ng-repeat="category in categories">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle pointer" data-ng-init="chunk=chunkArr(category.subcategories)" data-toggle="dropdown">{{category.name}}<b class="caret"></b></a>
+
+                        <ul data-ng-if="!changeDirection(chunk.count)" class="dropdown-menu">
+                            <div class="menu-table">
+                                <ul class="cell" data-ng-repeat="subs in chunk.array">
+                                    <li data-ng-repeat="sub in subs"><a data-ng-click="changeView(category.name,sub.name)" class="pointer">{{sub.name}}</a></li>
+                                </ul>
+                            </div>
+                        </ul>
+                        <ul data-ng-if="changeDirection(chunk.count)" class="dropdown-menu dropdown-menu-right">
+                            <div class="menu-table">
+                                <ul class="cell" data-ng-repeat="subs in chunk.array">
+                                    <li data-ng-repeat="sub in subs"><a data-ng-click="changeView(category.name,sub.name)" class="pointer">{{sub.name}}</a></li>
+                                </ul>
+                            </div>
+                        </ul>
+
+                    </li>
                 </ul>
             </div>
         </div>
-    </div>
+    </nav>
 </div>

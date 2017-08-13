@@ -14,7 +14,6 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $auth
 * Helper auth functions
 */
 
-
 var skipIfLoggedIn = function($q, $auth) {
 	var deferred = $q.defer();
 	if ($auth.isAuthenticated()) {
@@ -36,6 +35,22 @@ var loginRequired = function($q, $location, $auth, ModalService) {
 };
 
 
+var categoriesRequest = function(ProductFactory, MenuService){
+	return ProductFactory.categories()            
+	.then(function (response) {
+		var categories = response.data;
+		MenuService.clearCategoryItems();
+
+		angular.forEach(categories, function(item){
+			MenuService.addCategoryItem(item);
+		})
+
+	}, function (error) {
+		console.log('Unable to load subcategories data: ' + error);
+	});
+};
+
+
 var retailerRequest = function(ProductFactory, FilterbarService){
 	return 	ProductFactory.retailers()            
 	.then(function (response) {
@@ -54,16 +69,16 @@ var retailerRequest = function(ProductFactory, FilterbarService){
 	}, function (error) {
 		console.log('Unable to load retailer data: ' + error);
 	});
-}
+};
 
-var productRequest = function(ProductFactory){
-	return 	ProductFactory.products()            
+var productRequest = function($stateParams,ProductFactory){
+	return 	ProductFactory.products($stateParams)            
 	.then(function (response) {
 		return response.data;
 	}, function (error) {
 		console.log('Unable to load product data: ' + error);
 	});
-}
+};
 
 var profileRequest = function(ProfileFactory){
 	return ProfileFactory.getProfile()            
@@ -72,7 +87,7 @@ var profileRequest = function(ProfileFactory){
 	}, function (error) {
 		console.log('Unable to load profile data: ' + error);
 	});
-}
+};
 
 var homeState = {
 	name: 'home',
@@ -93,12 +108,24 @@ var errorState = {
 
 var searchState = {
 	name: 'search',
-	url: '/search?q=:term',
+	url: '/search/:menuCategory/:menuSubcategory?r&q&brand&category',
+	params: {
+		menuCategory: {
+			value: null,
+			squash: true
+		},
+		menuSubcategory: {
+			value: null,
+			squash: true
+		}
+	},
 	templateUrl: 'site/app/components/search/searchView.html',
 	controller: 'SearchController',
 	resolve: {
 		retailerRequest: retailerRequest,
+		categoriesRequest: categoriesRequest,
 		productRequest: productRequest,
+		categoriesRequest: categoriesRequest,
 	}
 }
 
@@ -126,6 +153,7 @@ $stateProvider.state(errorState);
 $stateProvider.state(searchState);
 $stateProvider.state(profileState);
 $stateProvider.state(cartState);
+
 
 });
 

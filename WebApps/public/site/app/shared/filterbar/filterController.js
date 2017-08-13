@@ -20,7 +20,7 @@ app.controller('FilterController', function ($scope, $location, $state, $http, $
 		if(!state){
 			FilterbarService.setCategory('');
 		}
-		$state.go('search', {}, { reload: true });
+		$state.go('search', {category: FilterbarService.getCategory().name}, { reload: true });
 	}
 
 	$scope.updateBrand = function(brand, position, entitie, state){
@@ -31,7 +31,7 @@ app.controller('FilterController', function ($scope, $location, $state, $http, $
 		if(!state){
 			FilterbarService.setBrand('');
 		}
-		$state.go('search', {}, { reload: true });
+		$state.go('search', {brand: FilterbarService.getBrand().name}, { reload: true });
 	}
 
 	$scope.retailerChanged = function(){

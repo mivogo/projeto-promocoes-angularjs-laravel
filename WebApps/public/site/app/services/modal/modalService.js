@@ -3,7 +3,7 @@
 */
 'use strict';
 
-app.service('ModalService', function ($uibModal, SearchService, ProductFactory) {
+app.service('ModalService', function ($uibModal, SearchService, ProductFactory, ProfileFactory, AuthService) {
 
   var service = this;
 
@@ -19,6 +19,18 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory) 
     }, function (error) {
       console.log('Unable to load product data: ' + error.data);
     });
+  }
+
+  var favoritesRequest = function(){
+    if(AuthService.isAuthenticated()){
+      return ProfileFactory.favoriteProducts()            
+      .then(function (response) {
+        return response.data;
+      }, function (error) {
+        console.log('Unable to load favorite produtcs data: ' + error.data);
+      });
+    }
+    return [];
   }
 
 
@@ -80,8 +92,11 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory) 
       controller: 'ProductController',
       resolve: {
         productRequest : productRequest,
+        favoritesRequest : favoritesRequest,
       }
     });
+
+    service.CloseModalForm();
 
     modalInstance = modal;
 
@@ -104,7 +119,9 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory) 
   }
 
   service.CloseModalForm = function(){
-    modalInstance.close();
+    if(modalInstance){
+      modalInstance.close();
+    }
   }
 
 });

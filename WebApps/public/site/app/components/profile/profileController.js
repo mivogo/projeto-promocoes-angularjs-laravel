@@ -8,6 +8,7 @@ app.controller('ProfileController', function ($scope, $location, $http, $rootSco
 
 	$scope.name = profileRequest.name;
 	$scope.email = profileRequest.email;
+	
 	if(profileRequest.location){
 		var zipcode = profileRequest.location.split("-");
 		$scope.zipone = zipcode[0];

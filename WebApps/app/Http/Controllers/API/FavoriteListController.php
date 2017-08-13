@@ -20,7 +20,7 @@ class FavoriteListController extends Controller
 	private $user;
 	private $jwtauth;
 
-	public function __construct(User $user,JWTAuth $jwtauth)
+	public function __construct(User $user, JWTAuth $jwtauth)
 	{
 		$this->user = $user;
 		$this->jwtauth = $jwtauth;

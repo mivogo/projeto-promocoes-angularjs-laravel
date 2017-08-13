@@ -71,7 +71,7 @@ var retailerRequest = function(ProductFactory, FilterbarService){
 	});
 };
 
-var productRequest = function($stateParams,ProductFactory){
+var productRequest = function($stateParams, ProductFactory){
 	return 	ProductFactory.products($stateParams)            
 	.then(function (response) {
 		return response.data;
@@ -125,7 +125,6 @@ var searchState = {
 		retailerRequest: retailerRequest,
 		categoriesRequest: categoriesRequest,
 		productRequest: productRequest,
-		categoriesRequest: categoriesRequest,
 	}
 }
 

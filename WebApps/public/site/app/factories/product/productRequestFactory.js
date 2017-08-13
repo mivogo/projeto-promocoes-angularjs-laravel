@@ -31,7 +31,7 @@ app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchSer
 	};
 
 	function buildRequest(param){
-		console.log(param);
+
 		var orderby = SearchService.selectedOrderOption.value;
 		var pageSize = SearchService.pageSize.value;
 		var search = SearchService.getSearch();
@@ -68,7 +68,6 @@ app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchSer
 			subcategory: subcategory
 		}
 
-		console.log(request);
 		return request;
 	}
 

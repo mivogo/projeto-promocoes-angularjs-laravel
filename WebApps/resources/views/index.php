@@ -60,6 +60,8 @@
 <script src="site/app/factories/profile/profileRequestFactory.js"></script>
 <script src="site/app/factories/auth/authRequestFactory.js"></script>
 <script src="site/app/factories/product/productRequestFactory.js"></script>
+<script src="site/app/factories/product/productFactory.js"></script>
+
 
 <body data-ng-app="promocoesWebApp">
 	<div header></div>

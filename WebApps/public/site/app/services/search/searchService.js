@@ -11,8 +11,8 @@ app.service('SearchService', function ($cookies) {
   service.search = '';
   
   service.pageSize = {};
-  service.pageSize.value = 10;
-  service.pageSize.values = [10,20,40];
+  service.pageSize.value = 8;
+  service.pageSize.values = [8,16,32,48];
   service.orderOptions = [
   { name: "Ordenar por Relevancia", value:"relevance"},
   { name: "Ordenar por Marca", value:"brand"}, 

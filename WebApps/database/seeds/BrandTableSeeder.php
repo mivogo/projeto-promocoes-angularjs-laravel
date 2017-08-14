@@ -12,34 +12,38 @@ class BrandTableSeeder extends Seeder
     public function run()
     {
         DB::table('brands')->insert(
-    		array([
-    			'name' => 'Coca Cola',
-    			'simple' => 'cocacola'
-    			],
-    			[
-    			'name' => 'Air Wick',
-    			'simple' => 'airwick'
-    			],
-    			[
-    			'name' => 'Peixe',
-    			'simple' => 'peixe'
-    			],
-    			[
-    			'name' => 'Bacalhau',
-    			'simple' => 'bacalhau'
-    			],
-    			[
-    			'name' => 'Continente',
-    			'simple' => 'continente'
-    			],
-    			[
-    			'name' => 'Jumbo',
-    			'simple' => 'jumbo'
-    			],
-    			[
-    			'name' => 'Intermarche',
-    			'simple' => 'intermarche'
-    			]
-    			));
+          array([
+             'name' => 'Coca Cola',
+             'simple' => 'cocacola'
+             ],
+             [
+             'name' => 'Air Wick',
+             'simple' => 'airwick'
+             ],
+             [             
+             'name' => 'Compal',
+             'simple' => 'compal'
+             ],
+             [             
+             'name' => 'Riberalves',
+             'simple' => 'riberalves'
+             ],
+             [             
+             'name' => 'Ramirez',
+             'simple' => 'ramirez'
+             ],
+             [
+             'name' => 'Continente',
+             'simple' => 'continente'
+             ],
+             [
+             'name' => 'Jumbo',
+             'simple' => 'jumbo'
+             ],
+             [
+             'name' => 'Intermarche',
+             'simple' => 'intermarche'
+             ]
+             ));
     }
 }

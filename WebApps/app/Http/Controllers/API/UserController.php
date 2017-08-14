@@ -31,6 +31,11 @@ class UserController extends Controller
 	public function details(){
 
 		$token = $this->jwtauth->getToken();
+
+		if(empty($token)){
+			return response()->json(["error"=>"Authentication token needed"], 401);
+		}
+
 		$user = $this->jwtauth->toUser($token);
 
 		$profile = $user->profile;
@@ -49,6 +54,11 @@ class UserController extends Controller
 		}
 
 		$token = $this->jwtauth->getToken();
+
+		if(empty($token)){
+			return response()->json(["error"=>"Authentication token needed"], 401);
+		}
+		
 		$user = $this->jwtauth->toUser($token);
 
 		User::unguard();
@@ -60,9 +70,6 @@ class UserController extends Controller
 		User::reguard();
 		Profile::reguard();
 
-		return response()->json([
-			$user,
-			(new ProfileTransformer)->transform($profile)
-			]);
+		return response()->json([$user,(new ProfileTransformer)->transform($profile)]);
 	}
 }

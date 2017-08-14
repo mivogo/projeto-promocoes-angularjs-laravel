@@ -35,6 +35,19 @@ app.factory('ProfileFactory', function($http, $auth, APIService) {
 		});
 	};
 
+	profileFactory.shoppingLists = function () {
+		return $http.get(urlBase + '/profile/shoppinglist', {
+			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
+		});
+	};
+
+	profileFactory.removeShoppingList = function (id) {
+		return $http.post(urlBase + '/profile/shoppinglist/delete/'+id, {
+			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
+		});
+	};
+
+
 
 	return profileFactory;
 });

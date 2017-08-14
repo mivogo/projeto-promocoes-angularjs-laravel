@@ -1,0 +1,40 @@
+<div class="container">
+	<div class="panel panel-default profile-card col-sm-12 col-lg-12">
+		<div class="row">
+			<div class="panel-heading profile-title col-sm-12 col-lg-12 col-sm-12 col-xs-12">
+				<h3><i class="fa fa-user fa-fw"></i>Listas Guardadas</h3>
+			</div>
+		</div>
+		<div class="panel-body profile-body col-sm-12 col-lg-12">
+			<div class="table-responsive col-lg-12" data-ng-show="numberLists() > 0">
+				<table data-ng-repeat="list in lists" class="table table-striped ngCart cart">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Nome</th>
+							<th>Descrição</th>
+							<th>Produtos</th>
+							<th>Quantidade</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><span data-ng-click="removeList(list.id)" class="glyphicon glyphicon-remove pointer noselect"></span></td>
+
+							<td>{{ list.name }}</td>
+							<td>{{ list.description }}</td>
+							<td>
+								<span class="cart-item-quantity noselect">  {{ list.total_products | number }}  </span>
+								
+							</td>
+							<td>{{ list.total_quantity | number }}</td>
+							<td>{{ list.total_price | currency }}</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div>

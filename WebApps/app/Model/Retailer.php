@@ -17,6 +17,11 @@ class Retailer extends Model
 		return $this->hasMany('App\Model\ProductRetailer');
 	}
 
+	public function shoppinglist()
+	{
+		return $this->hasMany('App\Model\ShoppingList');
+	}
+
 	public function store()
 	{
 		return $this->hasMany('App\Model\Store');

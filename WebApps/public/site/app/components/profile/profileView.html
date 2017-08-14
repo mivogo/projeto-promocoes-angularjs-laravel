@@ -28,7 +28,7 @@
             <label for="current_pass">Password</label>
           </div>
           <div class="profile-password">
-          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 profile-password-padding">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 profile-password-padding">
               <input type="password" name="current_pass" id="current_pass" class="form-control" placeholder="************" required="required" value="" disabled="disabled">
             </div>
             <button class="btn profile-password col-lg-6 col-md-6 col-sm-12 col-xs-12" data-ng-click="changePassword()">Alterar Password</button>
@@ -50,6 +50,9 @@
   <div>
     <div class="panel panel-default col-lg-4 col-md-4 col-sm-12 col-xs-12 side pull-left">
       Left (Side)
+      <div class="row text-center">
+        <button class="btn" data-ng-click="viewFavoriteProducts()">Favoritos</button>
+      </div>
     </div>
 
     <div class="panel panel-default col-lg-4 col-md-4 col-sm-12 col-xs-12 main">
@@ -58,6 +61,9 @@
 
     <div class="panel panel-default col-lg-4 col-md-4 col-sm-12 col-xs-12 side pull-right">
       Right (Side)
+      <div class="row text-center">
+      <button class="btn" data-ng-click="viewShoppingLists()">Listas</button>
+      </div>
     </div>
   </div>
 </div>

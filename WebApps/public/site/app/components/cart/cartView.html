@@ -1,9 +1,9 @@
 <div class="container">
-	<div class="alert alert-warning" role="alert" ng-show="ngCart.getTotalItems() === 0">
+	<div class="alert alert-warning" role="alert" data-ng-show="ngCart.getTotalItems() === 0">
 		Your cart is empty
 	</div>
 
-	<div class="table-responsive col-lg-12" ng-show="ngCart.getTotalItems() > 0">
+	<div class="table-responsive col-lg-12" data-ng-show="ngCart.getTotalItems() > 0">
 
 		<table class="table table-striped ngCart cart">
 			<thead>
@@ -26,7 +26,7 @@
 			</tfoot>
 			<tbody>
 				<tr ng-repeat="item in ngCart.getCart().items track by $index">
-					<td><span ng-click="ngCart.removeItemById(item.getId())" class="glyphicon glyphicon-remove"></span></td>
+					<td><span ng-click="ngCart.removeItemById(item.getId())" class="glyphicon glyphicon-remove pointer noselect"></span></td>
 
 					<td>{{ item.getName() }}</td>
 					<td><span class="glyphicon glyphicon-minus pointer noselect" ng-class="{'disabled':item.getQuantity()==1}"

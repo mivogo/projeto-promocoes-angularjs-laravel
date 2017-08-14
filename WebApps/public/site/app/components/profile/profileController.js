@@ -46,4 +46,12 @@ app.controller('ProfileController', function ($scope, $location, $http, $rootSco
 		ModalService.changePasswordForm();
 	}
 
+	$scope.viewFavoriteProducts = function(){
+		$state.go('favoriteProducts');
+	}
+
+	$scope.viewShoppingLists = function(){
+		$state.go('shoppingLists');
+	}
+
 });

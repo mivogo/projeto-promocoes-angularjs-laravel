@@ -1,0 +1,50 @@
+<div class="container">
+	<div class="panel panel-default profile-card col-sm-12 col-lg-12">
+		<div class="row">
+			<div class="panel-heading profile-title col-sm-12 col-lg-12 col-sm-12 col-xs-12">
+				<h3><i class="fa fa-user fa-fw"></i>Produtos Favoritos</h3>
+			</div>
+		</div>
+		<div class="panel-body profile-body col-sm-12 col-lg-12">
+			<div class="product-table-wrap">
+				<div class="product-table">
+					<div class="row" data-ng-repeat="item in favorites">
+						<div class="product-wrapper">
+							<div class="product">
+								<div class="flip-container">
+									<div class="flipper">
+										<div class="front">
+											<img data-ng-src="{{item.image}}" alt="" class="img-responsive">
+										</div>
+									</div>
+								</div>
+								<div class="text">
+									<span class="brand">{{item.brand}}</span>
+									<h5><span>{{item.name}}</span></h5>
+								</div>
+								<div class="price-buttons">
+									<p class="price">{{item.price | currency}}</p>
+									<p class="buttons">
+									<a data-ng-click="removeFavorite(item.product_id)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-heart"></i></a>
+										<a data-ng-show="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
+										<div data-ng-show="cart.hasItem(item)" class="cart-update">
+											<div data-ng-show="cart.hasItem(item)" class="cart-update-wrap">
+												<span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item,-1)">-</span>
+												<span class="cart-info noselect">
+													<span class="cart-qty noselect">{{cart.itemQuantity(item)}}</span> 
+													<span class="noselect">|</span>
+													<span class="cart-price noselect">{{cart.itemPrice(item) | currency}}</span>
+												</span>
+												<span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item,1)">+</span>
+											</div>
+										</div>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

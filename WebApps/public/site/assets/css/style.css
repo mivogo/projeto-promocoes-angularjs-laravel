@@ -642,6 +642,11 @@
 	margin-top: 0;
 }
 
+.product-wrapper .text h5 span{
+	color: #000;
+	font-size: 0.95em;
+}
+
 .product-wrapper .text h5 a{
 	color: #000;
 	font-size: 0.95em;
@@ -724,4 +729,7 @@
 	display: table-cell;
 }
 
+.product-table .row{
+	display: table-row;
+}
 

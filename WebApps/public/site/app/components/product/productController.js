@@ -21,9 +21,9 @@ app.controller('ProductController', function ($scope, $state, CartService, Modal
 	angular.forEach(related, function(data, key){
 		var product = Product.build(data);
 
-		$scope.related.push({
+		$scope.related.push(
 			product
-		});
+		);
 
 		$scope.relatedCount +=1;
 	});
@@ -33,7 +33,6 @@ app.controller('ProductController', function ($scope, $state, CartService, Modal
 			favorites.push(data.id);
 		});
 	}
-	console.log(favorites);
 
 	$scope.addFavorite = function (id){
 		if(AuthService.isAuthenticated()){

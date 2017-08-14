@@ -19,8 +19,8 @@
 					<div class="price-buttons">
 						<p class="price">{{item.price | currency}}</p>
 						<p class="buttons">
-							<a data-ng-show="!isFavorite(item.product_id)" data-ng-click="addFavorite(item.product_id)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-heart-o"></i> </a>
-							<a data-ng-show="isFavorite(item.product_id)" data-ng-click="removeFavorite(item.product_id)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-heart"></i> </a>
+							<a data-ng-show="!isFavorite(item.product_id)" data-ng-click="addFavorite(item.product_id)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-heart-o"></i></a>
+							<a data-ng-show="isFavorite(item.product_id)" data-ng-click="removeFavorite(item.product_id)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-heart"></i></a>
 							<a data-ng-show="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
 							<div data-ng-show="cart.hasItem(item)" class="cart-update">
 								<div data-ng-show="cart.hasItem(item)" class="cart-update-wrap">
@@ -47,35 +47,35 @@
 		</div>
 		<div class="product-table-wrap">
 			<div class="product-table">
-				<div class="cell" data-ng-repeat="item in related | limitTo:pageSize.value">
+				<div class="cell" data-ng-repeat="item in related">
 					<div class="product-wrapper">
 						<div class="product">
 							<div class="flip-container">
 								<div class="flipper">
 									<div class="front">
-										<a data-ng-click="productDetails(item.product.product_id,item.product.id)" class="pointer">
-											<img data-ng-src="{{item.product.image}}" alt="" class="img-responsive">
+										<a data-ng-click="productDetails(item.product_id,item.id)" class="pointer">
+											<img data-ng-src="{{item.image}}" alt="" class="img-responsive">
 										</a>
 									</div>
 								</div>
 							</div>
 							<div class="text">
-								<span class="brand">{{item.product.brand}}</span>
-								<h5><a data-ng-click="productDetails(item.product.product_id,item.product.id)" class="pointer">{{item.product.name}}</a></h5>
+								<span class="brand">{{item.brand}}</span>
+								<h5><a data-ng-click="productDetails(item.product_id,item.id)" class="pointer">{{item.name}}</a></h5>
 							</div>
 							<div class="price-buttons">
-								<p class="price">{{item.product.price | currency}}</p>
+								<p class="price">{{item.price | currency}}</p>
 								<p class="buttons">
-									<a data-ng-show="!cart.hasItem(item.product)" data-ng-click="cart.addItem(item.product,5)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
-									<div data-ng-show="cart.hasItem(item.product)" class="cart-update">
-										<div data-ng-show="cart.hasItem(item.product)" class="cart-update-wrap">
-											<span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item.product,-1)">-</span>
+									<a data-ng-show="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
+									<div data-ng-show="cart.hasItem(item)" class="cart-update">
+										<div data-ng-show="cart.hasItem(item)" class="cart-update-wrap">
+											<span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item,-1)">-</span>
 											<span class="cart-info noselect">
-												<span class="cart-qty noselect">{{cart.itemQuantity(item.product)}}</span> 
+												<span class="cart-qty noselect">{{cart.itemQuantity(item)}}</span> 
 												<span class="noselect">|</span>
-												<span class="cart-price noselect">{{cart.itemPrice(item.product) | currency}}</span>
+												<span class="cart-price noselect">{{cart.itemPrice(item) | currency}}</span>
 											</span>
-											<span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item.product,1)">+</span>
+											<span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item,1)">+</span>
 										</div>
 									</div>
 								</p>

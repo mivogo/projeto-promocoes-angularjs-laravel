@@ -13,10 +13,9 @@ class FavoriteListTransformer extends Transformer{
 		$prices = [];
 
 		foreach ($productretailer as $pr) {
-			if($pr->retailer->id != $info->retailer->id){
-				array_push($prices, ['price' => $pr->price, 'hasDiscount'=> $pr->hasDiscount,'retailer' => $pr->retailer->name ]);
-			}
+				array_push($prices, ['price' => $pr->price, 'base_price' => $pr->base_price,'hasDiscount'=> $pr->hasDiscount,'retailer' => $pr->retailer->name, 'retailer_id' => $pr->retailer->id]);
 		}
+		
 		return [
 		'id' => $info->id,
 		'product_id' => $product->id,

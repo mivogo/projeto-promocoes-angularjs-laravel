@@ -1,0 +1,29 @@
+<div class="container">
+	<div class="panel panel-default profile-card col-sm-12 col-lg-12">
+		<div class="panel-body profile-body col-sm-12 col-lg-12">
+			<div class="table-responsive col-lg-12">
+				<table  class="table table-striped ngCart cart">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Marca</th>
+							<th>Quantidade</th>
+							<th>Preço</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="product in products">
+							<td>{{ product.name }}</td>
+							<td>{{ product.brand }}</td>
+							<td>{{ product.quantity | number }}</td>
+							<td>{{ product.price | currency }}</td>
+							<td>{{ product.price * product.quantity | currency }}</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div>

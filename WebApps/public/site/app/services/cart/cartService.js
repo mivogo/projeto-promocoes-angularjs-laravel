@@ -7,6 +7,9 @@ app.service('CartService', ['ngCart', function (ngCart) {
 
   var service = this;
 
+  service.listName = localStorage.getItem('listName');
+  service.listDescription = localStorage.getItem('listDescription');
+  
   ngCart.setTaxRate(0);
   ngCart.setShipping(0);  
 
@@ -16,6 +19,10 @@ app.service('CartService', ['ngCart', function (ngCart) {
 
   service.totalCost = function(){
     return ngCart.totalCost();
+  }
+
+  service.getItems = function(){
+    return ngCart.getItems();
   }
 
   service.addItem = function(item){
@@ -75,5 +82,30 @@ app.service('CartService', ['ngCart', function (ngCart) {
     return total;
   }
 
+  service.replaceCartWithList = function(list){
+    ngCart.empty();
+
+    angular.forEach(list, function(value, key) {
+      ngCart.addItem(value.product_id,value.name,value.price,value.quantity,value);
+    });
+  }
+
+  service.setListName = function(name){
+    service.listName = name;
+    localStorage.setItem('listName', name);
+  }
+
+  service.getListName = function(){
+    return service.listName;
+  }
+
+  service.setListDescription = function(description){
+    service.listDescription = description;
+    localStorage.setItem('listDescription', description);
+  }
+
+  service.getListDescription = function(){
+    return service.listDescription;
+  }
 
 }]);

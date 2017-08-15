@@ -53,11 +53,12 @@ class ShoppingListController extends Controller
 		$list = $profile->shoppinglist()->where("name", $request->name)->first();
 		if(empty($list)){
 			$list = ShoppingList::create([
-				'name' => $request->get('name'),
-				'description' => $request->get('description'),
-				'retailer_id' => $request->get('retailer_id'),
+				'name' => $request->get('name')
 				]);
 		}
+
+		$list->description = $request->get('description');
+		$list->retailer_id = $request->get('retailer_id');
 
 		$list->product()->detach();
 		$list->save();
@@ -72,7 +73,7 @@ class ShoppingListController extends Controller
 	}
 
 
-	public function nameNotTaken(Request $request){
+	public function nameTaken(Request $request){
 
 		$validator = Validator::make($request->all(), [
 			'name' => 'required',
@@ -94,10 +95,10 @@ class ShoppingListController extends Controller
 		$list = $profile->shoppinglist()->where("name", $request->name)->first();
 
 		if($list){
-			return response()->json(["error"=>"A list with that name already exists"], 400);
+			return response()->json(["data"=>"There is no list with that name"],200);
 		}
+		return response()->json(["error"=>"A list with that name already exists"], 400);
 
-		return response()->json(["data"=>"There is no list with that name"],200);
 	}
 
 	public function showLists(){

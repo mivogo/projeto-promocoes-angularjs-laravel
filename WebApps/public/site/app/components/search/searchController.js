@@ -46,9 +46,7 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 		var item = products.data[i];
 		var product = Product.build(item);
 
-		$scope.data.push(
-			product
-			);
+		$scope.data.push(product);
 
 	}
 

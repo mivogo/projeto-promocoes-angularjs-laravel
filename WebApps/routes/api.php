@@ -43,7 +43,7 @@ Route::group(['middleware' => 'cors'], function () {
 	//SHOPPING LISTS
 	Route::post('/profile/shoppinglist', 'API\ShoppingListController@addList');
 	Route::get('/profile/shoppinglist', 'API\ShoppingListController@showLists');
-	Route::post('/profile/shoppinglist/nameNotTaken', 'API\ShoppingListController@nameNotTaken');
+	Route::post('/profile/shoppinglist/nameTaken', 'API\ShoppingListController@nameTaken');
 	Route::post('/profile/shoppinglist/{id}', 'API\ShoppingListController@showListProducts');
 	Route::post('/profile/shoppinglist/delete/{id}', 'API\ShoppingListController@deleteList');
 

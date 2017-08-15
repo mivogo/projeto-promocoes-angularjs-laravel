@@ -47,6 +47,24 @@ app.factory('ProfileFactory', function($http, $auth, APIService) {
 		});
 	};
 
+	profileFactory.shoppingListProducts = function (id) {
+		return $http.post(urlBase + '/profile/shoppinglist/'+id, {
+			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
+		});
+	};
+
+	profileFactory.shoppinglistNameTaken = function(name) {
+		return $http.post(urlBase + '/profile/shoppinglist/nameTaken', name, {
+			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
+		});
+	};
+
+		profileFactory.saveShoppingList = function(list) {
+		return $http.post(urlBase + '/profile/shoppinglist', list, {
+			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
+		});
+	};
+
 
 
 	return profileFactory;

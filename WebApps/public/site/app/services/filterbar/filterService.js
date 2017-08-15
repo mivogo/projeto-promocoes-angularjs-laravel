@@ -14,7 +14,6 @@ app.service('FilterbarService', function ($cookies) {
   service.category = '';
   service.retailer = $cookies.getObject('myRetailer');
 
-
   service.clearRetailerListItems = function() {
     service.retailerListItems = [];
   }
@@ -85,6 +84,18 @@ app.service('FilterbarService', function ($cookies) {
         return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); 
       });
     }
+  }
+
+  service.setRetailerWithID = function (id){
+    var retailer;
+
+    angular.forEach(service.retailerListItems, function(value){
+      if(value.id == id){
+        retailer = value;
+      }
+    });
+
+    service.setRetailer(retailer);
   }
 
   service.setRetailer = function (retailer){

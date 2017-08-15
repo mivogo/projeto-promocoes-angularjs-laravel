@@ -13,8 +13,10 @@
 	<link rel="stylesheet" href="site/assets/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="site/assets/css/font-awesome.min.css">
 	<link rel="stylesheet" href="site/assets/css/style.css">
+	<link rel="stylesheet" href="site/assets/css/modal-style.css">
 	<link rel="stylesheet" href="site/assets/css/angular-toastr.min.css">
 	<link rel="stylesheet" href="site/assets/css/select.min.css">
+	<link rel="stylesheet" href="site/assets/css/angular-material.min.css">
 </head>
 
 <script src="site/assets/libs/jquery.min.js"></script>
@@ -29,6 +31,10 @@
 <script src="site/assets/libs/angular-cookies.min.js"></script>
 <script src="site/assets/libs/ngCart.min.js"></script>
 <script src="site/assets/libs/angular-locale_pt-pt.js"></script>
+
+<script src="site/assets/libs/angular-material.min.js"></script>
+<script src="site/assets/libs/angular-aria.min.js"></script>
+<script src="site/assets/libs/angular-animate.min.js"></script>
 
 <script src="site/app/app.module.js"></script>
 <script src="site/app/app.route.js"></script>
@@ -45,6 +51,8 @@
 <script src="site/app/components/cart/cartController.js"></script>
 <script src="site/app/components/favoriteProducts/favoriteProductsController.js"></script>
 <script src="site/app/components/shoppingLists/shoppingListsController.js"></script>
+<script src="site/app/components/shoppingListProducts/shoppingListProductsController.js"></script>
+<script src="site/app/components/dialogSaveShoppingList/dialogSaveShoppingListController.js"></script>
 
 <script src="site/app/shared/header/headerController.js"></script>
 <script src="site/app/shared/footer/footerController.js"></script>
@@ -63,7 +71,6 @@
 <script src="site/app/factories/auth/authRequestFactory.js"></script>
 <script src="site/app/factories/product/productRequestFactory.js"></script>
 <script src="site/app/factories/product/productFactory.js"></script>
-
 
 <body data-ng-app="promocoesWebApp">
 	<div header></div>

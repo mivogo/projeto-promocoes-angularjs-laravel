@@ -7,7 +7,9 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory, 
 
   var service = this;
 
-  var modalInstance;
+  service.shoppingListId = '';
+
+  var modalInstance = null;
 
   var productRequest = function(){
     var pid = SearchService.productid;
@@ -28,6 +30,18 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory, 
         return response.data;
       }, function (error) {
         console.log('Unable to load favorite produtcs data: ' + error.data);
+      });
+    }
+    return [];
+  }
+
+  var shoppingListProductsRequest = function(){
+    if(AuthService.isAuthenticated()){
+      return ProfileFactory.shoppingListProducts(service.shoppingListId)            
+      .then(function (response) {
+        return response.data;
+      }, function (error) {
+        console.log('Unable to load shopping list products data: ' + error.data);
       });
     }
     return [];
@@ -90,10 +104,54 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory, 
       allowAnonymous: true,
       templateUrl: 'site/app/components/product/productView.html',
       controller: 'ProductController',
+      windowClass: 'modal-favoriteproduct',
       resolve: {
         productRequest : productRequest,
         favoritesRequest : favoritesRequest,
       }
+    });
+
+    service.CloseModalForm();
+
+    modalInstance = modal;
+
+    modal.result.then(function () {
+          // Redirect
+        }, function () {
+          service.CloseModalForm();
+        });
+
+  };
+
+  service.shoppingListForm = function(){
+    var modal = $uibModal.open({
+      allowAnonymous: false,
+      templateUrl: 'site/app/components/shoppingListProducts/shoppingListProductsView.html',
+      controller: 'ShoppingListProductsController',
+      windowClass: 'modal-shoppinglist',
+      resolve: {
+        shoppingListProductsRequest: shoppingListProductsRequest,
+      }
+    });
+
+    service.CloseModalForm();
+
+    modalInstance = modal;
+
+    modal.result.then(function () {
+          // Redirect
+        }, function () {
+          service.CloseModalForm();
+        });
+
+  };
+
+    service.saveShoppingListForm = function(){
+    var modal = $uibModal.open({
+      allowAnonymous: false,
+      templateUrl: 'site/app/components/dialogSaveShoppingList/dialogSaveShoppingListView.html',
+      controller: 'DialogSaveShoppingListController',
+      windowClass: 'modal-saveshoppinglist'
     });
 
     service.CloseModalForm();
@@ -122,6 +180,10 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory, 
     if(modalInstance){
       modalInstance.close();
     }
+  }
+
+  service.setShoppingListId = function(id){
+    service.shoppingListId = id;
   }
 
 });

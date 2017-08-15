@@ -1,0 +1,19 @@
+<div class="col-sm-8 col-sm-offset-8">
+	<div class="form shoppinglist-form">
+		<h3>Guardar Lista de Produtos</h3>
+		<p class="message">Guarde a lista de produtos no seu perfil para aceder quando quiser.</p>
+		<form name="shoppingListForm" novalidate>
+			<div class="form-group">
+				<input type="text" class="form-control" name="name" placeholder="Nome" data-ng-model="name" required>
+				<span style="color:red" data-ng-show="shoppingListForm.name.$dirty && shoppingListForm.name.$invalid">
+					<span data-ng-show="shoppingListForm.name.$error.required">Introduza o nome da lista.</span>
+				</span>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" name="description" placeholder="Descrição" data-ng-model="description">
+			</div>
+			<button data-ng-disabled="shoppingListForm.name.$dirty && shoppingListForm.name.$invalid || shoppingListForm.name.$pristine && !name" class="btn btn-primary btn-modal" data-ng-click="saveList($event)">Guardar</button>
+			<button class="btn btn-primary btn-modal" data-ng-click="cancel()">Cancelar</button>
+		</form>
+	</div>
+</div>

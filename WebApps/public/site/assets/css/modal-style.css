@@ -1,0 +1,41 @@
+.modal-header {
+    padding: 15px 15px 0 15px;
+    border-bottom: none;
+}
+
+.modal-body {
+	position: relative;
+	padding: 0 15px 15px 15px;
+}
+
+.modal-body .message {
+    margin: 10px 0 5px;
+    color: #5d5d5d;
+    font-size: 14px;
+}
+
+
+@media (min-width: 768px){
+
+	.modal-shoppinglist .modal-dialog {
+		width: 750px;
+	}
+
+}
+
+@media (min-width: 992px){
+
+	.modal-shoppinglist .modal-dialog {
+		width: 978px;
+	}
+
+}
+
+@media (min-width: 1200px){
+	.modal-shoppinglist .modal-dialog {
+		width: 1170px;
+	}
+}
+
+
+

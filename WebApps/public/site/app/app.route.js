@@ -107,6 +107,15 @@ var shoppingListsRequest = function(ProfileFactory){
 	});
 }
 
+var shoppingListsRequest = function(ProfileFactory){
+	return ProfileFactory.shoppingLists()            
+	.then(function (response) {
+		return response.data;
+	}, function (error) {
+		console.log('Unable to load shopping lists data: ' + error.data);
+	});
+}
+
 var homeState = {
 	name: 'home',
 	url: '/',
@@ -181,6 +190,7 @@ var shoppingListState = {
 	templateUrl: 'site/app/components/shoppingLists/shoppingListsView.html',
 	controller: 'ShoppingListsController',
 	resolve: {
+		retailerRequest: retailerRequest,
 		loginRequired: loginRequired,
 		shoppingListsRequest: shoppingListsRequest,
 	}

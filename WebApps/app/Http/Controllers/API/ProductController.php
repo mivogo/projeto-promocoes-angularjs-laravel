@@ -221,8 +221,8 @@ class ProductController extends Controller
 		$transformedProduct = (new ProductTransformer)->transformWithRetailerWithPrices($product,$productRetailer,$product->productretailer);
 
 		return response()->json([
-			'Product' => $transformedProduct,
-			'Related' => $transformedProducts
+			'product' => $transformedProduct,
+			'related' => $transformedProducts
 			]);
 	}
 

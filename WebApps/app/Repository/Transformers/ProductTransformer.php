@@ -31,11 +31,9 @@ class ProductTransformer extends Transformer{
 
 	public function transformArray($products){
 		$response = array();
-		$inc = 0;
 
 		foreach($products AS $product){
-			$response[$inc] = $this->transform($product);
-			$inc++;
+			array_push($reponse,$this->transform($product));
 		}
 
 		return $response;
@@ -70,12 +68,10 @@ class ProductTransformer extends Transformer{
 
 	public function transformArrayWithRetailer($productRetailers){
 		$response = array();
-		$inc = 0;
 
 		foreach($productRetailers AS $productRetailer){
 			$product = $productRetailer->product;
-			$response[$inc] = $this->transformWithRetailer($product,$productRetailer);
-			$inc++;
+			array_push($response,$this->transformWithRetailer($product,$productRetailer));
 		}
 
 		return $response;
@@ -89,9 +85,7 @@ class ProductTransformer extends Transformer{
 
 		$prices = [];
 		foreach ($productretailers as $pr) {
-			if($pr->retailer->id != $info->retailer->id){
-				array_push($prices, ['price' => $pr->price, 'hasDiscount'=> $pr->hasDiscount,'retailer' => $pr->retailer->name ]);
-			}
+				array_push($prices, ['price' => $pr->price, 'base_price' => $pr->base_price, 'hasDiscount'=> $pr->hasDiscount,'retailer' => $pr->retailer->name,'retailer_id' => $pr->retailer->id]);
 		}
 		return [
 		'id' => $info->id,

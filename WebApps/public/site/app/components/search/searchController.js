@@ -3,7 +3,7 @@
 */
 'use strict';
 
-app.controller('SearchController', function ($scope, $location, $http, $window, $rootScope, $state, $filter, $stateParams, productRequest, FilterbarService, SearchService, ModalService, CartService, MenuService) {
+app.controller('SearchController', function ($scope, $location, $http, $window, $rootScope, $state, $filter, $stateParams, productRequest, FilterbarService, SearchService, ModalService, CartService, MenuService, Product) {
 	console.log("Search Controller reporting for duty.");
 
 	$scope.cart = CartService;
@@ -44,23 +44,11 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 
 	for (var i=0; i<(products.to-products.from)+1; i++) {
 		var item = products.data[i];
-		$scope.data.push({
-			id: item.id,
-			product_id: item.product_id,
-			name: item.name,
-			price: item.price,
-			price_weight: item.price_weight,
-			price_weight_type: item.type_weight,
-			weight: item.weight,
-			weight_type: item.weight_type,
-			hasDiscount: item.hasDiscount,
-			base_price: item.base_price,
-			brand: item.brand,
-			subcategory: item.subcategory,
-			category: item.category,
-			image: item.image,
-			link: item.link
-		});
+		var product = Product.build(item);
+
+		$scope.data.push(
+			product
+			);
 
 	}
 

@@ -20,7 +20,7 @@ class FavoriteListController extends Controller
 	private $user;
 	private $jwtauth;
 
-	public function __construct(User $user,JWTAuth $jwtauth)
+	public function __construct(User $user, JWTAuth $jwtauth)
 	{
 		$this->user = $user;
 		$this->jwtauth = $jwtauth;
@@ -31,6 +31,11 @@ class FavoriteListController extends Controller
 	public function addFavorite($id){
 
 		$token = $this->jwtauth->getToken();
+
+		if(empty($token)){
+			return response()->json(["error"=>"Authentication token needed"], 401);
+		}
+
 		$user = $this->jwtauth->toUser($token);
 
 		$profile = $user->profile;
@@ -54,6 +59,11 @@ class FavoriteListController extends Controller
 	public function showFavorites(){
 
 		$token = $this->jwtauth->getToken();
+
+		if(empty($token)){
+			return response()->json(["error"=>"Authentication token needed"], 401);
+		}
+
 		$user = $this->jwtauth->toUser($token);
 
 		$profile = $user->profile;
@@ -69,7 +79,13 @@ class FavoriteListController extends Controller
 	}
 
 	public function deleteFavorite($id){
+
 		$token = $this->jwtauth->getToken();
+
+		if(empty($token)){
+			return response()->json(["error"=>"Authentication token needed"], 401);
+		}
+
 		$user = $this->jwtauth->toUser($token);
 
 		$profile = $user->profile;

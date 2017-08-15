@@ -37,5 +37,5 @@ app.service('MenuService', function () {
   service.getSubcategory = function(){
     return service.subcategory;
   }
-
+  
 });

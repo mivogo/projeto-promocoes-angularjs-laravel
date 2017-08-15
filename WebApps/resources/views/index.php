@@ -43,6 +43,8 @@
 <script src="site/app/components/password/passwordController.js"></script>
 <script src="site/app/components/product/productController.js"></script>
 <script src="site/app/components/cart/cartController.js"></script>
+<script src="site/app/components/favoriteProducts/favoriteProductsController.js"></script>
+<script src="site/app/components/shoppingLists/shoppingListsController.js"></script>
 
 <script src="site/app/shared/header/headerController.js"></script>
 <script src="site/app/shared/footer/footerController.js"></script>
@@ -60,6 +62,8 @@
 <script src="site/app/factories/profile/profileRequestFactory.js"></script>
 <script src="site/app/factories/auth/authRequestFactory.js"></script>
 <script src="site/app/factories/product/productRequestFactory.js"></script>
+<script src="site/app/factories/product/productFactory.js"></script>
+
 
 <body data-ng-app="promocoesWebApp">
 	<div header></div>

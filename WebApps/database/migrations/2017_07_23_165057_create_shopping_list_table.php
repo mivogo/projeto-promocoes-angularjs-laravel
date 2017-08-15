@@ -16,8 +16,12 @@ class CreateShoppingListTable extends Migration
         Schema::create('shopping_lists', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
+
+            $table->integer('retailer_id')->unsigned()->nullable();
+            $table->foreign('retailer_id')
+            ->references('id')->on('retailers')->onDelete('cascade');
 
             $table->integer('profile_id')->unsigned()->nullable();
             $table->foreign('profile_id')

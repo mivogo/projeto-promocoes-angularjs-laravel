@@ -14,11 +14,10 @@ class RetailerTransformer extends Transformer{
 
 	public function transformArray($retailers){
 		$response = array();
-		$inc = 0;
 
 		foreach($retailers AS $retailer){
-			$response[$inc] = $this->transform($retailer);
-			$inc++;
+			array_push($response,$this->transform($retailer));
+
 		}
 
 		return $response;

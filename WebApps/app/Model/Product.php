@@ -10,8 +10,8 @@ class Product extends Model
 
     use Eloquence;
 
-	protected $casts = [
-    	'relatedNames' => 'array',
+    protected $casts = [
+    'relatedNames' => 'array',
     ];
     
     public function profile()
@@ -39,6 +39,12 @@ class Product extends Model
     {
     	return $this->belongsToMany('App\Model\Retailer')
     	->withTimestamps();
+    }
+
+    public function shoppinglist()
+    {
+        return $this->belongsToMany('App\Model\ShoppingList')
+        ->withTimestamps();
     }
 
     public function productretailer()

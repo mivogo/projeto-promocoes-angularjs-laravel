@@ -113,6 +113,11 @@ class AuthController extends Controller
 		}
 
 		$token = $this->jwtauth->getToken();
+
+		if(empty($token)){
+			return response()->json(["error"=>"Authentication token needed"], 401);
+		}
+
 		$user = $this->jwtauth->toUser($token);
 
 		User::unguard();

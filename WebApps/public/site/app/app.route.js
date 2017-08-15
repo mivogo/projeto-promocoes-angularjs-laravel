@@ -71,7 +71,7 @@ var retailerRequest = function(ProductFactory, FilterbarService){
 	});
 };
 
-var productRequest = function($stateParams,ProductFactory){
+var productRequest = function($stateParams, ProductFactory){
 	return 	ProductFactory.products($stateParams)            
 	.then(function (response) {
 		return response.data;
@@ -88,6 +88,24 @@ var profileRequest = function(ProfileFactory){
 		console.log('Unable to load profile data: ' + error);
 	});
 };
+
+var favoritesRequest = function(ProfileFactory){
+	return ProfileFactory.favoriteProducts()            
+	.then(function (response) {
+		return response.data;
+	}, function (error) {
+		console.log('Unable to load favorite products data: ' + error.data);
+	});
+}
+
+var shoppingListsRequest = function(ProfileFactory){
+	return ProfileFactory.shoppingLists()            
+	.then(function (response) {
+		return response.data;
+	}, function (error) {
+		console.log('Unable to load shopping lists data: ' + error.data);
+	});
+}
 
 var homeState = {
 	name: 'home',
@@ -125,7 +143,6 @@ var searchState = {
 		retailerRequest: retailerRequest,
 		categoriesRequest: categoriesRequest,
 		productRequest: productRequest,
-		categoriesRequest: categoriesRequest,
 	}
 }
 
@@ -147,13 +164,35 @@ var cartState = {
 	controller: 'CartController'
 }
 
+var favoriteProductState = {
+	name: 'favoriteProducts',
+	url: '/profile/favorite',
+	templateUrl: 'site/app/components/favoriteProducts/favoriteProductsView.html',
+	controller: 'FavoriteProductsController',
+	resolve: {
+		loginRequired: loginRequired,
+		favoritesRequest: favoritesRequest,
+	}
+}
+
+var shoppingListState = {
+	name: 'shoppingLists',
+	url: '/profile/lists',
+	templateUrl: 'site/app/components/shoppingLists/shoppingListsView.html',
+	controller: 'ShoppingListsController',
+	resolve: {
+		loginRequired: loginRequired,
+		shoppingListsRequest: shoppingListsRequest,
+	}
+}
 
 $stateProvider.state(homeState);
 $stateProvider.state(errorState);
 $stateProvider.state(searchState);
 $stateProvider.state(profileState);
 $stateProvider.state(cartState);
-
+$stateProvider.state(favoriteProductState);
+$stateProvider.state(shoppingListState);
 
 });
 

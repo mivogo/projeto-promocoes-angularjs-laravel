@@ -1,23 +1,41 @@
 //Import libraries for making a Component
 import React, { Component } from 'react';
-import { Text, View, Button, Image, Dimensions } from 'react-native';
+import { Text, View, Button, Image, Dimensions, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 //Make a Component
 const Header = (props) => {
     return (
       <View style={styles.viewStyle}>
-        <Button
-          onPress={() => props.navigation.navigate('DrawerOpen')}
-          title="Menu"
-          style={{ alignSelf: "flex-start", alignSelf: "center" }}
-        />
+
+        {/* Menu icon and click action */}
+        <TouchableOpacity onPress={() => props.navigation.navigate('DrawerOpen')}>
+          <MaterialIcons 
+          name="menu"
+          size={50}
+          style={{color: "Black"}}
+          />
+        </TouchableOpacity>
+
+        {/* Header Text */}
         <View style={{
           position: 'relative',
           flexDirection: 'row',
           justifyContent: 'center',
+          flex:1,
           alignItems: 'center'}}>
-        <Text style={styles.textStyle}>{props.headerText}</Text>
+          <Text style={styles.textStyle}>{props.headerText}</Text>
+        </View>
+
+        {/* Filter Menu */}
+        <View>
+          <TouchableOpacity onPress={() => this.props.modal = true}>
+          <MaterialIcons 
+          name="search"
+          size={50}
+          style={{color: "Black"}}
+          />
+        </TouchableOpacity>
         </View>
       </View>
     );

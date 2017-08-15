@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Dimensions } from 'react-native';
+import { ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import ProductDetail from './ProductDetail';
 
 class ProductList extends Component {
@@ -27,10 +27,7 @@ class ProductList extends Component {
   width = Dimensions.get('window').width;
   
   renderProducts() {
-    console.log("LOL");
-    console.log(this.state.products);
     const data = this.state.products.data;
-    console.log(data);
     if(this.state.products.length != 0){
     return data.map(product =>
       <ProductDetail
@@ -39,6 +36,9 @@ class ProductList extends Component {
       />
      );
     }
+     else{
+       return <ActivityIndicator size='large' style={{flex:1, alignSelf:'center', justifyContent:'center'}} />;
+     }
   }
 
   render() {

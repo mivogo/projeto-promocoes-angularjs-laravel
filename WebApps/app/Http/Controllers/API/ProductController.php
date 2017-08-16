@@ -7,6 +7,7 @@ use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\User;
+use App\Jobs\CreatePriceNotification;
 use App\Utils\SmithWatermanGotoh;
 use App\Model\Product;
 use App\Model\ProductRetailer;
@@ -22,6 +23,7 @@ use JWTAuthException;
 use Validator;
 use DateTime;
 use DB;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -59,6 +61,7 @@ class ProductController extends Controller
 
 		$arr = $request->get('Items');
 		foreach($arr as $item) {
+			$finalProductRetailer = null;
 
 			Product::unguard();
 			Brand::unguard();
@@ -72,9 +75,8 @@ class ProductController extends Controller
 			$productRetailer = ProductRetailer::with('product')->where('retailer_id',$retailer->id)->where('pid',$item['ID'])->first();
 
 			if(!empty($productRetailer)){
-
 				$inc++;
-				$this->updateProductRetailer($productRetailer,$item);
+				$finalProductRetailer = $this->updateProductRetailer($productRetailer,$item);
 
 			}else{
 
@@ -102,13 +104,20 @@ class ProductController extends Controller
 					$this->createNewProduct($retailer,$brand,$item);
 				}else{
 					$inc3++;
-					$this->addRetailerToProduct($retailer,$selectedProduct,$item);
+					$finalProductRetailer = $this->addRetailerToProduct($retailer,$selectedProduct,$item);
 				}
 			}
 
 			ProductRetailer::reguard();
 			Brand::reguard();
 			Product::reguard();
+
+			if(!empty($finalProductRetailer) && $finalProductRetailer->updated_at->toDateString() == Carbon::today()->toDateString() && $finalProductRetailer->base_price > $finalProductRetailer->price){
+				$percentage = $this->calculatePricePercentageDifference($finalProductRetailer);
+				if($percentage >= 0.25){
+					$this->dispatch((new CreatePriceNotification($finalProductRetailer,$percentage)));
+				}
+			}
 		}
 
 		$this->disableProducts($idArr,$retailer);
@@ -272,6 +281,8 @@ class ProductController extends Controller
 
 		$newProduct->push();
 		SubCategory::reguard();
+
+		return $newProductRetailer;
 	}
 	
 	private function addRetailerToProduct($retailer,$selectedProduct,$item){
@@ -286,6 +297,8 @@ class ProductController extends Controller
 		$retailer->productretailer()->save($newProductRetailer);
 
 		$selectedProduct->push();
+
+		return $newProductRetailer;
 	}
 
 	private function createNewProductRetailer($item){
@@ -347,7 +360,7 @@ class ProductController extends Controller
 				$productRetailer->save();
 			}
 
-			return;
+			return $productRetailer;
 		}
 
 		if($newPrice>$price){
@@ -372,6 +385,8 @@ class ProductController extends Controller
 		}
 
 		$productRetailer->save();
+
+		return $productRetailer;
 	}
 
 	private function getDaysFromDateDiff($productRetailer){
@@ -586,6 +601,11 @@ class ProductController extends Controller
 		})->toArray();
 
 		return $transformed;
+	}
+
+	private function calculatePricePercentageDifference($productRetailer){
+		$difference = $productRetailer->base_price - $productRetailer->price;
+		return $difference / $productRetailer->base_price;
 	}
 	
 }

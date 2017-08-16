@@ -19,7 +19,7 @@
                     <span class="badge">Marca</span> 
                     <div class="filter-check">
                         <table>             
-                            <tr data-ng-repeat="b in brands | unique:'brand'">
+                            <tr data-ng-repeat="b in brands">
                                 <td>
                                     <label class="checkbox"><input type="checkbox" data-ng-model="b.checked" data-ng-checked="b.checked" data-ng-click="updateBrand(b,$index,brands,b.checked)"/></label>
                                     <span>{{b.name}}</span>
@@ -32,7 +32,7 @@
                     <span class="badge">Categoria</span> 
                     <div class="filter-check">
                         <table>
-                            <tr ng-repeat="cat in categories | unique:'category'">
+                            <tr ng-repeat="cat in categories">
                                 <td>
                                     <label class="checkbox"> <input type="checkbox" data-ng-model="cat.checked" data-ng-checked="cat.checked" data-ng-click="updateCategory(cat,$index,categories,cat.checked)" /></label>
                                     <span>{{cat.name}}</span>

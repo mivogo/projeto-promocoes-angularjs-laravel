@@ -22,6 +22,13 @@ class Profile extends Model
 		return $this->hasMany('App\Model\ShoppingList');
 	}
 
+	public function notification()
+	{
+		return $this->belongsToMany('App\Model\Notification')
+    	->withPivot('read')
+		->withTimestamps();
+	}
+
 	public function rating()
 	{
 		return $this->hasMany('App\Model\Rating');

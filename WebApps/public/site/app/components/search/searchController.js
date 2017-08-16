@@ -34,20 +34,22 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	$scope.orderOptions = SearchService.orderOptions;
 	$scope.orderSelectedOption = SearchService.selectedOrderOption;
 
-	if(products.to == null){
-		products.to = 1;
-	}
+	if(products.data.length>0){
+		if(products.to == null){
+			products.to = 1;
+		}
 
-	if(products.from == null){
-		products.from = 1;
-	}
+		if(products.from == null){
+			products.from = 1;
+		}
 
-	for (var i=0; i<(products.to-products.from)+1; i++) {
-		var item = products.data[i];
-		var product = Product.build(item);
+		for (var i=0; i<(products.to-products.from)+1; i++) {
+			var item = products.data[i];
+			var product = Product.build(item);
 
-		$scope.data.push(product);
+			$scope.data.push(product);
 
+		}
 	}
 
 	if(categories.length > 0){

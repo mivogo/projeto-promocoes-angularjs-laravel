@@ -47,6 +47,10 @@ Route::group(['middleware' => 'cors'], function () {
 	Route::post('/profile/shoppinglist/{id}', 'API\ShoppingListController@showListProducts');
 	Route::post('/profile/shoppinglist/delete/{id}', 'API\ShoppingListController@deleteList');
 
+	//NOTIFICATIONS
+	Route::get('/profile/notification', 'API\NotificationController@showAll');
+	Route::post('/profile/notification/{id}', 'API\NotificationController@markAsRead');
+
 	//VARIED DATA
 	Route::get('/retailers', 'API\RetailerController@showAll');
 	Route::get('/categories', 'API\CategoryController@showAll');

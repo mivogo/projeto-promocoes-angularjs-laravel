@@ -12,8 +12,9 @@ class NotificationTransformer extends Transformer{
 		'retailer_name' => $notification->retailer_name,
 		'price' => $notification->price,
 		'base_price' => $notification->base_price,
-		'percentage' => $notification->percentage,
-		'read' => $notification->pivot->read
+		'percentage' => round($notification->percentage*100),
+		'read' => $notification->pivot->read,
+		'created' => $notification->created_at->toDateString()
 		];
 
 	}

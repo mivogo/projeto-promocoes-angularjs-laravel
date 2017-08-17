@@ -43,19 +43,26 @@ class CreatePriceNotification implements ShouldQueue
         $profiles = Profile::all();
         $pid = $this->productretailer->product_id;
 
-        $notification = Notification::create();
-        $notification->product_name = $this->productretailer->product->name;
-        $notification->brand_name = $this->productretailer->product->brand->name;
-        $notification->retailer_name = $this->productretailer->retailer->name;
-        $notification->price = $this->productretailer->price;
-        $notification->base_price = $this->productretailer->base_price;
-        $notification->percentage = $this->percentage;
-        $notification->save();
+        $created = null;
 
         foreach ($profiles as $profile) {
             $found = $profile->product()->where('id',$pid)->first();
             if(!empty($found)){
-                $profile->notification()->attach([$notification->id => ['read' => false]]);
+
+                if(is_null($created)){
+                    $notification = Notification::create();
+                    $notification->product_name = $this->productretailer->product->name;
+                    $notification->brand_name = $this->productretailer->product->brand->name;
+                    $notification->retailer_name = $this->productretailer->retailer->name;
+                    $notification->price = $this->productretailer->price;
+                    $notification->base_price = $this->productretailer->base_price;
+                    $notification->percentage = $this->percentage;
+                    $notification->save();
+
+                    $created = $notification;
+                }
+
+                $profile->notification()->attach([$created->id => ['read' => false]]);
             }
         }
 

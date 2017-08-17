@@ -1,7 +1,7 @@
 <div class="row">
     <div class="panel panel-default sidebar-menu">
         <div class="panel-body">
-            <ui-select data-ng-model="retailer.selected" theme="bootstrap" tagging="tagHandler" search-enabled="false" data-ng-change="retailerChanged()">
+            <ui-select data-ng-model="retailer.selected" tagging="tagHandler" data-ng-change="retailerChanged()">
                 <ui-select-match>
                     <img class="ui-select-img" data-ng-src="{{$select.selected.img}}"/>
                 </ui-select-match>

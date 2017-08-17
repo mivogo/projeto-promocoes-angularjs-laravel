@@ -733,3 +733,127 @@
 	display: table-row;
 }
 
+
+
+.notification-content .dropdown {
+	display:inline-block;
+	margin: 16px 2px 2px 2px;
+}
+
+.notification-content .dropdown .icon-select-active{
+	padding: 20px 10px;
+	color:#777;
+}
+
+.notification-content .dropdown .icon-select-disabled{
+	padding: 20px 10px;
+	color:#777;
+}
+
+.notification-content .fa-bell-o {
+	font-size:1.3em;
+}
+
+.notification-content .notifications {
+	min-width:420px; 
+}
+
+.notification-content .notifications-wrapper {
+	overflow:auto;
+	max-height:250px;
+}
+
+.notification-content .menu-title {
+	color:#ff7788;
+	font-size:1.5rem;
+	display:inline-block;
+}
+
+.notification-content .glyphicon-circle-arrow-right {
+	margin-left:10px;     
+}
+
+
+.notification-content .notification-heading, .notification-content .notification-footer  {
+	padding:2px 10px;
+}
+
+
+.notificiation-content .dropdown-menu.divider {
+	margin:5px 0;          
+}
+
+.notification-content .item-title {
+	font-size: 0.75em;
+	color: #777;
+}
+
+.notification-content .item-info {
+	font-size: 0.75em;
+}
+
+.notification-content .item-info .product{
+	font-weight: bold;
+	color: #777;
+}
+
+.notification-content .item-info .price{
+
+}
+
+.notification-content .item-info .base-price{
+	text-decoration: line-through;
+}
+
+.notification-content .notifications a.content {
+	text-decoration:none;
+	background:#ccc;
+
+}
+
+.notification-content .notification-item {
+	padding:10px;
+	margin:5px;
+	background:#ccc;
+	border-radius:4px;
+}
+
+.notification-content .icon-select-active .count{
+	position: absolute;
+	top: -5px;
+	right: 3px;
+	height: 15px;
+	width: 15px;
+	overflow: hidden;
+	background: #f00;
+	color: #fff;
+	text-align: center;
+	border-radius: 100%;
+	font-size: 10px;
+	font-weight: bold;
+	line-height: 15px;
+}
+
+.notification-content .icon-select-disabled .count{
+	position: absolute;
+	top: -5px;
+	right: 3px;
+	height: 15px;
+	width: 15px;
+	overflow: hidden;
+	background: #ddd;
+	color: #fff;
+	text-align: center;
+	border-radius: 100%;
+	font-size: 10px;
+	font-weight: bold;
+	line-height: 15px;
+}
+
+.notification-content .animated {
+	-webkit-animation-duration: 500ms;
+	animation-duration: 500ms;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+

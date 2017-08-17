@@ -50,6 +50,8 @@ Route::group(['middleware' => 'cors'], function () {
 	//NOTIFICATIONS
 	Route::get('/profile/notification', 'API\NotificationController@showAll');
 	Route::post('/profile/notification/{id}', 'API\NotificationController@markAsRead');
+	Route::get('/profile/notificationNotRead', 'API\NotificationController@showNotRead');
+	Route::post('/profile/notificationMarkAll', 'API\NotificationController@markAllAsRead');
 
 	//VARIED DATA
 	Route::get('/retailers', 'API\RetailerController@showAll');

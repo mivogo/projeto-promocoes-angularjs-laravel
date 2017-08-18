@@ -64,6 +64,8 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 
 	if($stateParams.category){
 		var category = $stateParams.category;
+
+		FilterbarService.clearCategoryListItems();
 		FilterbarService.addCategoryListItem({name: category, checked: true});
 		FilterbarService.setCategory({name: category, checked: true});
 	}
@@ -71,6 +73,8 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	if($stateParams.menuCategory){
 		var category = $stateParams.menuCategory;
 		category = category.replace(/-/g, ' ');
+
+		FilterbarService.clearCategoryListItems();
 		FilterbarService.addCategoryListItem({name: category, checked: true});
 		FilterbarService.setCategory({name: category, checked: true});
 	}
@@ -88,6 +92,9 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 
 	if($stateParams.brand){
 		var brand = $stateParams.brand;
+
+		
+		FilterbarService.clearBrandListItems();
 		FilterbarService.addBrandListItem({name: brand, checked: true});
 		FilterbarService.setBrand({name: brand, checked: true});
 	}

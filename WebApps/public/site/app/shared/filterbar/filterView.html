@@ -22,7 +22,7 @@
                             <tr data-ng-repeat="b in brands">
                                 <td>
                                     <label class="checkbox"><input type="checkbox" data-ng-model="b.checked" data-ng-checked="b.checked" data-ng-click="updateBrand(b,$index,brands,b.checked)"/></label>
-                                    <span>{{b.name}}</span>
+                                    <span class="capitalize">{{b.name}}</span>
                                 </td>
                             </tr>
                         </table>
@@ -35,7 +35,7 @@
                             <tr ng-repeat="cat in categories">
                                 <td>
                                     <label class="checkbox"> <input type="checkbox" data-ng-model="cat.checked" data-ng-checked="cat.checked" data-ng-click="updateCategory(cat,$index,categories,cat.checked)" /></label>
-                                    <span>{{cat.name}}</span>
+                                    <span class="capitalize">{{cat.name}}</span>
                                 </td>
                             </tr>
                         </table>

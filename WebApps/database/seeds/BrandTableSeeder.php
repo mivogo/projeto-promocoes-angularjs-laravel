@@ -43,6 +43,10 @@ class BrandTableSeeder extends Seeder
              [
              'name' => 'Intermarche',
              'simple' => 'intermarche'
+             ],
+             [
+             'name' => 'Sanytol',
+             'simple' => 'sanitol'
              ]
              ));
     }

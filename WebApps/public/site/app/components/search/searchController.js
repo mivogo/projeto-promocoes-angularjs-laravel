@@ -34,20 +34,22 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	$scope.orderOptions = SearchService.orderOptions;
 	$scope.orderSelectedOption = SearchService.selectedOrderOption;
 
-	if(products.to == null){
-		products.to = 1;
-	}
+	if(products.data.length>0){
+		if(products.to == null){
+			products.to = 1;
+		}
 
-	if(products.from == null){
-		products.from = 1;
-	}
+		if(products.from == null){
+			products.from = 1;
+		}
 
-	for (var i=0; i<(products.to-products.from)+1; i++) {
-		var item = products.data[i];
-		var product = Product.build(item);
+		for (var i=0; i<(products.to-products.from)+1; i++) {
+			var item = products.data[i];
+			var product = Product.build(item);
 
-		$scope.data.push(product);
+			$scope.data.push(product);
 
+		}
 	}
 
 	if(categories.length > 0){
@@ -62,6 +64,8 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 
 	if($stateParams.category){
 		var category = $stateParams.category;
+
+		FilterbarService.clearCategoryListItems();
 		FilterbarService.addCategoryListItem({name: category, checked: true});
 		FilterbarService.setCategory({name: category, checked: true});
 	}
@@ -69,6 +73,8 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	if($stateParams.menuCategory){
 		var category = $stateParams.menuCategory;
 		category = category.replace(/-/g, ' ');
+
+		FilterbarService.clearCategoryListItems();
 		FilterbarService.addCategoryListItem({name: category, checked: true});
 		FilterbarService.setCategory({name: category, checked: true});
 	}
@@ -86,6 +92,9 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 
 	if($stateParams.brand){
 		var brand = $stateParams.brand;
+
+		
+		FilterbarService.clearBrandListItems();
 		FilterbarService.addBrandListItem({name: brand, checked: true});
 		FilterbarService.setBrand({name: brand, checked: true});
 	}

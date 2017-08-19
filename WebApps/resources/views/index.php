@@ -58,6 +58,7 @@
 <script src="site/app/shared/footer/footerController.js"></script>
 <script src="site/app/shared/filterbar/filterController.js"></script>
 <script src="site/app/shared/menu/menuController.js"></script>
+<script src="site/app/shared/notification/notificationController.js"></script>
 
 <script src="site/app/services/filterbar/filterService.js"></script>
 <script src="site/app/services/auth/authService.js"></script>
@@ -66,6 +67,7 @@
 <script src="site/app/services/api/apiService.js"></script>
 <script src="site/app/services/cart/cartService.js"></script>
 <script src="site/app/services/menu/menuService.js"></script>
+<script src="site/app/services/notification/notificationService.js"></script>
 
 <script src="site/app/factories/profile/profileRequestFactory.js"></script>
 <script src="site/app/factories/auth/authRequestFactory.js"></script>

@@ -116,6 +116,17 @@ var shoppingListsRequest = function(ProfileFactory){
 	});
 }
 
+var notificationsRequest = function(ProfileFactory, AuthService, NotificationService){
+	if (AuthService.isAuthenticated()) {
+		return ProfileFactory.notificationsNotRead()            
+		.then(function (response) {
+			NotificationService.addNotificationNotReadList(response.data);
+		}, function (error) {
+			console.log('Unable to load notifications data: ' + error.data);
+		});
+	}
+}
+
 var homeState = {
 	name: 'home',
 	url: '/',
@@ -123,6 +134,7 @@ var homeState = {
 	controller: 'HomeController',
 	resolve: {
 		retailerRequest: retailerRequest,
+		notificationsRequest: notificationsRequest,
 	}
 }
 
@@ -150,6 +162,7 @@ var searchState = {
 	controller: 'SearchController',
 	resolve: {
 		retailerRequest: retailerRequest,
+		notificationsRequest: notificationsRequest,
 		categoriesRequest: categoriesRequest,
 		productRequest: productRequest,
 	}
@@ -163,6 +176,7 @@ var profileState = {
 	resolve: {
 		loginRequired: loginRequired,
 		profileRequest: profileRequest,
+		notificationsRequest: notificationsRequest,
 	}
 }
 
@@ -170,7 +184,10 @@ var cartState = {
 	name: 'cart',
 	url: '/cart',
 	templateUrl: 'site/app/components/cart/cartView.html',
-	controller: 'CartController'
+	controller: 'CartController',
+	resolve: {
+		notificationsRequest: notificationsRequest,
+	}
 }
 
 var favoriteProductState = {
@@ -181,6 +198,7 @@ var favoriteProductState = {
 	resolve: {
 		loginRequired: loginRequired,
 		favoritesRequest: favoritesRequest,
+		notificationsRequest: notificationsRequest,
 	}
 }
 
@@ -193,6 +211,7 @@ var shoppingListState = {
 		retailerRequest: retailerRequest,
 		loginRequired: loginRequired,
 		shoppingListsRequest: shoppingListsRequest,
+		notificationsRequest: notificationsRequest,
 	}
 }
 
@@ -205,4 +224,5 @@ $stateProvider.state(favoriteProductState);
 $stateProvider.state(shoppingListState);
 
 });
+
 

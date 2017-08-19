@@ -79,6 +79,7 @@ app.service('FilterbarService', function ($cookies) {
       if(service.category.name && item.name.toLowerCase() == service.category.name.toLowerCase()){
         item.checked = true;
       }
+
       service.categoryListItems.push(item);
       service.categoryListItems.sort(function (a, b) { 
         return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); 

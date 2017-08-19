@@ -21,7 +21,8 @@ app.directive("menu", function() {
     templateUrl: 'site/app/shared/menu/menuView.html',
     scope: true,
     transclude : false,
-    controller: 'MenuController'  };
+    controller: 'MenuController'  
+  };
 });
 
 app.directive("footer", function() {
@@ -41,6 +42,16 @@ app.directive("filterbar", function() {
     scope: false,
     replace: true,
     controller: 'FilterController'
+  };
+});
+
+app.directive("notification", function(){
+  return {
+    restrict: 'A',
+    templateUrl: 'site/app/shared/notification/notificationView.html',
+    scope: true,
+    replace: false,
+    controller: 'NotificationController'
   };
 });
 
@@ -68,5 +79,13 @@ app.directive('pwstr',['$parse', function ($parse) {
     },
   };
 }]);
+
+app.config(function(uiSelectConfig) {
+  uiSelectConfig.theme = 'bootstrap';
+  uiSelectConfig.resetSearchInput = true;
+  uiSelectConfig.skipFocusser = true;
+  uiSelectConfig.searchEnabled = false;
+});
+
 
 

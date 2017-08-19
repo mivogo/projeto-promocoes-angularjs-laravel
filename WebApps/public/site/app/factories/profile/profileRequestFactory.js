@@ -59,13 +59,35 @@ app.factory('ProfileFactory', function($http, $auth, APIService) {
 		});
 	};
 
-		profileFactory.saveShoppingList = function(list) {
+	profileFactory.saveShoppingList = function(list) {
 		return $http.post(urlBase + '/profile/shoppinglist', list, {
 			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
 		});
 	};
 
+	profileFactory.notifications = function() {
+		return $http.get(urlBase + '/profile/notification', {
+			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
+		});
+	};
 
+	profileFactory.notificationsNotRead = function() {
+		return $http.get(urlBase + '/profile/notificationNotRead', {
+			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
+		});
+	};
+
+	profileFactory.markNotification = function(id) {
+		return $http.post(urlBase + '/profile/notification/'+id, {
+			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
+		});
+	};
+
+	profileFactory.markAllNotifications = function() {
+		return $http.post(urlBase + '/profile/notificationMarkAll', {
+			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
+		});
+	};
 
 	return profileFactory;
 });

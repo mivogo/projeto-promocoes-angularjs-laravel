@@ -1,106 +1,317 @@
 import React, { Component } from 'react';
-import { Text, View, Button, Image, Dimensions, TouchableOpacity, TextInput } from 'react-native';
-import Modal from 'react-native-modal';
+import { Text, View, Dimensions, TouchableOpacity, TextInput, Button, Picker, Modal } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Header from './header';
-import Footer from './Footer';
 import ProductList from './ProductList';
 
 class SearchScreen extends Component {
 
-  state = {
-    isModalVisible: false,
-    searchQuery: ""
-  }
-
-  _showModal = () => this.setState({ isModalVisible: true })
-
-  _hideModal = () => this.setState({ isModalVisible: false })
-
   static navigationOptions = {
     tabBarLabel: 'Search',
-    drawerIcon: ({tintColor}) => {
+    drawerIcon: ({ tintColor }) => {
       return (
         <MaterialIcons 
         name="search"
         size={24}
-        style={{color: tintColor}}
-        >
-        </MaterialIcons>
+        style={{ color: tintColor }}
+        />
       );
     }
   }
 
-  renderHeader(headerName){
+  state = {
+    isSearchMenuVisible: false,
+    isFilterMenuVisible: false,
+    isLoading: true,
+    retailer: 1,
+    searchQuery: 'banana',
+    searchOrder: 'relevance',
+    searchBrand: '',
+    category: '',
+    subcategory: '',
+    products: [],
+    brands: [],
+    categories: []
+  }
+
+  productsRequest(filterMode) {
+    this.setState({ isLoading: true });
+ 
+    console.log("MOUNTOU");
+    jsonRequest = '';
+    const url = 'http://vps415122.ovh.net/api/productsFromRetailer/' + this.state.retailer;
+    jsonRequest += '{"search": "' + this.state.searchQuery + '",';
+    jsonRequest += '"order": "' + this.state.searchOrder + '",';
+    jsonRequest += '"item_amount": "' + "20" + '",';
+    if(filterMode){
+      jsonRequest += '"brand": "'+ this.state.searchBrand + '",';    
+      jsonRequest += '"category": "'+ this.state.category + '",';   
+    }
+    jsonRequest += '"subcategory": "'+ this.state.subcategory + '"}';
+
+    console.log(url);
+    console.log(jsonRequest);
+    
+    fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: jsonRequest
+    }).then((response) => response.json())
+    .then((responseJson) => {
+      if (filterMode){
+        this.setState({ products: responseJson.products, isLoading: false });
+      }
+      else {
+       this.setState({ products: responseJson.products, brands: responseJson.brands, categories: responseJson.categories, isLoading: false });
+      }
+    });
+  }
+
+  componentWillMount() {
+    this.productsRequest(false);
+  }
+
+  setSearchMenuVisible(visible) {
+    this.setState({ isSearchMenuVisible: visible });
+  }
+
+  setFilterMenuVisible(visible) {
+    this.setState({ isFilterMenuVisible: visible });
+  }
+
+
+  renderHeader(headerName) {
+    console.log('Render Header Menu');
      return (<View style={styles.headerStyle}>
 
         {/* Menu icon and click action */}
         <TouchableOpacity onPress={() => this.props.navigation.navigate('DrawerOpen')}>
           <MaterialIcons 
           name="menu"
-          size={50}
-          style={{color: 'black'}}
+          size={40}
+          style={{ color: 'black', padding: 5 }}
           />
         </TouchableOpacity>
 
         {/* Header Text */}
-        <View style={{
+        <View 
+          style={{
           position: 'relative',
           flexDirection: 'row',
           justifyContent: 'center',
-          flex:1,
-          alignItems: 'center'}}>
+          flex: 1,
+          alignItems: 'center' }}
+        >
           <Text style={styles.headerTextStyle}>{headerName}</Text>
         </View>
 
         {/* Filter Menu */}
         <View>
-          <TouchableOpacity onPress={this._showModal}>
+          <TouchableOpacity onPress={() => { this.setFilterMenuVisible(!this.state.isFilterMenuVisible); }}>
+          <MaterialIcons 
+          name="filter-list"
+          size={40}
+          style={{ color: 'black', padding: 5 }}
+          />
+        </TouchableOpacity>
+        </View>
+
+        {/* Search Menu */}
+        <View>
+        <TouchableOpacity onPress={() => { this.setSearchMenuVisible(!this.state.isSearchMenuVisible); }}>
           <MaterialIcons 
           name="search"
-          size={50}
-          style={{color: 'black'}}
+          size={40}
+          style={{ color: 'black', padding: 5 }}
           />
         </TouchableOpacity>
         </View>
       </View>);
   }
+  convertRetailerIDtoName(){
+    if (this.state.retailer === 1) {
+      return 'Continente';
+    }
+    if (this.state.retailer === 2) {
+      return 'Jumbo';
+    }
+    return 'Intermarché';
+  }
 
-  renderFilterMenu(){
+  renderSearchMenu() {
+    console.log('Render Search Menu');
     return (
-        <View style={styles.modalStyle}>
-          <View style={{padding:10, borderColor: 'blue', borderWidth:1 }}>
-            <Text>Termos a pesquisar:</Text>
+        <View style={styles.modalSearchStyle}>
+          <View style={{ padding: 10, borderColor: 'blue', borderWidth: 1, backgroundColor: 'white' }}>
+
+             {/* Pesquisa */}
+            <Text style={{ fontSize: 20 }}>Termos a pesquisar:</Text>
             <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-            onChangeText={(searchQuery) => this.setState({searchQuery})}
-            value={this.state.searchQuery}
+            style={{ height: 40, borderColor: 'gray', borderWidth: 0 }}
+            onChangeText={(text) => this.setState({ searchQuery: text })}
+            defaultValue={this.state.searchQuery}
+            />
+
+            {/* Superfície Comercial */}
+            <Text style={{ fontSize: 20 }}>Superfície comercial:</Text>
+            <Picker
+              selectedValue={this.state.retailer}
+              onValueChange={(itemValue, itemIndex) => this.setState({ retailer: itemValue })}
+            >
+            <Picker.Item label="Continente" value="1" />
+            <Picker.Item label="Jumbo" value="2" />
+            <Picker.Item label="Intermarché" value="3" />
+            </Picker>
+
+            {/* Botão pesquisar */}
+            <Button
+             onPress={() => { this.productsRequest(false); this.setSearchMenuVisible(!this.state.isSearchMenuVisible); }}
+             title="Pesquisar"
+             color="blue"
             />
           </View>
+
         </View>
+
+    );
+  }
+
+  renderFilterBrands() {
+    console.log('Render Filter Brands');
+    if (!(this.state.isLoading) && (this.state.brands.length !== 0)) {
+    console.log('Debug 2');
+    console.log(this.state.brands);
+    return this.state.brands.map((brand, index) =>
+      <Picker.Item 
+      key={index}
+      label={brand}
+      value={brand}
+      />
+      );
+    }
+  }
+
+  renderFilterCategories() {
+    console.log('Render Filter Categories');
+    if (!(this.state.isLoading) && (this.state.categories.length !== 0)) {
+    console.log('Debug 2');
+    console.log(this.state.categories);
+    return this.state.categories.map((category, index) =>
+      <Picker.Item 
+      key={index}
+      label={category}
+      value={category}
+      />
+      );
+    }
+  }
+
+  renderFilterMenu() {
+    console.log('Render Filter Menu');
+    return (
+        <View style={styles.modalFilterStyle}>
+          <View style={{ padding: 10, borderColor: 'blue', borderWidth: 1, backgroundColor: 'white' }}>
+
+            {/* Ordenação */}
+            <Text style={{ fontSize: 20 }}>Ordernar por:</Text>
+            <Picker
+              selectedValue={this.state.searchOrder}
+              onValueChange={(itemValue) => this.setState({ searchOrder: itemValue })}
+            >
+              <Picker.Item label="Relevância" value="relevance" />
+              <Picker.Item label="Mais caros primeiro" value="-price" />
+              <Picker.Item label="Mais baratos primeiro" value="price" />
+              <Picker.Item label="Marca" value="brand" />
+              <Picker.Item label="Ordem alfabética" value="name" />
+            </Picker>
+
+          {/* Marcas */}
+          <Text style={{ fontSize: 20 }}>Filtrar por marca:</Text>
+          <Picker
+            selectedValue={this.state.searchBrand}
+            onValueChange={(itemValue) => this.setState({ searchBrand: itemValue })}
+          >
+            <Picker.Item 
+              key="-1"
+              label="(Não filtrar)"
+              value=""
+            />
+            {this.renderFilterBrands()}
+          </Picker>
+
+           {/* Categorias */}
+          <Text style={{ fontSize: 20 }}>Filtrar por categoria:</Text>
+          <Picker
+            selectedValue={this.state.category}
+            onValueChange={(itemValue) => this.setState({ category: itemValue })}
+          >
+            <Picker.Item 
+              key="-1"
+              label="(Não filtrar)"
+              value=""
+            />
+            {this.renderFilterCategories()}
+          </Picker>
+
+            {/* Botão pesquisar */}
+            <Button
+             onPress={() => { this.productsRequest(true); this.setFilterMenuVisible(!this.state.isFilterMenuVisible); }}
+             title="Filtrar"
+             color="blue"
+            />
+          </View>
+
+        </View>
+
     );
   }
 
   render() {
+    console.log('Render');
     return (
     <View style={{ flex: 1 }}>
+      
       <Modal 
-        isVisible={this.state.isModalVisible}>
+        animationType={'slide'}
+        visible={this.state.isSearchMenuVisible}
+        onRequestClose={() => this.setSearchMenuVisible(!this.state.isSearchMenuVisible)}
+        transparent={true}
+      >
+        {this.renderSearchMenu()}
+      </Modal>
+
+      <Modal 
+        animationType={'slide'}      
+        visible={this.state.isFilterMenuVisible}
+        onRequestClose={() => this.setFilterMenuVisible(!this.state.isFilterMenuVisible)}
+        transparent={true}
+      >
         {this.renderFilterMenu()}
       </Modal>
-      {this.renderHeader("Resultados")}
-      <ProductList />
+
+      {this.renderHeader('Resultados')}
+      <ProductList 
+        isItLoading={this.state.isLoading}
+        products={this.state.products}
+      />
     </View>
     );
   }
-};
+}
 
 const styles = {
-  modalStyle:{
-    alignSelf: "center",
-    backgroundColor: "white",
-    alignSelf: "stretch",
-    flex:1
+  modalSearchStyle: {
+    flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',    
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  },
+  modalFilterStyle: {
+    flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   },
   containerStyle: {
     width: (Dimensions.get('window').width / 2) - 10,

@@ -1,10 +1,6 @@
 import React from 'react';
-import { AppRegistry, View } from "react-native";
+import { AppRegistry } from "react-native";
 import { DrawerNavigator } from "react-navigation";
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Header from './src/components/header';
-import Footer from './src/components/Footer';
-import ProductList from './src/components/ProductList';
 import SearchScreen from './src/components/SearchScreen';
 import SecondScreen from './src/components/Screen2';
 
@@ -18,7 +14,7 @@ const DrawerExample = DrawerNavigator(
         path: '/sent',
         screen: SecondScreen
     },
-    Third: {
+    Lol: {
         path: '/sent',
         screen: SecondScreen
     },

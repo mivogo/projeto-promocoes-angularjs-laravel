@@ -3,32 +3,25 @@ import { ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import ProductDetail from './ProductDetail';
 
 class ProductList extends Component {
-  state = { products: [], retailerID: 1 };
+  state = { products: [], isLoading: false };
 
-  componentWillMount() {
-    const url = 'http://vps415122.ovh.net/api/productsFromRetailer/' + this.state.retailerID;
-    fetch(url, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-     	order: "price",
-	    item_amount: "15",
-	    search: "coca cola"
-      })
-    }).then((response) => response.json())
-    .then((responseJson) => {
-       this.setState({products: responseJson.products})
-    })
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.isItLoading){
+      this.setState({ isLoading: true });
+    }
+    else{
+      this.setState({ isLoading: false });
+    }
+    this.setState({ products: nextProps.products });
   }
 
   width = Dimensions.get('window').width;
   
   renderProducts() {
+    console.log(' Render Products ');
     const data = this.state.products.data;
-    if(this.state.products.length != 0){
+    console.log(this.state.products.data);
+    if (this.state.products.length !== 0 && !(this.state.isLoading)) {
     return data.map(product =>
       <ProductDetail
        key={product.id}
@@ -36,12 +29,14 @@ class ProductList extends Component {
       />
      );
     }
-     else{
-       return <ActivityIndicator size='large' style={{flex:1, alignSelf:'center', justifyContent:'center'}} />;
-     }
+    return <ActivityIndicator 
+    size='large' 
+    style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }} 
+    />;
   }
 
   render() {
+    console.log(' RENDER RENDER');
     return (
       <ScrollView
       contentContainerStyle={styles.contentContainer}

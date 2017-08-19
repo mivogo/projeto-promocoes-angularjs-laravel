@@ -7,7 +7,7 @@ import Button from './Button';
 const ProductDetail = ({ product }) => {
   console.log("ProductDetail");
   console.log(this.product);
-  const { name, category, image, link, price, weight, weight_type, price_weight, type_weight, subcategory } = product;
+  const { name, brand, category, image, link, price, weight, weight_type, price_weight, type_weight, subcategory } = product;
   const {
     thumbnailStyle,
     headerContentStyle,
@@ -19,7 +19,7 @@ const ProductDetail = ({ product }) => {
   const newPrice = price.toString().replace('.', ',');
   const newPriceWeight = price_weight.toString().replace('.', ',');
 
-
+  console.log('Render Product Detail');
     return (
       <Card>
         <CardSection>
@@ -31,6 +31,7 @@ const ProductDetail = ({ product }) => {
           </View>
           <View style={headerContentStyle}>
             <Text style={headerTextStyle}>{name}</Text>
+            <Text>{brand}</Text>
             <Text>{category} > {subcategory}</Text>
             <Text>{weight}{weight_type}</Text>
             <Text>{newPrice}€/un ({newPriceWeight}€/{type_weight})</Text>

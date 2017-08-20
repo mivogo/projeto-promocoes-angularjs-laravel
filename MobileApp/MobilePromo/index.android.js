@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AppRegistry, Button } from "react-native";
 import { DrawerNavigator } from "react-navigation";
 import SearchScreen from './src/components/SearchScreen';
-import SecondScreen from './src/components/Screen2';
+import SecondScreen from './src/components/FavoriteProducts';
 import Login from './src/components/Login';
 
 

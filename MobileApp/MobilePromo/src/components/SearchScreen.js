@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, TouchableOpacity, TextInput, Button, Picker, Modal } from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity, TextInput, Button, Picker, Modal, AsyncStorage } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ProductList from './ProductList';
 
@@ -356,8 +356,7 @@ class SearchScreen extends Component {
   }
 
   render() {
-    console.log('Render');
-    console.log(this.props.navigation.state.params.miguel);    
+    console.log('Render'); 
     return (
     <View style={{ flex: 1 }}>
       

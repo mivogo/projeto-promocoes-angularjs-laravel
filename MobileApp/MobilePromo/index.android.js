@@ -1,31 +1,38 @@
-import React from 'react';
-import { AppRegistry } from "react-native";
+import React, { Component } from 'react';
+import { AppRegistry, Button } from "react-native";
 import { DrawerNavigator } from "react-navigation";
 import SearchScreen from './src/components/SearchScreen';
 import SecondScreen from './src/components/Screen2';
+import Login from './src/components/Login';
+
 
 const DrawerExample = DrawerNavigator(
   {
+    'Login/Logout': {
+        path: '/',
+        screen: Login
+    },
     Pesquisar: {
         path: '/',
         screen: SearchScreen
     },
     Second: {
-        path: '/sent',
+        path: '/',
         screen: SecondScreen
     },
     Lol: {
-        path: '/sent',
+        path: '/',
         screen: SecondScreen
     },
     Fourth: {
-        path: '/sent',
+        path: '/',
         screen: SecondScreen
     }
   },
   {
-      initialRouteName: 'Pesquisar',
-      drawerPosition: 'left',
+      initialRouteName: "Login/Logout",
+      initialRouteParams: { miguel: 'LOL' },
+      drawerPosition: 'left',  
       contentOptions: {
         activeTintColor: 'red',
       }

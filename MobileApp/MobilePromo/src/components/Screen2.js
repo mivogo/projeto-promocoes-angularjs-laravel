@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { Text, View, Button, Image, Dimensions } from 'react-native';
+import { Text, View, Button, Dimensions } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 class Screen2 extends Component {
   static navigationOptions = {
     tabBarLabel: 'Screen 1',
-    drawerIcon: ({tintColor}) => {
+    drawerIcon: ({ tintColor }) => {
       return (
         <MaterialIcons 
         name="change-history"
         size={24}
-        style={{color: tintColor}}
+        style={{ color: tintColor }}
         >
         </MaterialIcons>
       );
     }
   }
+
   render() {
     return (
     <View style={
@@ -29,7 +30,7 @@ class Screen2 extends Component {
         Screen 2
       </Text>
       <Button
-        onPress={() => this.props.navigation.navigate('DrawerOpen')}
+        onPress={() => this.props.navigation.navigate('Pesquisar')}
         title="Open DrawNavigator"
       />
     </View>

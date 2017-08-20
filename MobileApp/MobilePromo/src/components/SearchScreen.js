@@ -19,6 +19,8 @@ class SearchScreen extends Component {
   }
 
   state = {
+    page: 1,
+    total_pages: 0,
     isSearchMenuVisible: false,
     isFilterMenuVisible: false,
     isLoading: true,
@@ -33,20 +35,19 @@ class SearchScreen extends Component {
     categories: []
   }
 
-  productsRequest(filterMode) {
+  productsRequest(filterMode,current_page) {
     this.setState({ isLoading: true });
- 
-    console.log("MOUNTOU");
-    jsonRequest = '';
-    const url = 'http://vps415122.ovh.net/api/productsFromRetailer/' + this.state.retailer;
+    console.log('MOUNTOU');
+    let jsonRequest = '';
+    const url = 'http://vps415122.ovh.net/api/productsFromRetailer/' + this.state.retailer + '?page=' + current_page;
     jsonRequest += '{"search": "' + this.state.searchQuery + '",';
     jsonRequest += '"order": "' + this.state.searchOrder + '",';
     jsonRequest += '"item_amount": "' + "20" + '",';
-    if(filterMode){
-      jsonRequest += '"brand": "'+ this.state.searchBrand + '",';    
-      jsonRequest += '"category": "'+ this.state.category + '",';   
+    if (filterMode) {
+      jsonRequest += '"brand": "' + this.state.searchBrand + '",';    
+      jsonRequest += '"category": "' + this.state.category + '",';   
     }
-    jsonRequest += '"subcategory": "'+ this.state.subcategory + '"}';
+    jsonRequest += '"subcategory": "' + this.state.subcategory + '"}';
 
     console.log(url);
     console.log(jsonRequest);
@@ -59,17 +60,28 @@ class SearchScreen extends Component {
     body: jsonRequest
     }).then((response) => response.json())
     .then((responseJson) => {
-      if (filterMode){
-        this.setState({ products: responseJson.products, isLoading: false });
+
+      if (filterMode) {
+        this.setState({ 
+          products: responseJson.products, 
+          isLoading: false, 
+          page: responseJson.products.current_page, 
+          total_pages: responseJson.products.last_page });
       }
       else {
-       this.setState({ products: responseJson.products, brands: responseJson.brands, categories: responseJson.categories, isLoading: false });
+       this.setState({ 
+         products: responseJson.products, 
+         brands: responseJson.brands, 
+         categories: responseJson.categories, 
+         isLoading: false, 
+         page: responseJson.products.current_page, 
+         total_pages: responseJson.products.last_page });
       }
     });
   }
 
   componentWillMount() {
-    this.productsRequest(false);
+    this.productsRequest(false, 1);    
   }
 
   setSearchMenuVisible(visible) {
@@ -79,7 +91,6 @@ class SearchScreen extends Component {
   setFilterMenuVisible(visible) {
     this.setState({ isFilterMenuVisible: visible });
   }
-
 
   renderHeader(headerName) {
     console.log('Render Header Menu');
@@ -129,7 +140,84 @@ class SearchScreen extends Component {
         </View>
       </View>);
   }
-  convertRetailerIDtoName(){
+
+  renderFooter() {
+    console.log('Render Footer Menu');
+    return (
+      <View style={styles.footerStyle}>
+        {/* Anterior */}
+        <TouchableOpacity onPress={() => {
+            this.productsRequest(false, (this.state.page - 1));
+            }
+          }
+        >
+          <View 
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            flex: 1,
+            alignItems: 'flex-start' }}
+          >
+            <MaterialIcons 
+            name="skip-previous"
+            size={40}
+            style={{ color: 'black', padding: 5 }}
+            />
+            <Text style={styles.footerTextStyle}>
+            Anterior
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+         {/* Páginas */}
+         <View 
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          flex: 1,
+          alignItems: 'center' }}
+         >
+          <Text style={styles.footerTextStyle}>
+            {this.state.page}
+          </Text>
+
+          <Text style={styles.footerTextStyle}>
+          /
+          </Text>
+
+          <Text style={styles.footerTextStyle}>
+            {this.state.total_pages}
+          </Text>
+        </View>
+
+        {/* Próximo */}
+        <TouchableOpacity onPress={() => {
+          this.productsRequest(false, (this.state.page + 1));
+          }
+        }
+        >
+        <View 
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          flex: 1,
+          alignItems: 'flex-end' }}
+        >
+          <Text style={styles.footerTextStyle}>
+          Próximo
+          </Text>
+          <MaterialIcons 
+          name="skip-next"
+          size={40}
+          style={{ color: 'black', padding: 5 }}
+          />
+        </View>
+        </TouchableOpacity>
+      </View>
+      );
+  }
+
+  convertRetailerIDtoName() {
     if (this.state.retailer === 1) {
       return 'Continente';
     }
@@ -157,7 +245,7 @@ class SearchScreen extends Component {
             <Text style={{ fontSize: 20 }}>Superfície comercial:</Text>
             <Picker
               selectedValue={this.state.retailer}
-              onValueChange={(itemValue, itemIndex) => this.setState({ retailer: itemValue })}
+              onValueChange={(itemValue) => this.setState({ retailer: itemValue })}
             >
             <Picker.Item label="Continente" value="1" />
             <Picker.Item label="Jumbo" value="2" />
@@ -166,7 +254,7 @@ class SearchScreen extends Component {
 
             {/* Botão pesquisar */}
             <Button
-             onPress={() => { this.productsRequest(false); this.setSearchMenuVisible(!this.state.isSearchMenuVisible); }}
+             onPress={() => { this.productsRequest(false, 1); this.setSearchMenuVisible(!this.state.isSearchMenuVisible); }}
              title="Pesquisar"
              color="blue"
             />
@@ -256,7 +344,7 @@ class SearchScreen extends Component {
 
             {/* Botão pesquisar */}
             <Button
-             onPress={() => { this.productsRequest(true); this.setFilterMenuVisible(!this.state.isFilterMenuVisible); }}
+             onPress={() => { this.productsRequest(true, 1); this.setFilterMenuVisible(!this.state.isFilterMenuVisible); }}
              title="Filtrar"
              color="blue"
             />
@@ -269,6 +357,7 @@ class SearchScreen extends Component {
 
   render() {
     console.log('Render');
+    console.log(this.props.navigation.state.params.miguel);    
     return (
     <View style={{ flex: 1 }}>
       
@@ -295,6 +384,7 @@ class SearchScreen extends Component {
         isItLoading={this.state.isLoading}
         products={this.state.products}
       />
+      {this.renderFooter()}
     </View>
     );
   }
@@ -329,7 +419,22 @@ const styles = {
     marginTop: 10,
   },
   headerStyle: {
+    borderWidth: 1,
     backgroundColor: '#F8F8F8',
+    flexDirection: 'row',
+    height: 60,
+    paddingTop: 5,
+    paddingBottom: 5,
+    shadowColor: 'black',
+    shadowOffset: { width: 20, height: 20 },
+    shadowOpacity: 0.5,
+    elevation: 10,
+    position: 'relative'
+  },
+  footerStyle: {
+    borderWidth: 1,    
+    backgroundColor: '#F8F8F8',
+    alignSelf: 'center',
     flexDirection: 'row',
     height: 60,
     paddingTop: 5,
@@ -342,6 +447,10 @@ const styles = {
   },
   headerTextStyle: {
     fontSize: 20
+  },
+  footerTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center'
   }
 };
 

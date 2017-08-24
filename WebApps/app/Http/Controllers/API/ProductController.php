@@ -203,13 +203,14 @@ class ProductController extends Controller
 		$productRetailer = ProductRetailer::find($prid);
 
 		$retailerid = $productRetailer->retailer_id;
-		$product->subcategory;
+		$productName = $product->name;
+
+		$match = "MATCH (name) AGAINST (? IN BOOLEAN MODE)";
 
 		$existingProducts = Product::whereHas('productretailer',  function($query) use ($retailerid)  {
 			$query->where('retailer_id', $retailerid);
-		})->where('sub_category_id',$product->sub_category_id)->where('id','!=',$product->id)->get();
+		})->where('sub_category_id',$product->sub_category_id)->where('id','!=',$product->id)->orderByRaw($match . " DESC", [$productName])->get();
 
-		$productName = $product->name;
 		$relatedProducts = [];
 		if(!$existingProducts->isEmpty()){
 			foreach($existingProducts as $existingProduct){

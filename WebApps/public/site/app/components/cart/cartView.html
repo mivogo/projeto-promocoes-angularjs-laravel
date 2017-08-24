@@ -1,11 +1,11 @@
 <div class="container">
-	<div class="alert alert-warning" role="alert" data-ng-show="ngCart.getTotalItems() === 0">
+	<div class="alert alert-warning" role="alert" data-ng-show="cart.getTotalItems() === 0">
 		Your cart is empty
 	</div>
 
-	<div class="table-responsive col-lg-12" data-ng-show="ngCart.getTotalItems() > 0">
+	<div class="table-responsive col-lg-12" data-ng-show="cart.getTotalItems() > 0">
 
-		<table class="table table-striped ngCart cart">
+		<table class="table table-striped cart">
 			<thead>
 				<tr>
 					<th></th>
@@ -21,24 +21,24 @@
 					<td></td>
 					<td></td>
 					<td>Total:</td>
-					<td>{{ ngCart.totalCost() | currency }}</td>
+					<td>{{ cart.totalCost() | currency }}</td>
 				</tr>
 			</tfoot>
 			<tbody>
-				<tr ng-repeat="item in ngCart.getCart().items track by $index">
-					<td><span ng-click="ngCart.removeItemById(item.getId())" class="glyphicon glyphicon-remove pointer noselect"></span></td>
-
-					<td>{{ item.getName() }}</td>
-					<td><span class="glyphicon glyphicon-minus pointer noselect" ng-class="{'disabled':item.getQuantity()==1}"
-						ng-click="item.setQuantity(-1, true)"></span>
-						<span class="cart-item-quantity noselect">  {{ item.getQuantity() | number }}  </span>
-						<span class="glyphicon glyphicon-plus pointer noselect" ng-click="item.setQuantity(1, true)"></span>
+				<tr ng-repeat="item in cart.getItems() track by $index">
+					<td><span ng-click="cart.removeItemById(item.id)" class="glyphicon glyphicon-remove pointer noselect"></span></td>
+					<td>{{ item.name }}</td>
+					<td><span class="glyphicon glyphicon-minus pointer noselect" ng-class="{'disabled':item.quantity==1}"
+						ng-click="cart.updateItemQuantity(item.data, -1)"></span>
+						<span class="cart-item-quantity noselect">  {{ item.quantity | number }}  </span>
+						<span class="glyphicon glyphicon-plus pointer noselect" ng-click="cart.updateItemQuantity(item.data, 1)"></span>
 					</td>
-					<td>{{ item.getPrice() | currency}}</td>
-					<td>{{ item.getTotal() | currency }}</td>
+					<td>{{ item.price | currency}}</td>
+					<td>{{ item.total | currency }}</td>
 				</tr>
 			</tbody>
 		</table>
 		<a data-ng-click="saveList()" class="btn btn-primary pointer cart-add-button"><i class="glyphicon glyphicons-floppy-saved"></i>Guardar Lista</a>
+		<a data-ng-click="clearList()" class="btn pointer cart-add-button"><i class="glyphicon glyphicons-trash"></i>Limpar Lista</a>
 	</div>
 </div>

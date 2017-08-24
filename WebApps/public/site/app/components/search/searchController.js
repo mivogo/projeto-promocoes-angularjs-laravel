@@ -136,8 +136,6 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 
 	$scope.$on('resetSearchCurrentPage', resetCurrentPage);
 
-	
-
 	function resetCurrentPage($event){
 		$state.reload();
 	}

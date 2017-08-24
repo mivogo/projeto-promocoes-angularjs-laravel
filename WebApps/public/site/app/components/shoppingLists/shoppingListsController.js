@@ -32,10 +32,8 @@ app.controller('ShoppingListsController', function ($scope, $state, CartService,
 	$scope.modifyList = function(id){
 		ProfileFactory.shoppingListProducts(id)            
 		.then(function (response) {
-			CartService.setListName(response.data.list.name);
-			CartService.setListDescription(response.data.list.description);
 			FilterbarService.setRetailerWithID(response.data.list.retailer_id);
-			CartService.replaceCartWithList(response.data.products);
+			CartService.replaceCartWithList(response.data);
 		}, function (error) {
 			console.log('Unable to get shoppping list products: ' + error);
 		});

@@ -63,6 +63,9 @@ class RetailerController extends Controller
 				}));
 
 				$arr['suggestions'] = $suggestions;
+				$arr['product'] = [];
+			}else{
+				$arr['product'] = (new ProductTransformer)->transformWithRetailer($r_product,$productRetailer);
 			}
 
 			$arr['retailer_id'] = $retailer->id;

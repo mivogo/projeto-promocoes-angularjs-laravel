@@ -3,7 +3,7 @@
 */
 'use strict';
 
-app.service('FilterbarService', function ($cookies) {
+app.service('FilterbarService', function ($cookies, CartService) {
 
   var service = this;
 
@@ -99,9 +99,14 @@ app.service('FilterbarService', function ($cookies) {
     service.setRetailer(retailer);
   }
 
+  service.getRetailersList = function(){
+    return service.retailerListItems;
+  }
+
   service.setRetailer = function (retailer){
     $cookies.putObject('myRetailer', retailer);
     service.retailer = retailer;
+    CartService.activateCart(retailer.id);
   }
 
   service.setBrand = function(brand){

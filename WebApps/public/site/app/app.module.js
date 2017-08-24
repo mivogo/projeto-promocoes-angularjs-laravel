@@ -3,7 +3,7 @@
 */
 'use strict';
 
-var app = angular.module('promocoesWebApp', ['ui.router','ui.bootstrap','ui.select','ngCookies','satellizer','toastr','ngCart']);
+var app = angular.module('promocoesWebApp', ['ui.router','ui.bootstrap','ui.select','ngCookies','satellizer','toastr','ngMaterial']);
 
 app.directive("header", function() {
   return {
@@ -42,6 +42,16 @@ app.directive("filterbar", function() {
     scope: false,
     replace: true,
     controller: 'FilterController'
+  };
+});
+
+app.directive("cartinfobar", function() {
+  return {
+    restrict: 'A',
+    templateUrl: 'site/app/shared/cartinfobar/cartinfobarView.html',
+    scope: true,
+    replace: false,
+    controller: 'CartInfoBarController'
   };
 });
 

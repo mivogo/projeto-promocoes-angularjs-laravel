@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="panel panel-default sidebar-menu">
+        <div class="panel-heading">
+            <h3 class="panel-title">Retailer</h3>
+        </div>
+        <div class="panel-body">
+            <div>
+                <div>{{activeRetailer.name}}</div>
+                <div>{{retailerTotalCost(activeRetailer.id) | currency}} <span data-ng-show="retailerHasUnavailableProducts(activeRetailer.id)">!</span></div>
+                <div>
+                    <div class="alert alert-warning" role="alert" data-ng-show="activeCart.length === 0">
+                        Your cart is empty
+                    </div>
+
+                    <div class="table-responsive col-lg-12" data-ng-show="activeCart.length > 0">
+
+                        <table class="table table-striped cart">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="item in activeCart track by $index">
+                                    <td>{{ item.name }}</td>
+                                    <td data-ng-if="item.available">{{ item.total | currency }}</td>
+                                    <td data-ng-if="!item.available">Indisp.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default sidebar-menu">
+        <div class="panel-heading">
+            <h3 class="panel-title">Comparar preço total</h3>
+        </div>
+        <div class="panel-body">
+            <div data-ng-repeat="retailer in retailers">
+                <div class="pointer" data-ng-show="retailer.id != activeRetailer.id" data-ng-click="changeActiveRetailer(retailer)">
+                    <div>{{retailer.name}}</div>
+                    <div>{{retailerTotalCost(retailer.id) | currency}} <span data-ng-show="retailerHasUnavailableProducts(retailer.id)">!</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

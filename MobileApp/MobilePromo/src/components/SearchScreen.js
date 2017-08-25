@@ -35,7 +35,7 @@ class SearchScreen extends Component {
     categories: []
   }
 
-  productsRequest(filterMode,current_page) {
+  productsPost(filterMode,current_page) {
     this.setState({ isLoading: true });
     console.log('MOUNTOU');
     let jsonRequest = '';
@@ -81,7 +81,7 @@ class SearchScreen extends Component {
   }
 
   componentWillMount() {
-    this.productsRequest(false, 1);    
+    this.productsPost(false, 1);    
   }
 
   setSearchMenuVisible(visible) {
@@ -147,7 +147,7 @@ class SearchScreen extends Component {
       <View style={styles.footerStyle}>
         {/* Anterior */}
         <TouchableOpacity onPress={() => {
-            this.productsRequest(false, (this.state.page - 1));
+            this.productsPost(false, (this.state.page - 1));
             }
           }
         >
@@ -192,7 +192,7 @@ class SearchScreen extends Component {
 
         {/* Próximo */}
         <TouchableOpacity onPress={() => {
-          this.productsRequest(false, (this.state.page + 1));
+          this.productsPost(false, (this.state.page + 1));
           }
         }
         >
@@ -254,7 +254,7 @@ class SearchScreen extends Component {
 
             {/* Botão pesquisar */}
             <Button
-             onPress={() => { this.productsRequest(false, 1); this.setSearchMenuVisible(!this.state.isSearchMenuVisible); }}
+             onPress={() => { this.productsPost(false, 1); this.setSearchMenuVisible(!this.state.isSearchMenuVisible); }}
              title="Pesquisar"
              color="blue"
             />
@@ -344,7 +344,7 @@ class SearchScreen extends Component {
 
             {/* Botão pesquisar */}
             <Button
-             onPress={() => { this.productsRequest(true, 1); this.setFilterMenuVisible(!this.state.isFilterMenuVisible); }}
+             onPress={() => { this.productsPost(true, 1); this.setFilterMenuVisible(!this.state.isFilterMenuVisible); }}
              title="Filtrar"
              color="blue"
             />
@@ -381,7 +381,7 @@ class SearchScreen extends Component {
       {this.renderHeader('Resultados')}
       <ProductList 
         isItLoading={this.state.isLoading}
-        products={this.state.products}
+        products={this.state.products.data}
       />
       {this.renderFooter()}
     </View>

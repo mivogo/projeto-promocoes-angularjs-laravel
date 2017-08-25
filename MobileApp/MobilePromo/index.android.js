@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { AppRegistry, Button } from "react-native";
 import { DrawerNavigator } from "react-navigation";
 import SearchScreen from './src/components/SearchScreen';
-import SecondScreen from './src/components/FavoriteProducts';
+import FavoriteProducts from './src/components/FavoriteProducts';
+import UserListsProducts from './src/components/UserListProducts';
+import Notifications from './src/components/Notifications';
+import ShoppingCart from './src/components/ShoppingCart';
 import Login from './src/components/Login';
 
 
 const DrawerExample = DrawerNavigator(
   {
-    'Login/Logout': {
+    'Conta': {
         path: '/',
         screen: Login
     },
@@ -16,22 +19,25 @@ const DrawerExample = DrawerNavigator(
         path: '/',
         screen: SearchScreen
     },
-    Second: {
+    'Carrinho': {
         path: '/',
-        screen: SecondScreen
+        screen: ShoppingCart
     },
-    Lol: {
+    'Produtos Favoritos': {
         path: '/',
-        screen: SecondScreen
+        screen: FavoriteProducts
     },
-    Fourth: {
+    'Listas guardadas': {
         path: '/',
-        screen: SecondScreen
+        screen: UserListsProducts
+    },
+    'Notificações': {
+        path: '/',
+        screen: Notifications
     }
   },
   {
-      initialRouteName: "Login/Logout",
-      initialRouteParams: { miguel: 'LOL' },
+      initialRouteName: 'Conta',
       drawerPosition: 'left',  
       contentOptions: {
         activeTintColor: 'red',

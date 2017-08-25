@@ -19,8 +19,8 @@ class ProductList extends Component {
   
   renderProducts() {
     console.log(' Render Products ');
-    const data = this.state.products.data;
-    console.log(this.state.products.data);
+    const data = this.state.products;
+    console.log(this.state.products);
     if (this.state.products.length !== 0 && !(this.state.isLoading)) {
     return data.map(product =>
       <ProductDetail

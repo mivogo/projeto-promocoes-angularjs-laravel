@@ -3,13 +3,13 @@ import { Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ProductList from './ProductList';
 
-class FavoriteProducts extends Component {
+class UserListProducts extends Component {
   static navigationOptions = {
     tabBarLabel: 'Favorite Products',
     drawerIcon: ({ tintColor }) => {
       return (
         <MaterialIcons 
-        name="favorite"
+        name="format-list-numbered"
         size={24}
         style={{ color: tintColor }}
         >
@@ -20,14 +20,14 @@ class FavoriteProducts extends Component {
 
   state = {
     token: '',
-    products: [],
+    lists: [],
     isLoading: false,
   }
 
   favoritePost() {
     console.log('RENDER FAVORITE POST');
     this.setState({ isLoading: true });
-    const url = 'http://vps415122.ovh.net/api/profile/favorites';
+    const url = 'http://vps415122.ovh.net/api/profile/shoppinglist';
     const auth = 'bearer ' + this.state.token;
     console.log('Auth');
     console.log(auth);
@@ -42,7 +42,7 @@ class FavoriteProducts extends Component {
       console.log('FavoritePost');
       console.log(responseJson);
       this.setState({ 
-        products: responseJson, 
+        lists: responseJson, 
         isLoading: false, });
     })
     .catch((error) => {
@@ -109,11 +109,11 @@ class FavoriteProducts extends Component {
     return (
     <View style={{ flex: 1 }}
     >
-    {this.renderHeader('Produtos Favoritos')}
-    <ProductList 
+    {this.renderHeader('Listas Guardadas')}
+    {/*<ProductList 
         isItLoading={this.state.isLoading}
         products={this.state.products}
-    />
+    />*/}
     </View>
     );
   }
@@ -138,4 +138,4 @@ const styles = {
   }
 };
 
-export default FavoriteProducts;
+export default UserListProducts;

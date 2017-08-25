@@ -11,7 +11,7 @@ class Login extends Component {
     drawerIcon: ({ tintColor }) => {
       return (
         <MaterialIcons 
-        name="change-history"
+        name="account-circle"
         size={24}
         style={{ color: tintColor }}
         >
@@ -22,8 +22,8 @@ class Login extends Component {
 
   state = {
     name: '',
-    email: '',
-    password: '',
+    email: 'pedro@mail.com',
+    password: 'kim1414',
     token: '',
     isLogged: false,
     isLoading: false,

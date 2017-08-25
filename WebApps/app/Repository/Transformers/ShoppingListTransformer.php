@@ -9,6 +9,7 @@ class ShoppingListTransformer extends Transformer{
 		'name' => preg_replace('/\s+/', ' ', $list->name),
 		'description' => $list->description,
 		'retailer_id' => $list->retailer_id,
+		'retailer_name' => $list->retailer->name,
 		];	
 	}	
 

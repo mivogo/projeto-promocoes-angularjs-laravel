@@ -8,7 +8,7 @@ app.service('APIService', function () {
   var service = this;
 
   service.apiUrl = function(){
-    return 'http://localhost:8000/api';
+    return 'http://vps415122.ovh.net/api';
   }
 
 });

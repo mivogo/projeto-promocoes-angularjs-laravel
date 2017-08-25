@@ -51,9 +51,5 @@ app.controller('FilterController', function ($scope, $location, $state, $http, $
 		});
 	}
 
-	function broadcastSearchPageReset(){
-		$rootScope.$broadcast('resetSearchCurrentPage');
-	}
-
 
 });

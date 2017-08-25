@@ -7,7 +7,13 @@
 app.controller('NotificationController', function ($scope, $state, NotificationService) {
 	console.log("Notification Controller reporting for duty.");
 
-	$scope.notifications = localStorage.getItem('notificationsNotRead');
+	var updateNotifications = function(){
+		$scope.notifications = NotificationService.getNotificationsNotRead();
+	};
+
+	NotificationService.registerObserverCallback(updateNotifications);
+
+	$scope.notifications = NotificationService.getNotificationsNotRead();
 
 	$scope.markAsRead = function(id){
 		NotificationService.markAsRead(id);
@@ -18,7 +24,6 @@ app.controller('NotificationController', function ($scope, $state, NotificationS
 	}
 
 	$scope.totalNotifications = function(){
-
 		return NotificationService.totalNotificationsNotRead();
 	}
 
@@ -26,7 +31,6 @@ app.controller('NotificationController', function ($scope, $state, NotificationS
 		$state.go('search', {q:name}, {reload:true});
 	}
 
-	$scope.$on('notificationService: changed', function() {
-		$scope.notifications = NotificationService.getNotificationsNotRead();
-	});
+
+
 });

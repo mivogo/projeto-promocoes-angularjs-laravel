@@ -6,8 +6,8 @@
 app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $authProvider) {
 
 	$locationProvider.html5Mode({enabled:true});
-	$authProvider.loginUrl = 'http://localhost:8000/api/login';
-	$authProvider.signupUrl = 'http://localhost:8000/api/register';
+	$authProvider.loginUrl = 'http://vps415122.ovh.net/api/login';
+	$authProvider.signupUrl = 'http://vps415122.ovh.net/api/register';
 	$urlRouterProvider.otherwise('/404');
 
 /*
@@ -51,7 +51,7 @@ var categoriesRequest = function(ProductFactory, MenuService){
 };
 
 
-var retailerRequest = function(ProductFactory, FilterbarService){
+var retailerRequest = function(ProductFactory, FilterbarService, CartService){
 	return 	ProductFactory.retailers()            
 	.then(function (response) {
 		var retailers = response.data;
@@ -59,11 +59,13 @@ var retailerRequest = function(ProductFactory, FilterbarService){
 		FilterbarService.clearRetailerListItems();
 		angular.forEach(retailers, function(item){
 			item.img = 'site/assets/img/'+item.name+".svg";
-			FilterbarService.addRetailerListItem(item);  
+			FilterbarService.addRetailerListItem(item);
+			CartService.initRetailerCart(item.id);
 			if(first && !FilterbarService.retailer){
 				FilterbarService.setRetailer(item);
+				CartService.activateCart(item.id);
+				first = false;
 			}
-			first = false;
 		})
 
 	}, function (error) {
@@ -121,6 +123,17 @@ var notificationsRequest = function(ProfileFactory, AuthService, NotificationSer
 		return ProfileFactory.notificationsNotRead()            
 		.then(function (response) {
 			NotificationService.addNotificationNotReadList(response.data);
+		}, function (error) {
+			console.log('Unable to load notifications data: ' + error.data);
+		});
+	}
+}
+
+var allNotificationsRequest = function(ProfileFactory, AuthService, NotificationService){
+	if (AuthService.isAuthenticated()) {
+		return ProfileFactory.notifications()            
+		.then(function (response) {
+			return response.data;
 		}, function (error) {
 			console.log('Unable to load notifications data: ' + error.data);
 		});
@@ -215,6 +228,18 @@ var shoppingListState = {
 	}
 }
 
+var notificationState = {
+	name: 'notifications',
+	url: '/profile/notifications',
+	templateUrl: 'site/app/components/notifications/notificationsView.html',
+	controller: 'ProfileNotificationsController',
+	resolve: {
+		loginRequired: loginRequired,
+		notificationsRequest: notificationsRequest,
+		allNotificationsRequest: allNotificationsRequest,
+	}
+}
+
 $stateProvider.state(homeState);
 $stateProvider.state(errorState);
 $stateProvider.state(searchState);
@@ -222,6 +247,7 @@ $stateProvider.state(profileState);
 $stateProvider.state(cartState);
 $stateProvider.state(favoriteProductState);
 $stateProvider.state(shoppingListState);
+$stateProvider.state(notificationState);
 
 });
 

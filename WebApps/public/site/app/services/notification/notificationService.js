@@ -6,6 +6,7 @@
 app.service('NotificationService', function ($rootScope, AuthService, ProfileFactory) {
 
   var service = this;
+  var observerCallbacks = [];
 
   service.notificationsNotRead = [];
   service.notifications = [];
@@ -26,7 +27,7 @@ app.service('NotificationService', function ($rootScope, AuthService, ProfileFac
     })
 
     localStorage.setItem('notificationsNotRead', service.notificationsNotRead.length);
-    $rootScope.$broadcast('notificationService: changed');
+    notifyObservers();
   }
 
   service.addNotificationNotRead = function(item){
@@ -83,7 +84,6 @@ app.service('NotificationService', function ($rootScope, AuthService, ProfileFac
     }
   }
 
-
   service.getNotifications = function(){
     return service.notifications;
   }
@@ -96,5 +96,14 @@ app.service('NotificationService', function ($rootScope, AuthService, ProfileFac
     return service.notificationsNotRead.length;
   }
 
+  service.registerObserverCallback = function(callback){
+    observerCallbacks.push(callback);
+  };
+
+  var notifyObservers = function(){
+    angular.forEach(observerCallbacks, function(callback){
+      callback();
+    });
+  };
   
 });

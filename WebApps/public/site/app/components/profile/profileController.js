@@ -54,4 +54,8 @@ app.controller('ProfileController', function ($scope, $location, $http, $rootSco
 		$state.go('shoppingLists');
 	}
 
+	$scope.viewNotifications = function(){
+		$state.go('notifications')
+	}
+
 });

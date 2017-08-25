@@ -39,6 +39,17 @@ class ProductController extends Controller
 		$this->swgAlgorithm = new SmithWatermanGotoh();
 	}
 
+	public function teste(Request $request, $id){
+		$product = Product::find($id);
+		$product->productretailer;
+
+		$one = $request->one;
+		$two = $request->two;
+
+		return response()->json($this->swgAlgorithm->compare($one,$two));
+		return response()->json($product);
+	}
+
 	public function createFromList(Request $request)
 	{
 
@@ -92,7 +103,7 @@ class ProductController extends Controller
 					$currentResult = 0;
 					foreach($existingProducts as $existingProduct){
 						$testResult = $this->bestResult($existingProduct,$item['Name']);
-						if($testResult >= 0.75 && $testResult > $currentResult){
+						if($testResult > 0.9 && $testResult > $currentResult){
 							$currentResult = $testResult;
 							$selectedProduct = $existingProduct;
 						}
@@ -103,8 +114,14 @@ class ProductController extends Controller
 					$inc2++;
 					$this->createNewProduct($retailer,$brand,$item);
 				}else{
-					$inc3++;
-					$finalProductRetailer = $this->addRetailerToProduct($retailer,$selectedProduct,$item);
+					$associationExists = ProductRetailer::where('product_id',$selectedProduct->id)->where('retailer_id',$retailer->id)->first();
+					if(empty($associationExists)){
+						$inc3++;
+						$finalProductRetailer = $this->addRetailerToProduct($retailer,$selectedProduct,$item);	
+					}else{
+						$inc2++;
+						$this->createNewProduct($retailer,$brand,$item);
+					}
 				}
 			}
 
@@ -203,18 +220,19 @@ class ProductController extends Controller
 		$productRetailer = ProductRetailer::find($prid);
 
 		$retailerid = $productRetailer->retailer_id;
-		$product->subcategory;
+		$productName = $product->name;
+
+		$match = "MATCH (name) AGAINST (? IN BOOLEAN MODE)";
 
 		$existingProducts = Product::whereHas('productretailer',  function($query) use ($retailerid)  {
 			$query->where('retailer_id', $retailerid);
-		})->where('sub_category_id',$product->sub_category_id)->where('id','!=',$product->id)->get();
+		})->where('sub_category_id',$product->sub_category_id)->where('id','!=',$product->id)->orderByRaw($match . " DESC", [$productName])->get();
 
-		$productName = $product->name;
 		$relatedProducts = [];
 		if(!$existingProducts->isEmpty()){
 			foreach($existingProducts as $existingProduct){
 				$testResult = $this->bestResult($existingProduct,$productName);
-				if($testResult >= 0.50){
+				if($testResult >= 0.65){
 					array_push($relatedProducts, $existingProduct);
 				}
 			}

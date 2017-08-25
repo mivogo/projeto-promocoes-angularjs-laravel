@@ -93,17 +93,19 @@ class ProductController extends Controller
 
 				$brand = $this->findBrand($item['Brand']);
 
+				$diff = $this->weightDifference($item);
+
 				$existingProducts = Product::with('productretailer')->whereHas('productretailer',  function($query) use ($retailer)  {
 					$query->where('retailer_id','!=',$retailer->id);
 				})
-				->where('brand_id',$brand->id)->whereBetween('weight', array($item['Weight']-2, $item['Weight']+2))->get();
+				->where('brand_id',$brand->id)->whereBetween('weight', array($item['Weight']-$diff, $item['Weight']+$diff))->get();
 
 				$selectedProduct = null;
 				if(!$existingProducts->isEmpty()){
 					$currentResult = 0;
 					foreach($existingProducts as $existingProduct){
 						$testResult = $this->bestResult($existingProduct,$item['Name']);
-						if($testResult > 0.9 && $testResult > $currentResult){
+						if($testResult >= 0.75 && $testResult > $currentResult){
 							$currentResult = $testResult;
 							$selectedProduct = $existingProduct;
 						}
@@ -433,9 +435,25 @@ class ProductController extends Controller
 		return $item;
 	}
 
+	private function weightDifference($item){
+		if(strcmp($item['Weight_Type'], "ml") == 0){
+			return 500;
+		}
+
+		if(strcmp($item['Weight_Type'], "cl") == 0 || strcmp($item['Weight_Type'], "g") == 0){
+			return 50;
+		}
+
+		return 1;
+	}
+
 	private function weightFix($item){
 		if(strcmp($item['Weight_Type'], "ml") == 0){
-			$item['Type_of_weight'] = 'l';
+			$item['Type_of_weight'] = 'lt';
+		}
+
+		if(strcmp($item['Weight_Type'], "cl") == 0){
+			$item['Type_of_weight'] = 'lt';
 		}
 
 		if(strcmp($item['Weight_Type'], "g") == 0){

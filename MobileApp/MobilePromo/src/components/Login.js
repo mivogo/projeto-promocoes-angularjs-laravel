@@ -58,7 +58,8 @@ class Login extends Component {
         AsyncStorage.setItem('@Token', this.state.token);
         AsyncStorage.setItem('@Name', this.state.name);
         AsyncStorage.setItem('@LogMode', 'Logged');
-        setTimeout(() => { this.props.navigation.navigate('Pesquisar'); }, 10000);
+        this.props.navigation.navigate('Pesquisar'); 
+        {/*setTimeout(() => { this.props.navigation.navigate('Pesquisar'); }, 10000); */}
         }
         else {
             this.setState({ token: responseJson.token, isLogged: false, isLoading: false });            

@@ -24,6 +24,17 @@ class FavoriteProducts extends Component {
     isLoading: false,
   }
 
+  componentWillMount() {
+    console.log("A MONTAR");
+
+    AsyncStorage.getItem('@Token').then((rtoken) => {
+      this.setState({ token: rtoken });
+      this.favoritePost();
+      }, (error) => {
+      console.log(error);
+    });
+  }
+
   favoritePost() {
     console.log('RENDER FAVORITE POST');
     this.setState({ isLoading: true });
@@ -91,17 +102,6 @@ class FavoriteProducts extends Component {
       </View>);
   }
 
-  componentWillMount() {
-    console.log("A MONTAR");
-
-    AsyncStorage.getItem('@Token').then((rtoken) => {
-      this.setState({ token: rtoken });
-      this.favoritePost();
-      }, (error) => {
-      console.log(error);
-    });
-
-  }
 
   render() {
     console.log('RENDER FAVORITE PRODUCTS');

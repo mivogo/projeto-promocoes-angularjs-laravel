@@ -53,10 +53,12 @@ app.controller('DialogSaveShoppingListController', function ($scope, $state, $ui
     var items = CartService.getItems();
     var products = [];
     angular.forEach(items, function(item){
-      products.push({id:item.getId(),quantity:item.getQuantity()});
+      if(item.available){
+        products.push({id:item.id,quantity:item.quantity});
+      }
     });
 
-    var request ={
+    var request = {
       name: $scope.name,
       description: $scope.description,
       retailer_id: FilterbarService.getRetailer().id,
@@ -67,7 +69,6 @@ app.controller('DialogSaveShoppingListController', function ($scope, $state, $ui
 
     ProfileFactory.saveShoppingList(request)            
     .then(function (response) {
-
       ModalService.CloseModalForm();
       $state.reload();
     }, function (error) {

@@ -50,4 +50,9 @@ app.controller('HeaderController', function ($scope, $location, $http, $rootScop
 		}
 	};
 
+	$scope.notification = function(){
+		console.log("lol");
+		 jQuery('#notifications-menu').collapse('show');//getting element sibling
+	}
+
 });

@@ -52,4 +52,18 @@ app.controller('CartController', function ($scope, $uibModal, ModalService, Cart
 		});
 	}	
 
+	$scope.hasSuggestions = function(item){
+    	for(var i = 0; i <item.suggestions.length; i++) {
+			if(!CartService.hasItem(item.suggestions[i])){
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	$scope.suggestions = function(index,item){
+		ModalService.productSuggestionForm(index,item);
+	}
+
 });

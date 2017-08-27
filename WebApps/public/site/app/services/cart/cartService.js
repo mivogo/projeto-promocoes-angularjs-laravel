@@ -163,25 +163,21 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
     return qt;
   }
 
-  service.updateItemQuantity = function (item,quantity){
+  service.updateItemQuantity = function (item, quantity){
     var qt;
     var index;
+    var arr = service.activeCart;
 
-    angular.forEach(service.carts, function(arr) {
-      for(var i = 0; i < arr.length; i++) {
-        if (arr[i].id == item.product_id) {
-          arr[i].quantity += quantity;
-          arr[i].total = arr[i].price * arr[i].quantity;
-          qt = arr[i].quantity;
+    for(var i = 0; i < arr.length; i++) {
+      if (arr[i].id == item.product_id) {
+        qt = arr[i].quantity+quantity;
+        index = i;
 
-          if(qt == 0){
-            index = i;
-          }
-
-          break;
-        }
+        break;
       }
-    });
+    }
+
+    updateCartsProductQuantity(index, quantity);
 
     if(qt == 0){
       removeProductFromCarts(index);
@@ -219,6 +215,28 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
     }
 
     return false;
+  }
+
+  service.replaceItemWithSuggestion = function (index, product){
+    var arr = service.activeCart;
+    var quantity = arr[index].quantity;
+    var cartp;
+
+    var data = {
+      id: product.product_id,
+      name: product.name,
+      price: product.price,
+      quantity: quantity,
+      data: product,
+      suggestions: [],
+      available: true
+    };
+
+    cartp = CartProduct.build(data);
+    arr.splice(index, 1, cartp);
+
+    updateLocalStorageCarts();
+    notifyObservers();
   }
 
   service.replaceCartWithList = function(list){
@@ -291,6 +309,13 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
 
   function updateLocalStorageActiveCart(id){
     localStorage.setItem('activeCart', id);
+  }
+
+  function updateCartsProductQuantity(index, quantity){
+    angular.forEach(service.carts, function(arr){
+      arr[index].quantity += quantity;
+      arr[index].total = arr[index].price * arr[index].quantity;
+    });
   }
 
   function addProductToCart(id, product){

@@ -34,6 +34,9 @@
 <script src="site/assets/libs/angular-material.min.js"></script>
 <script src="site/assets/libs/angular-aria.min.js"></script>
 <script src="site/assets/libs/angular-animate.min.js"></script>
+<script src="site/assets/libs/angular-consent.js"></script>
+
+<script src="site/assets/js/query.js"></script>
 
 <script src="site/app/app.module.js"></script>
 <script src="site/app/app.route.js"></script>
@@ -53,6 +56,7 @@
 <script src="site/app/components/shoppingListProducts/shoppingListProductsController.js"></script>
 <script src="site/app/components/dialogSaveShoppingList/dialogSaveShoppingListController.js"></script>
 <script src="site/app/components/notifications/notificationsController.js"></script>
+<script src="site/app/components/productSuggestion/productSuggestionController.js"></script>
 
 <script src="site/app/shared/header/headerController.js"></script>
 <script src="site/app/shared/footer/footerController.js"></script>

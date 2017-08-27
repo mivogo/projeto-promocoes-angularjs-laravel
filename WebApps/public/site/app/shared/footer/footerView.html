@@ -26,6 +26,17 @@
 
 			<p>Company Name &copy; 2015</p>
 		</div>
-	</div>
-</footer>
+
+		<section consent="cookie-disclaimer">
+			<section data-ng-if="$consent.hasNotAgreedYet()">
+				<div class="cc-window">
+					<span class="text">Este site usa cookies para otimizar melhor experiência de navegação. Nunca recolhemos dados pessoais sem a sua autorização.</span>
+						<div class="compliance">
+							<button class="btn" data-ng-click="$consent.agree();">Fechar</button>
+						</div>
+					</div>
+				</section>
+			</section>
+		</div>
+	</footer>
 

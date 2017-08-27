@@ -62,6 +62,6 @@ Route::group(['middleware' => 'cors'], function () {
 	Route::get('/brands', 'API\BrandController@showAll');
 
 
-	Route::post('/teste/{id}', 'API\ProductController@teste');
+	Route::post('/testeNotification/{id}', 'API\ProductController@testeNotification');
 
 });

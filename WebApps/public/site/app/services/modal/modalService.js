@@ -146,12 +146,36 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory, 
 
   };
 
-    service.saveShoppingListForm = function(){
+  service.saveShoppingListForm = function(){
     var modal = $uibModal.open({
       allowAnonymous: false,
       templateUrl: 'site/app/components/dialogSaveShoppingList/dialogSaveShoppingListView.html',
       controller: 'DialogSaveShoppingListController',
       windowClass: 'modal-saveshoppinglist'
+    });
+
+    service.CloseModalForm();
+
+    modalInstance = modal;
+
+    modal.result.then(function () {
+          // Redirect
+        }, function () {
+          service.CloseModalForm();
+        });
+
+  };
+
+  service.productSuggestionForm = function(replaceIndex, selectedProduct){
+    var modal = $uibModal.open({
+      allowAnonymous: false,
+      templateUrl: 'site/app/components/productSuggestion/productSuggestionView.html',
+      controller: 'ProductSuggestionController',
+      windowClass: 'modal-productsuggestion',
+      resolve: {
+        replaceIndex: replaceIndex,
+        selectedProduct: selectedProduct,
+      }
     });
 
     service.CloseModalForm();

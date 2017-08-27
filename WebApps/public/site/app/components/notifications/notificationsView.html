@@ -10,7 +10,7 @@
 				<div class="content pointer" data-ng-click="markAsRead(notification.id)">
 					<div class="notification-item">
 						<h4 class="item-title">{{notification.created}}</h4>
-						<p class="item-info"><a class="product" data-ng-click="searchProduct(notification.product_name)">{{notification.product_name}}</a> no {{notification.retailer_name}} encontra-se com {{notification.percentage}}% desconto: <span class="base-price">{{notification.base_price | currency}}</span> -  <span class="price">{{notification.price | currency}}</span></p>
+						<p class="item-info"><a class="product" data-ng-click="searchProduct(notification)">{{notification.product_name}}</a> no {{notification.retailer_name}} encontra-se com {{notification.percentage}}% desconto: <span class="base-price">{{notification.base_price | currency}}</span> -  <span class="price">{{notification.price | currency}}</span></p>
 					</div>
 				</div>
 			</div>

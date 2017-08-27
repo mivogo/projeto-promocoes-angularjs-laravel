@@ -10,6 +10,7 @@
 				<tr>
 					<th></th>
 					<th></th>
+					<th></th>
 					<th>Quantity</th>
 					<th>Amount</th>
 					<th>Total</th>
@@ -20,6 +21,7 @@
 					<td></td>
 					<td></td>
 					<td></td>
+					<td></td>
 					<td>Total:</td>
 					<td>{{ cart.totalCost() | currency }}</td>
 				</tr>
@@ -27,11 +29,13 @@
 			<tbody>
 				<tr ng-repeat="item in cart.getItems() track by $index">
 					<td><span ng-click="cart.removeItemById(item.id)" class="glyphicon glyphicon-remove pointer noselect"></span></td>
+					<td data-ng-if="hasSuggestions(item)"><span ng-click="suggestions($index, item)" class="glyphicon glyphicon-refresh pointer noselect"></span></td>
+					<td data-ng-if="!hasSuggestions(item)"></td>
 					<td>{{ item.name }}</td>
-					<td><span class="glyphicon glyphicon-minus pointer noselect" ng-class="{'disabled':item.quantity==1}"
-						ng-click="cart.updateItemQuantity(item.data, -1)"></span>
+					<td><span class="glyphicon glyphicon-minus pointer noselect" data-ng-class="{'disabled':item.quantity==1}"
+						data-ng-click="cart.updateItemQuantity(item.data, -1)"></span>
 						<span class="cart-item-quantity noselect">  {{ item.quantity | number }}  </span>
-						<span class="glyphicon glyphicon-plus pointer noselect" ng-click="cart.updateItemQuantity(item.data, 1)"></span>
+						<span class="glyphicon glyphicon-plus pointer noselect" data-ng-click="cart.updateItemQuantity(item.data, 1)"></span>
 					</td>
 					<td>{{ item.price | currency}}</td>
 					<td>{{ item.total | currency }}</td>

@@ -4,7 +4,7 @@
 
 'use strict';
 
-app.controller('ProfileNotificationsController', function ($scope, $state, allNotificationsRequest, NotificationService) {
+app.controller('ProfileNotificationsController', function ($scope, $state, FilterbarService, allNotificationsRequest, NotificationService) {
 	console.log("Profile Notification Controller reporting for duty.");
 
 	$scope.notifications = allNotificationsRequest;
@@ -19,8 +19,9 @@ app.controller('ProfileNotificationsController', function ($scope, $state, allNo
 		NotificationService.markAllAsRead();
 	}
 
-	$scope.searchProduct = function(name){
-		$state.go('search', {q:name}, {reload:true});
+	$scope.searchProduct = function(data){
+		FilterbarService.setRetailerWithName(data.retailer_name);
+		$state.go('search', {q:data.product_name,brand:data.brand_name}, {reload:true});
 	}
 
 });

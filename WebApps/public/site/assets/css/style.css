@@ -103,10 +103,11 @@
 	max-height: 250px;
 	overflow-y: auto;
 	margin:5px 0;
+	font-size: 11px;
 }
 
 .filter-check::-webkit-scrollbar {
-	width:10px; // manage scrollbar width here
+	width:5px; // manage scrollbar width here
 }
 .filter-check::-webkit-scrollbar * {
 	background:transparent; // manage scrollbar background color here
@@ -737,7 +738,29 @@
 	display: table-row;
 }
 
+.cartinfobar .panel-body{
+	padding: 10px;
+}
 
+.cartinfobar .panel-body .table-responsive{
+	padding: 0;
+	max-height: 365px;
+}
+
+.cartinfobar .panel-body .table-responsive::-webkit-scrollbar {
+	width: 5px; // manage scrollbar width here
+}
+.cartinfobar .panel-body .table-responsive::-webkit-scrollbar * {
+	background:transparent; // manage scrollbar background color here
+}
+.cartinfobar .panel-body .table-responsive::-webkit-scrollbar-thumb {
+	background:rgba(150,150,150,0.1) !important; // manage scrollbar thumb background color here
+}
+
+.cartinfobar .panel-body .table-responsive .table{
+	font-size: 9px;
+	margin-bottom: 0px; 
+}
 
 .notification-content .dropdown {
 	display:inline-block;
@@ -861,3 +884,75 @@
 	animation-fill-mode: both;
 }
 
+.cc-window{
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	-ms-flex-align: center;
+	-ms-grid-row-align: center;
+	align-items: center;
+
+	padding: 1em 1.8em;
+	width: 100%;
+	-ms-flex-direction: row;
+	flex-direction: row;
+
+	position: fixed;
+	overflow: hidden;
+	box-sizing: border-box;
+	font-family: Helvetica,Calibri,Arial,sans-serif;
+	font-size: 12px;
+	line-height: 1.5em;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	z-index: 9999;
+
+	opacity: 1;
+	transition: opacity 1s ease;
+
+	color: rgb(255, 255, 255);
+	background-color: rgb(56, 59, 117);
+}
+
+.cc-window .text{
+	-ms-flex: 1;
+	flex: 1;
+}
+
+.cc-window .compliance{
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-line-pack: justify;
+	align-content: space-between;
+	min-width: 140px;
+}
+
+.cc-window .compliance .btn{
+	color: rgb(0, 0, 0);
+	background-color: rgb(241, 214, 0);
+	border-color: transparent;
+	margin-left: .5em;
+	font-size: 12px;
+	-ms-flex: 1;
+	flex: 1;
+}
+
+
+#notifications-menu .collapsing {
+	position: relative;
+	height: 0;
+	overflow: hidden;
+	-webkit-transform: translateZ(0);
+	-webkit-transition: height .01s ease-out;
+	-moz-transition: height .01s ease-out;
+	-o-transition: height .01s ease-out;
+	-ms-transition: height .01s ease-out;
+	transition: height .01s ease-out;
+	-webkit-transition: height .01s ease-out;
+	transition: height .01s ease-out;
+}

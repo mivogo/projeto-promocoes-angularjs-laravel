@@ -34,29 +34,29 @@ app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchSer
 
 		var orderby = SearchService.selectedOrderOption.value;
 		var pageSize = SearchService.pageSize.value;
-		var search = SearchService.getSearch();
-		var brand = FilterbarService.getBrand().name;
-		var category = FilterbarService.getCategory().name;
-		var subcategory = MenuService.getSubcategory();
+		var search;
+		var brand;
+		var category
+		var subcategory;
 
-		if(!search && param.q){
+		if(param.q){
 			search = param.q;
 		}
 
-		if(!brand && param.brand){
+		if(param.brand){
 			brand = param.brand;
 		}
 
-		if(!category && param.category){
+		if(param.category){
 			category = param.category;
 		}
 
-		if(!category && param.menuCategory){
-			category = param.menuCategory;
+		if(param.menuCategory){
+			category = param.menuCategory.replace(/-/g, ' ');
 		}
 
-		if(!subcategory && param.menuSubategory){
-			subcategory = param.menuSubategory;
+		if(param.menuSubcategory){
+			subcategory = param.menuSubcategory.replace(/-/g, ' ');;
 		}
 
 		var request = {

@@ -47,19 +47,30 @@ class ShoppingListTransformer extends Transformer{
 	}	
 
 	public function transformProduct($product, $productretailer){
+		$info = $productretailer;
 		$sub = $product->subcategory;
 		$brand = $product->brand;
+		$retailer = $info->retailer;
 		return [
-		'id' => $productretailer->id,
+		'id' => $info->id,
 		'product_id' => $product->id,
 		'name' => preg_replace('/\s+/', ' ', $product->name),
-		'price' => $productretailer->price,
-		'base_price' => $productretailer->base_price,
-		'hasDiscount' => $productretailer->hasDiscount,
-		'quantity' => $product->pivot->quantity,
+		'price' => $info->price,
+		'base_price' => $info->base_price,
+		'hasDiscount' => $info->hasDiscount,
+		'weight' => $product->weight,
+		'weight_type' => $product->weight_type,
+		'price_weight' => $info->price_per_weight,
+		'type_weight'  => $info->type_of_weight,
 		'brand' => $brand->name,
-		'image' => $productretailer->image
+		'retailer'=> $retailer->name,
+		'subcategory' => $sub->name,
+		'category' => $sub->category->name,
+		'image' => $info->image,
+		'pid' => $info->pid,
+		'link' => $info->link
 		];	
+	
 	}	
 
 }

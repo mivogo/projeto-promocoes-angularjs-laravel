@@ -225,9 +225,7 @@ class UserListProducts extends Component {
       </Modal>
     
     {this.renderHeader('Listas Guardadas')}
-    <ScrollView
-      contentContainerStyle={styles.contentContainer}
-      >
+    <ScrollView>
       {this.renderListsPreview()}
     </ScrollView>
     {/*<ProductList 

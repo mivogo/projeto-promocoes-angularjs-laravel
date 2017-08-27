@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
+import { Text, View, Button, AsyncStorage, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ProductList from './ProductList';
 
 class Notifications extends Component {
   static navigationOptions = {
-    tabBarLabel: 'Favorite Products',
+    tabBarLabel: 'Notifications',
     drawerIcon: ({ tintColor }) => {
       return (
         <MaterialIcons 
@@ -20,17 +20,24 @@ class Notifications extends Component {
 
   state = {
     token: '',
-    lists: [],
+    notifications: [],
     isLoading: false,
   }
 
-  favoritePost() {
-    console.log('RENDER FAVORITE POST');
+  componentWillMount() {
+    AsyncStorage.getItem('@Token').then((rtoken) => {
+      this.setState({ token: rtoken });
+      this.notificationsGet();
+      }, (error) => {
+      console.log(error);
+    });
+  }
+
+  notificationsGet() {
+    console.log('RENDER NOTIFICATIONS GET');
     this.setState({ isLoading: true });
-    const url = 'http://vps415122.ovh.net/api/profile/shoppinglist';
+    const url = 'http://vps415122.ovh.net/api/profile/notificationNotRead';
     const auth = 'bearer ' + this.state.token;
-    console.log('Auth');
-    console.log(auth);
     fetch(url, {
     method: 'GET',
     headers: {
@@ -39,14 +46,49 @@ class Notifications extends Component {
     }
     }).then((response) => response.json())
     .then((responseJson) => {
-      console.log('FavoritePost');
-      console.log(responseJson);
       this.setState({ 
-        lists: responseJson, 
-        isLoading: false, });
+        notifications: responseJson, 
+        isLoading: false });
     })
     .catch((error) => {
-        console.log('DEU MERDA');
+        console.log('Erro Pedido');
+        this.setState({ isLoading: false });
+        console.error(error);
+    });
+  }
+
+  removeNotificationsPost(id) {
+    this.setState({ isLoading: true });
+    const url = 'http://vps415122.ovh.net/api/profile/notification/' + id;
+    const auth = 'bearer ' + this.state.token;
+    fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': auth
+    }
+    }).then((response) => response.json())
+    .then(() => {})
+    .catch((error) => {
+        console.log('Erro Pedido');
+        this.setState({ isLoading: false });
+        console.error(error);
+    });
+  }
+
+  removeAllNotificationsPost() {
+    this.setState({ isLoading: true });
+    const url = 'http://vps415122.ovh.net/api/profile/notificationMarkAll';
+    const auth = 'bearer ' + this.state.token;
+    fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': auth
+    }
+    }).then((response) => response.json())
+    .catch((error) => {
+        console.log('Erro Pedido');
         this.setState({ isLoading: false });
         console.error(error);
     });
@@ -79,7 +121,7 @@ class Notifications extends Component {
 
          {/* Search Menu */}
          <View>
-        <TouchableOpacity onPress={() => { this.favoritePost(); }}>
+        <TouchableOpacity onPress={() => { this.notificationsGet(); }}>
           <MaterialIcons 
           name="refresh"
           size={40}
@@ -91,35 +133,74 @@ class Notifications extends Component {
       </View>);
   }
 
-  componentWillMount() {
-    console.log("A MONTAR");
-
-    AsyncStorage.getItem('@Token').then((rtoken) => {
-      this.setState({ token: rtoken });
-      this.favoritePost();
-      }, (error) => {
-      console.log(error);
-    });
-
-  }
-
-  render() {
-    console.log('RENDER FAVORITE PRODUCTS');
-    console.log(this.state.token);
+  renderFooter() {
+    console.log('Render Footer Menu');
     return (
-    <View style={{ flex: 1 }}
-    >
-    {this.renderHeader('Notificações')}
-    {/*<ProductList 
-        isItLoading={this.state.isLoading}
-        products={this.state.products}
-    />*/}
-    </View>
+      <View style={styles.footerStyle}>
+         <Button onPress={() => { this.removeAllNotificationsPost(); this.notificationsGet(); }} title='Apagar Todos'/>
+       </View> 
     );
   }
-};
+
+  renderNotifications() {
+    console.log(this.state.notifications.length);
+    if (this.state.notifications.length !== 0 && !(this.state.isLoading)) {
+      return this.state.notifications.map(row =>
+        <View
+        key={row.id}
+        style={{ flex: 1, 
+        flexDirection: 'row',
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: 10 }}
+        >
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontWeight: 'bold' }}>{row.product_name} no {row.retailer_name} encontra-se com {row.percentage}% de desconto: {row.base_price} -> {row.price}</Text>
+          </View>
+            <View style={{ width: 10 }} />
+            <Button onPress={() => { this.removeNotificationsPost(row.id); this.notificationsGet(); }} title='Apagar' color='red' />
+          
+        </View>
+       );
+    }
+    return (
+      <ActivityIndicator 
+      size='large' 
+      style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }} 
+      />
+      );
+ }
+ 
+  render() {
+    console.log('RENDER NOTIFICATIONS');
+    return (
+    <View style={{ flex: 1 }}>
+    {this.renderHeader('Notificações')}
+    <ScrollView>
+      {this.renderNotifications()}
+    </ScrollView>
+    {this.renderFooter()}
+    </View>
+    );
+}
+
+}
 
 const styles = {
+  footerStyle: {
+    borderWidth: 1,    
+    backgroundColor: '#F8F8F8',
+    alignSelf: 'center',
+    flexDirection: 'row',
+    height: 60,
+    paddingTop: 5,
+    paddingBottom: 5,
+    shadowColor: 'black',
+    shadowOffset: { width: 20, height: 20 },
+    shadowOpacity: 0.5,
+    elevation: 10,
+    position: 'relative'
+  },
   headerStyle: {
     borderWidth: 1,
     backgroundColor: '#F8F8F8',
@@ -135,6 +216,20 @@ const styles = {
   },
   headerTextStyle: {
     fontSize: 20
+  },
+  containerStyle: {
+    borderWidth: 1,
+    borderRadius: 2,
+    borderColor: '#ddd',
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 10,
   }
 };
 

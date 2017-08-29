@@ -1,12 +1,16 @@
 <div class="row">
     <div class="panel panel-default sidebar-menu cartinfobar">
         <div class="panel-heading">
-            <h3 class="panel-title">Retailer</h3>
+            <h3 class="panel-title">A sua lista</h3>
         </div>
         <div class="panel-body">
             <div>
-                <div>{{activeRetailer.name}}</div>
-                <div>{{retailerTotalCost(activeRetailer.id) | currency}} <span data-ng-show="retailerHasUnavailableProducts(activeRetailer.id)">!</span></div>
+                <div ui-sref="cart" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 retailer-price-box pointer">
+                    <div class="table">
+                    <div class="retailer nopadding"><img class="img-responsive ng-scope" data-ng-src="{{activeRetailer.img}}"/></div>
+                        <div class="price nopadding">{{retailerTotalCost(activeRetailer.id) | currency}} <span data-ng-show="retailerHasUnavailableProducts(activeRetailer.id)"><i class="fa fa-exclamation-circle"></i></span></div>
+                    </div>
+                </div>
                 <div>
                     <div class="alert alert-warning" role="alert" data-ng-show="activeCart.length === 0">
                         Your cart is empty
@@ -16,15 +20,15 @@
                         <table class="table table-striped cart">
                             <thead>
                                 <tr>
-                                    <th>Nome</th>
-                                    <th>Total</th>
+                                    <th>Produto</th>
+                                    <th class="text-right">Preço</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr data-ng-repeat="item in activeCart track by $index">
-                                    <td>{{ item.name }}</td>
-                                    <td data-ng-if="item.available">{{ item.total | currency }}</td>
-                                    <td data-ng-if="!item.available">Indisp.</td>
+                                    <td>{{ item.name }} ({{item.quantity}})</td>
+                                    <td class="text-right" data-ng-if="item.available">{{ item.total | currency }}</td>
+                                    <td class="text-right" data-ng-if="!item.available">Indisp.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -34,15 +38,19 @@
         </div>
     </div>
 
-    <div class="panel panel-default sidebar-menu">
+    <div class="panel panel-default sidebar-menu cartinfobar">
         <div class="panel-heading">
             <h3 class="panel-title">Comparar preço total</h3>
         </div>
         <div class="panel-body">
             <div data-ng-repeat="retailer in retailers">
                 <div class="pointer" data-ng-show="retailer.id != activeRetailer.id" data-ng-click="changeActiveRetailer(retailer)">
-                    <div>{{retailer.name}}</div>
-                    <div>{{retailerTotalCost(retailer.id) | currency}} <span data-ng-show="retailerHasUnavailableProducts(retailer.id)">!</span></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 retailer-price-box">
+                        <div class="table">
+                            <div class="retailer nopadding"><img class="img-responsive ng-scope" data-ng-src="{{retailer.img}}"/></div>
+                            <div class="price nopadding">{{retailerTotalCost(retailer.id) | currency}} <span data-ng-show="retailerHasUnavailableProducts(retailer.id)"><i class="fa fa-exclamation-circle"></i></span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

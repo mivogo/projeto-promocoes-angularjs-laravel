@@ -16,7 +16,7 @@ class ShoppingListTransformer extends Transformer{
 	public function transformFromArray($lists){
 		$response = array();
 
-		foreach($lists AS $list){
+		foreach($lists as $list){
 			$sum = 0;
 			$qt = 0;
 			$price = 0;
@@ -26,7 +26,7 @@ class ShoppingListTransformer extends Transformer{
 			foreach ($products as $product) {
 				$sum +=1;
 				$qt += $product->pivot->quantity;
-				$price += ($product->productretailer()->where('retailer_id',$retailerid)->first()->price * $product->pivot->quantity);
+				$price += ($product->productretailer()->where('retailer_id',$retailerid)->first()->price) * $product->pivot->quantity;
 			}
 			
 			$new = (new ShoppingListTransformer)->transformWithQuantity($list,$sum,$qt,$price);

@@ -42,7 +42,7 @@ app.controller('HeaderController', function ($scope, $location, $http, $rootScop
 			FilterbarService.setBrand('');
 			MenuService.setSubcategory('');
 
-			$state.go('search', {q: $scope.searchterm, brand:null,category:null}, { reload: true });
+			$state.go('search', {q: $scope.searchterm, brand:null,category:null,menuCategory:null,menuSubcategory:null}, { reload: true });
 			$scope.searchterm = null;
 		}else{
 

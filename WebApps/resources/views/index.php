@@ -10,6 +10,7 @@
 	<title>Projeto Promocoes</title>
 
 	<link rel="stylesheet" href="site/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="site/assets/css/jasny-bootstrap.min.css">
 	<link rel="stylesheet" href="site/assets/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="site/assets/css/font-awesome.min.css">
 	<link rel="stylesheet" href="site/assets/css/style.css">
@@ -21,6 +22,7 @@
 
 <script src="site/assets/libs/jquery.min.js"></script>
 <script src="site/assets/libs/bootstrap.min.js"></script>
+<script src="site/assets/libs/jasny-bootstrap.min.js"></script>
 <script src="site/assets/libs/angular.min.js"></script>
 <script src="site/assets/libs/angular-ui-router.min.js"></script>
 <script src="site/assets/libs/ui-bootstrap.js"></script>

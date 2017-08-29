@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Model\ShoppingList;
 use App\Model\Product;
+use App\Model\ProductRetailer;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repository\Transformers\ShoppingListTransformer;
@@ -64,7 +65,10 @@ class ShoppingListController extends Controller
 		$list->save();
 		
 		foreach ($r_products as $product) {
-			$list->product()->attach([$product['id'] => ['quantity' => $product['quantity']]]);
+			$verify = ProductRetailer::where('product_id',$product['id'])->where('retailer_id',$list->retailer_id)->first();
+			if(!empty($verify)){
+				$list->product()->attach([$product['id'] => ['quantity' => $product['quantity']]]);
+			}
 		}
 
 		$profile->shoppinglist()->save($list);

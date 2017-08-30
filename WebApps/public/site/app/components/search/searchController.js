@@ -7,7 +7,9 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	console.log("Search Controller reporting for duty.");
 
 	$scope.cart = CartService;
-
+	$scope.searchTerm = $stateParams.q;
+	$scope.activeRetailer = FilterbarService.getRetailer().name;
+	
 	SearchService.clearUrl();
 	SearchService.clearProductIds();
 
@@ -20,6 +22,7 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	$scope.currentPage = products.current_page;
 	$scope.nextPageUrl = products.next_page_url;
 	$scope.prevPageUrl = products.prev_page_url;
+	$scope.totalProducts = products.total;
 
 	$scope.pageSize = {
 		"type": "select", 

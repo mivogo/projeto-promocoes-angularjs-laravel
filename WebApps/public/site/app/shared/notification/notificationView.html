@@ -1,29 +1,29 @@
 <div class="notification-content">
   <div class="dropdown">
-    <a data-ng-if="totalNotifications() > 0" id="dLabel" class="icon-select-active pointer" data-toggle="dropdown" data-target="notifications" href="#">
+    <a data-ng-if="totalNotifications() > 0" id="dLabel" class="icon-select-active pointer" data-toggle="collapse" data-target="#notifications-menu" href="#">
       <span class="count animated" id="notifications-count">{{totalNotifications()}}</span>
       <i class="fa fa-bell-o"></i>
     </a>
 
-    <a  data-ng-if="totalNotifications() == 0" id="dLabel" class="icon-select-disabled pointer" data-toggle="dropdown" data-target="notifications" href="#">
+    <a  data-ng-if="totalNotifications() == 0" id="dLabel" class="icon-select-disabled pointer" data-toggle="collapse" data-target="#notifications-menu" href="#">
       <span class="count animated" id="notifications-count">{{totalNotifications()}}</span>
       <i class="fa fa-bell-o"></i>
     </a>
 
-    <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
+    <div id="notifications-menu" class="dropdown-menu notifications collapse" role="menu" aria-labelledby="dLabel">
       <div class="notification-heading">
         <h4 class="menu-title">Avisos</h4>
         <h4 class="menu-title pull-right pointer" data-ng-click="markAllAsRead()">Marcar todos <i class="glyphicon glyphicon-ok"></i></h4>
       </div>
 
-      <li class="divider"></li>
+      <div class="divider"></div>
 
       <div data-ng-if="totalNotifications() > 0" class="notifications-wrapper">
         <div data-ng-repeat="notification in notifications">
           <div class="content pointer" data-ng-click="markAsRead(notification.id)">
             <div class="notification-item">
               <h4 class="item-title">{{notification.created}}</h4>
-              <p class="item-info"><a class="product" data-ng-click="searchProduct(notification.product_name)">{{notification.product_name}}</a> no {{notification.retailer_name}} encontra-se com {{notification.percentage}}% desconto: <span class="base-price">{{notification.base_price | currency}}</span> -  <span class="price">{{notification.price | currency}}</span></p>
+              <p class="item-info"><a class="product" data-ng-click="searchProduct(notification)">{{notification.product_name}}</a> no {{notification.retailer_name}} encontra-se com {{notification.percentage}}% desconto: <span class="base-price">{{notification.base_price | currency}}</span> -  <span class="price">{{notification.price | currency}}</span></p>
             </div>
           </div>
         </div>
@@ -37,9 +37,9 @@
           </a>
         </div>
       </div>
-      <li class="divider"></li>
+      <div class="divider"></div>
       <div class="notification-footer"></div>
-    </ul>
+    </div>
 
   </div>
 </div>

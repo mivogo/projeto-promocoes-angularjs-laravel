@@ -39,15 +39,20 @@ class ProductController extends Controller
 		$this->swgAlgorithm = new SmithWatermanGotoh();
 	}
 
-	public function teste(Request $request, $id){
-		$product = Product::find($id);
-		$product->productretailer;
+	public function testeNotification($prid){
+		
+		$pr = ProductRetailer::find($prid);
+		$aux = $pr->price;
+		$pr->price = $aux - ($aux*0.4);
 
-		$one = $request->one;
-		$two = $request->two;
+		$percentage = $this->calculatePricePercentageDifference($pr);
+		if($percentage >= 0.25){
+			$this->dispatch((new CreatePriceNotification($pr,$percentage)));
+		}
 
-		return response()->json($this->swgAlgorithm->compare($one,$two));
-		return response()->json($product);
+		$pr->price = $aux;
+
+		return response()->json($percentage);
 	}
 
 	public function createFromList(Request $request)
@@ -98,7 +103,7 @@ class ProductController extends Controller
 				$existingProducts = Product::with('productretailer')->whereHas('productretailer',  function($query) use ($retailer)  {
 					$query->where('retailer_id','!=',$retailer->id);
 				})
-				->where('brand_id',$brand->id)->whereBetween('weight', array($item['Weight']-$diff, $item['Weight']+$diff))->get();
+				->where('brand_id',$brand->id)->where('weight_type',$item['Weight_Type'])->whereBetween('weight', array($item['Weight']-$diff, $item['Weight']+$diff))->get();
 
 				$selectedProduct = null;
 				if(!$existingProducts->isEmpty()){
@@ -424,6 +429,26 @@ class ProductController extends Controller
 		$item['ID'] = intval($item['ID']);
 		$item['Weight'] = doubleval($item['Weight']);
 
+		if(strcmp($item['Weight_Type'], "ml") == 0){
+			$item['Type_of_weight'] = 'l';
+		}
+
+		if(strcmp($item['Weight_Type'], "cl") == 0){
+			$item['Type_of_weight'] = 'l';
+		}
+
+		if(strcmp($item['Weight_Type'], "g") == 0){
+			$item['Type_of_weight'] = 'kg';
+		}
+
+		if(strcmp($item['Weight_Type'], "lt") == 0){
+			$item['Weight_Type'] = 'l';
+		}
+
+		if(strcmp($item['Type_of_weight'], "lt") == 0){
+			$item['Type_of_weight'] = 'l';
+		}
+
 		if(empty($item['Brand'])){
 			$item['Brand'] = $retailer->name;
 		}	
@@ -448,17 +473,6 @@ class ProductController extends Controller
 	}
 
 	private function weightFix($item){
-		if(strcmp($item['Weight_Type'], "ml") == 0){
-			$item['Type_of_weight'] = 'lt';
-		}
-
-		if(strcmp($item['Weight_Type'], "cl") == 0){
-			$item['Type_of_weight'] = 'lt';
-		}
-
-		if(strcmp($item['Weight_Type'], "g") == 0){
-			$item['Type_of_weight'] = 'kg';
-		}
 
 		$converted = 0.001 * $item['Weight'];
 		$item['Price_per_weight'] = $item['Price'] / $converted;

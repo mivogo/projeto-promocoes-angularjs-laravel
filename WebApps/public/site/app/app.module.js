@@ -3,7 +3,7 @@
 */
 'use strict';
 
-var app = angular.module('promocoesWebApp', ['ui.router','ui.bootstrap','ui.select','ngCookies','satellizer','toastr','ngMaterial']);
+var app = angular.module('promocoesWebApp', ['ui.router','ui.bootstrap','ui.select','ngCookies','satellizer','toastr','ngMaterial','angularConsent']);
 
 app.directive("header", function() {
   return {

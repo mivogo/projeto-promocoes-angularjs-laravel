@@ -4,7 +4,7 @@
 
 'use strict';
 
-app.controller('NotificationController', function ($scope, $state, NotificationService) {
+app.controller('NotificationController', function ($scope, $state, FilterbarService, NotificationService) {
 	console.log("Notification Controller reporting for duty.");
 
 	var updateNotifications = function(){
@@ -27,8 +27,9 @@ app.controller('NotificationController', function ($scope, $state, NotificationS
 		return NotificationService.totalNotificationsNotRead();
 	}
 
-	$scope.searchProduct = function(name){
-		$state.go('search', {q:name}, {reload:true});
+	$scope.searchProduct = function(data){
+		FilterbarService.setRetailerWithName(data.retailer_name);
+		$state.go('search', {q:data.product_name,brand:data.brand_name}, {reload:true});
 	}
 
 

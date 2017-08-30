@@ -83,8 +83,8 @@ class RetailerController extends Controller
 
 		foreach ($names as $name) {
 			if(!$result){
-				$similarity = $this->swgAlgorithm->compare($name, $itemName);
-				if($similarity >= 0.85){
+				$similarity = $this->swgAlgorithm->compare($itemName,$name);
+				if($similarity >= 0.75){
 					$result = true;
 				}
 			}

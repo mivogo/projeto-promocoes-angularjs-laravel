@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
+import { Text, View, AsyncStorage, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ProductList from './ProductList';
+import Button from 'apsl-react-native-button';
 
 class ShoppingCart extends Component {
   static navigationOptions = {
@@ -24,33 +25,6 @@ class ShoppingCart extends Component {
     isLoading: false,
   }
 
-  favoritePost() {
-    console.log('RENDER FAVORITE POST');
-    this.setState({ isLoading: true });
-    const url = 'http://vps415122.ovh.net/api/profile/shoppinglist';
-    const auth = 'bearer ' + this.state.token;
-    console.log('Auth');
-    console.log(auth);
-    fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': auth
-    }
-    }).then((response) => response.json())
-    .then((responseJson) => {
-      console.log('FavoritePost');
-      console.log(responseJson);
-      this.setState({ 
-        lists: responseJson, 
-        isLoading: false, });
-    })
-    .catch((error) => {
-        console.log('DEU MERDA');
-        this.setState({ isLoading: false });
-        console.error(error);
-    });
-  }
 
   renderHeader(headerName) {
     console.log('Render Header Menu');
@@ -79,7 +53,7 @@ class ShoppingCart extends Component {
 
          {/* Search Menu */}
          <View>
-        <TouchableOpacity onPress={() => { this.favoritePost(); }}>
+        <TouchableOpacity onPress={() => { this.componentWillMount(); }}>
           <MaterialIcons 
           name="refresh"
           size={40}
@@ -91,15 +65,52 @@ class ShoppingCart extends Component {
       </View>);
   }
 
+  cleanCart() {
+    const jsonObj={
+      products: []
+    };
+    AsyncStorage.setItem('@Cart', JSON.stringify(jsonObj));
+    this.componentWillMount();
+  }
+
+  renderFooter() {
+    console.log('Render Footer Menu');
+    return (
+      <View style={styles.footerStyle}>
+         <Button onPress={() => { this.cleanCart(); }}>Apagar todos</Button>
+       </View> 
+    );
+  }
+
   componentWillMount() {
     console.log("A MONTAR");
-
+    this.setState({ isLoading: true });    
     AsyncStorage.getItem('@Token').then((rtoken) => {
       this.setState({ token: rtoken });
-      this.favoritePost();
       }, (error) => {
       console.log(error);
     });
+
+    const jsonObj={
+      products: {
+        data: []
+      }
+    };
+    console.log(jsonObj);
+
+    AsyncStorage.getItem('@Cart').then((cart) => {
+      cart = JSON.parse(cart);
+      const json = cart.products;
+      console.log(json);
+      for (let i = 0; i < json.length; i++) { 
+          console.log(json[i].data.name);
+          jsonObj.products['data'].push(json[i].data);
+      }
+      console.log(jsonObj);
+      this.setState({ products: jsonObj.products.data, isLoading: false });
+      }, (error) => {
+        console.log(error);
+      });
 
   }
 
@@ -110,10 +121,11 @@ class ShoppingCart extends Component {
     <View style={{ flex: 1 }}
     >
     {this.renderHeader('Carrinho')}
-    {/*<ProductList 
+    <ProductList 
         isItLoading={this.state.isLoading}
         products={this.state.products}
-    />*/}
+    />
+    {this.renderFooter()}
     </View>
     );
   }

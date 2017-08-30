@@ -1,31 +1,61 @@
 import React, { Component } from 'react';
-import { ScrollView, Dimensions, ActivityIndicator } from 'react-native';
+import {AsyncStorage, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import ProductDetail from './ProductDetail';
 
 class ProductList extends Component {
-  state = { products: [], isLoading: false };
+  state = { products: [], favorites: [], token: '', isLoading: false };
 
   componentWillReceiveProps(nextProps) {
+    AsyncStorage.getItem('@Token').then((rtoken) => {
+      this.getFavorites(rtoken);
+    }, (error) => {
+      console.log(error);
+    });    
+
+    this.getFavorites();
+
     if(nextProps.isItLoading){
       this.setState({ isLoading: true });
     }
     else{
       this.setState({ isLoading: false });
     }
+    
     this.setState({ products: nextProps.products });
+  }
+
+  getFavorites(token){
+    const url = 'http://vps415122.ovh.net/api/profile/favorites';
+    const auth = 'bearer ' + token;
+    console.log('PEDRO AUTH');
+    console.log(auth);
+    fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': auth
+    }
+    }).then((response) => response.json())
+    .then((responseJson) => {
+      console.log("Recebeu favoritos");
+      this.setState({ favorites: responseJson, isLoading: false });
+    })
+    .catch((error) => {
+        console.error(error);
+    });
   }
 
   width = Dimensions.get('window').width;
   
   renderProducts() {
-    console.log(' Render Products ');
+    console.log(' Render Products -------------------------------------');
     const data = this.state.products;
-    console.log(this.state.products);
-    if (this.state.products.length !== 0 && !(this.state.isLoading)) {
+    if (!(this.state.isLoading)) {
     return data.map(product =>
       <ProductDetail
        key={product.id}
        product={product}
+       favorites={this.state.favorites}
       />
      );
     }

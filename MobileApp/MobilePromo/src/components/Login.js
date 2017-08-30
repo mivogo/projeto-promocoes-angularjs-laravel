@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, Button, AsyncStorage, TextInput, ActivityIndicator, Modal } from 'react-native';
+import { Text, View, AsyncStorage, TextInput, ActivityIndicator, Modal } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import Button from 'apsl-react-native-button';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 class Login extends Component {
@@ -28,6 +30,14 @@ class Login extends Component {
     isLogged: false,
     isLoading: false,
     visibleRegister: false
+  }
+
+  componentWillMount() {
+      const jsonObj={
+          products: []
+      };
+      console.log('A ENVIAR');
+    AsyncStorage.setItem('@Cart', JSON.stringify(jsonObj)); 
   }
 
   setRegisterMenuVisible(visible) {
@@ -110,36 +120,6 @@ class Login extends Component {
     });
   }
 
-  renderRegisterButton() {
-    if (!this.state.isLoading) {     
-    return (<Button
-      onPress={() => {
-          this.registerPost();
-          }}
-      title="Registar"
-    />);
-    }
-    return <ActivityIndicator 
-    size='large' 
-    style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }} 
-    />;
-  }
-
-  renderLoginButton() {
-    if (!this.state.isLoading) {     
-    return (<Button
-      onPress={() => {
-          this.loginPost();
-          }}
-      title="Login"
-    />);
-    }
-    return <ActivityIndicator 
-    size='large' 
-    style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }} 
-    />;
-  }
-
   renderRegisterMenu() {
     console.log('Render Search Menu');
     return (
@@ -170,7 +150,12 @@ class Login extends Component {
             placeholder='Password'            
             />
 
-            {this.renderRegisterButton()}
+            <Button
+            onPress={() => { this.registerPost(); }}
+            isLoading={this.state.isLoading}
+            >
+                <Text>Registar</Text>
+            </Button>
 
           </View>
 
@@ -189,6 +174,7 @@ class Login extends Component {
       borderWidth: 1
       }
     }>
+        {/* Register Modal */}
         <Modal 
             animationType={'slide'}
             visible={this.state.visibleRegister}
@@ -197,17 +183,31 @@ class Login extends Component {
         >
             {this.renderRegisterMenu()}
         </Modal>
+
+       {/* Login */}
       <View style={
         {
         flex: 1,
         alignItems:'flex-start',
-        borderWidth: 1
+        alignSelf:'center',
+        justifyContent:'center'
         }
       }>
-            <Text style={{fontSize: 30, color: 'blue'}}>
-                Login:
+
+            {/* Login - Text */}
+            <Text style={{ fontSize: 30, alignSelf: 'center' }}>
+                PROMOS
             </Text>
 
+            {/* Login - Animated Logo */}
+            <Animatable.View animation="pulse" iterationCount="infinite" style={{ alignSelf: 'center' }}>
+                <MaterialIcons 
+                name="shopping-basket"
+                size={200}
+                />
+            </Animatable.View>
+
+             {/* Login - Email Input */}
             <TextInput
                 style={styles.inputStyle}
                 keyboardType='email-address'
@@ -216,6 +216,7 @@ class Login extends Component {
                 placeholder='Email'
             />
 
+            {/* Login - Password Input */}
             <TextInput
                 style={styles.inputStyle}
                 onChangeText={(text) => this.setState({ password: text })}
@@ -223,30 +224,38 @@ class Login extends Component {
                 defaultValue={this.state.password}
                 placeholder='Password'
             />
-      </View>
-      <View 
-      style={{
-          flex: 1,
-          flexDirection: 'row',
-          alignItems: 'flex-start',
-          borderWidth: 1
-      }}
-      >
-        {this.renderLoginButton()}
         
+         {/* Login - Login Button */}
         <Button
+        style={{borderColor: 'blue'}}
+        textStyle={{color: 'blue'}}
+        onPress={() => { this.loginPost(); }}
+        isLoading={this.state.isLoading}
+        >
+        Login
+        </Button>
+        
+        {/* Login - Register Button */}
+        <Button
+            style={{borderColor: 'red'}}
+            textStyle={{color: 'red'}}
             onPress={() => {this.setRegisterMenuVisible(!this.state.visibleRegister);}}
-            title="Registar"
-        />
+        >
+        Registar
+        </Button>
 
+        {/* Login - Visitor Button */}
         <Button
+        style={{ borderColor: 'green' }}
+        textStyle={{ color: 'green' }}
             onPress={() => {
                 AsyncStorage.setItem('@LogMode', 'Visitor');
                 this.props.navigation.navigate('Pesquisar');
                 }
             }
-            title="Entrar como visitante"
-        />
+        >
+        Entrar como visitante
+        </Button>
       </View>
     </View>            
     );

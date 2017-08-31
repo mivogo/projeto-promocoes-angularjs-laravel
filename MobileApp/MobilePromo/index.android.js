@@ -1,49 +1,48 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { AppRegistry, Button } from "react-native";
 import { DrawerNavigator } from "react-navigation";
-import SearchScreen from './src/components/SearchScreen';
-import FavoriteProducts from './src/components/FavoriteProducts';
-import UserListsProducts from './src/components/UserListProducts';
-import Notifications from './src/components/Notifications';
-import ShoppingCart from './src/components/ShoppingCart';
-import Login from './src/components/Login';
-
+import SearchScreen from "./src/components/SearchScreen";
+import FavoriteProducts from "./src/components/FavoriteProducts";
+import UserListsProducts from "./src/components/UserListProducts";
+import Notifications from "./src/components/Notifications";
+import ShoppingCart from "./src/components/ShoppingCart";
+import Login from "./src/components/Login";
 
 const DrawerExample = DrawerNavigator(
   {
-    'Conta': {
-        path: '/',
-        screen: Login
+    Conta: {
+      path: "/",
+      screen: Login
     },
     Pesquisar: {
-        path: '/',
-        screen: SearchScreen
+      path: "/",
+      screen: SearchScreen
     },
-    'Carrinho': {
-        path: '/',
-        screen: ShoppingCart
+    Carrinho: {
+      path: "/",
+      screen: ShoppingCart
     },
-    'Produtos Favoritos': {
-        path: '/',
-        screen: FavoriteProducts
+    "Produtos Favoritos": {
+      path: "/",
+      screen: FavoriteProducts
     },
-    'Listas guardadas': {
-        path: '/',
-        screen: UserListsProducts
+    "Listas guardadas": {
+      path: "/",
+      screen: UserListsProducts
     },
-    'Notificações': {
-        path: '/',
-        screen: Notifications
+    Notificações: {
+      path: "/",
+      screen: Notifications
     }
   },
   {
-      initialRouteName: 'Conta',
-      drawerPosition: 'left',  
-      contentOptions: {
-        activeTintColor: 'red',
-      }
+    initialRouteName: "Conta",
+    drawerPosition: "left",
+    contentOptions: {
+      activeTintColor: "red"
+    }
   }
 );
 
 //Render it to the device
-AppRegistry.registerComponent('MobilePromo', () => DrawerExample);
+AppRegistry.registerComponent("MobilePromo", () => DrawerExample);

@@ -5,7 +5,7 @@
 'use strict';
 
 app.controller('NotificationController', function ($scope, $state, FilterbarService, NotificationService) {
-	console.log("Notification Controller reporting for duty.");
+	//console.log("Notification Controller reporting for duty.");
 
 	var updateNotifications = function(){
 		$scope.notifications = NotificationService.getNotificationsNotRead();

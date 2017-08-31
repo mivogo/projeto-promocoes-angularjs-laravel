@@ -4,7 +4,7 @@
 'use strict';
 
 app.controller('CartInfoBarController', function ($scope, $state, FilterbarService, CartService) {
-	console.log("Cart Info Bar Controller reporting for duty.");
+	//console.log("Cart Info Bar Controller reporting for duty.");
 
 	$scope.retailers = FilterbarService.getRetailersList();
 	$scope.activeRetailer = FilterbarService.getRetailer();

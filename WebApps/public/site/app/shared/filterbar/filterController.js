@@ -4,7 +4,7 @@
 'use strict';
 
 app.controller('FilterController', function ($scope, $location, $state, $http, $rootScope, FilterbarService) {
-	console.log("Filter Controller reporting for duty.");
+	//console.log("Filter Controller reporting for duty.");
 
 	$scope.brands = FilterbarService.brandListItems;
 	$scope.categories = FilterbarService.categoryListItems;

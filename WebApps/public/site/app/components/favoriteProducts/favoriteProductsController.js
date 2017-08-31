@@ -5,7 +5,7 @@
 'use strict';
 
 app.controller('FavoriteProductsController', function ($scope, $state, Product, CartService, ProfileFactory, favoritesRequest) {
-	console.log("Favorite Products Controller reporting for duty.");
+	//console.log("Favorite Products Controller reporting for duty.");
 
 	var favorites = favoritesRequest;
 

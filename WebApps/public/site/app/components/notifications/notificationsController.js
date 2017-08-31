@@ -5,7 +5,7 @@
 'use strict';
 
 app.controller('ProfileNotificationsController', function ($scope, $state, FilterbarService, allNotificationsRequest, NotificationService) {
-	console.log("Profile Notification Controller reporting for duty.");
+	//console.log("Profile Notification Controller reporting for duty.");
 
 	$scope.notifications = allNotificationsRequest;
 

@@ -4,7 +4,7 @@
 'use strict';
 
 app.controller('RegisterController', function ($scope, $rootScope, $auth, toastr, AuthService, ModalService) {
-	console.log("Register Controller reporting for duty.");
+	//console.log("Register Controller reporting for duty.");
 
 	$scope.loginForm = function() {
 		ModalService.CallLoginForm();

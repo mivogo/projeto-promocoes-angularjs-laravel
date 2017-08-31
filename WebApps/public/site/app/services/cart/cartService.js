@@ -261,6 +261,9 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
     angular.forEach(service.carts, function(arr) {
       arr.splice(0,arr.length);
     });
+
+    updateLocalStorageCarts();
+    notifyObservers();
   }
 
   service.retailerTotalCost = function(id){

@@ -473,8 +473,17 @@ class ProductController extends Controller
 	}
 
 	private function weightFix($item){
+		$value = 0.001;
 
-		$converted = 0.001 * $item['Weight'];
+		if(strcmp($item['Weight_Type'], "cl") == 0){
+			$value = 0.01;
+		}
+
+		if(strcmp($item['Weight_Type'], "l") == 0 || strcmp($item['Weight_Type'], "kg") == 0){
+			$value = 1;
+		}
+
+		$converted = $value * $item['Weight'];
 		$item['Price_per_weight'] = $item['Price'] / $converted;
 
 		return $item;

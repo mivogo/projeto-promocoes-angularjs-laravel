@@ -5,7 +5,7 @@
 'use strict';
 
 app.controller('ProductSuggestionController', function ($scope, $uibModal, $state, CartService, ModalService, replaceIndex, selectedProduct) {
-	console.log("Product Suggestion Controller reporting for duty.");
+	//console.log("Product Suggestion Controller reporting for duty.");
 
 	var suggestionsList = selectedProduct.suggestions;
 

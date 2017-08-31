@@ -4,7 +4,7 @@
 'use strict';
 
 app.controller('DialogSaveShoppingListController', function ($scope, $state, $uibModal, CartService, ModalService, AuthService, ProfileFactory, FilterbarService) {
-	console.log("Dialog Save Shopping List reporting for duty.");
+	//console.log("Dialog Save Shopping List reporting for duty.");
 
   $scope.name = CartService.getListName();
   $scope.description = CartService.getListDescription();

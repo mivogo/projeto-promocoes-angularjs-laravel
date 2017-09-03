@@ -5,7 +5,7 @@
 'use strict';
 
 app.controller('ShoppingListsController', function ($scope, $state, CartService, ModalService, ProfileFactory, FilterbarService, shoppingListsRequest) {
-	console.log("Shopping Lists Controller reporting for duty.");
+	//console.log("Shopping Lists Controller reporting for duty.");
 
 	var lists = shoppingListsRequest;
 

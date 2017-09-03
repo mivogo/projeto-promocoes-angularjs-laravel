@@ -4,7 +4,7 @@
 'use strict';
 
 app.controller('ProfileController', function ($scope, $location, $http, $rootScope, $state, $auth, toastr, AuthService, ModalService, ProfileFactory, profileRequest) {
-	console.log("Profile Controller reporting for duty.");
+	//console.log("Profile Controller reporting for duty.");
 
 	$scope.name = profileRequest.name;
 	$scope.email = profileRequest.email;

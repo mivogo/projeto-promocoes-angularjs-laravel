@@ -4,10 +4,13 @@
 'use strict';
 
 app.controller('SearchController', function ($scope, $location, $http, $window, $rootScope, $state, $filter, $stateParams, productRequest, FilterbarService, SearchService, ModalService, CartService, MenuService, Product) {
-	console.log("Search Controller reporting for duty.");
+	//console.log("Search Controller reporting for duty.");
 
 	$scope.cart = CartService;
 	$scope.searchTerm = $stateParams.q;
+	if(!$stateParams.q){
+		$scope.searchTerm = $stateParams.menuSubcategory.replace(/-/g, ' ');
+	}
 	$scope.activeRetailer = FilterbarService.getRetailer().name;
 	
 	SearchService.clearUrl();
@@ -53,6 +56,9 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 			$scope.data.push(product);
 
 		}
+	}else{
+		FilterbarService.clearCategoryListItems();
+		FilterbarService.clearBrandListItems();
 	}
 
 	if(categories.length > 0){
@@ -121,9 +127,13 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 		ModalService.productForm();
 	}
 
-	$scope.resetCurrentPage = function(){
-		SearchService.pageSize.value = $scope.pageSize.value;
-		SearchService.selectedOrderOption = $scope.orderSelectedOption;
+	$scope.changeOrder = function(option){
+		SearchService.selectedOrderOption = option;
+		$state.reload();
+	}
+
+	$scope.changePageSize= function(value){
+		SearchService.pageSize.value = value;
 		$state.reload();
 	}
 
@@ -134,12 +144,6 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 
 	$scope.nextPage = function(){
 		SearchService.url = $scope.nextPageUrl;
-		$state.reload();
-	}
-
-	$scope.$on('resetSearchCurrentPage', resetCurrentPage);
-
-	function resetCurrentPage($event){
 		$state.reload();
 	}
 

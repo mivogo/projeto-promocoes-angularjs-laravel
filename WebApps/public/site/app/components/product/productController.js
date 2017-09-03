@@ -4,7 +4,7 @@
 'use strict';
 
 app.controller('ProductController', function ($scope, $state, CartService, ModalService, SearchService, AuthService, ProfileFactory, favoritesRequest, productRequest, Product) {
-	console.log("Product Controller reporting for duty.");
+	//console.log("Product Controller reporting for duty.");
 
 	var data = productRequest.product;
 	var related = productRequest.related;

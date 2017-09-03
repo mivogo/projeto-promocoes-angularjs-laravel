@@ -4,7 +4,7 @@
 'use strict';
 
 app.controller('PasswordController', function ($scope, $location, $http, $rootScope, $state, $auth, toastr, AuthService, ModalService, AuthFactory) {
-	console.log("Password Controller reporting for duty.");
+	//console.log("Password Controller reporting for duty.");
 
 	$scope.changePassword = function() {
 		var password = {

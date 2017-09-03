@@ -4,7 +4,6 @@
 'use strict';
 
 app.controller('HeaderController', function ($scope, $location, $http, $rootScope, $state, AuthService, ModalService, SearchService, CartService, MenuService, FilterbarService) {
-	
 	//console.log("Header Controller reporting for duty.");
 
 	$scope.cart = CartService;

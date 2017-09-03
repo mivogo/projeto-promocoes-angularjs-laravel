@@ -5,7 +5,7 @@
 'use strict';
 
 app.controller('CartController', function ($scope, $uibModal, ModalService, CartService, AuthService) {
-	console.log("Cart Controller reporting for duty.");
+	//console.log("Cart Controller reporting for duty.");
 
 	var updateCart = function(){
 		if(CartService.getTotalItems() === 0){

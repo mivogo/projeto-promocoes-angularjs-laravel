@@ -1,45 +1,50 @@
 <div class="product-container">
 	<div class="row">
 		<div class="main-product-container">
-			<div class="product-wrapper">
-				<div class="product">
-					<div class="flip-container">
-						<div class="flipper">
-							<div class="front">
-								<a data-ng-click="productDetails(item.product_id,item.id)" class="pointer">
-									<img data-ng-src="{{item.image}}" alt="" class="img-responsive">
-								</a>
-							</div>
-						</div>
+			<div class="main-product-container-left">
+				<div class="product-img-wrapper">
+					<div class="product-image">
+						<img data-ng-src="{{item.image}}" alt="" class="img-responsive">
 					</div>
+				</div>
+			</div>
+			<div class="main-product-container-main">
+				<div class="product-info-wrapper">
 					<div class="text">
-						<span class="brand">{{item.brand}}</span>
-						<h5><a data-ng-click="productDetails(item.product_id,item.id)" class="pointer">{{item.name}}</a></h5>
+						<span class="brand capitalize">{{item.brand | lowercase}}</span>
+						<h5>{{item.name}}</h5>
+						<span class="weight">({{item.weight}} {{item.weight_type}})</span>
 					</div>
 					<div class="price-buttons">
-						<p class="price">{{item.price | currency}}</p>
-						<p class="buttons">
-							<a data-ng-show="!isFavorite(item.product_id)" data-ng-click="addFavorite(item.product_id)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-heart-o"></i></a>
-							<a data-ng-show="isFavorite(item.product_id)" data-ng-click="removeFavorite(item.product_id)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-heart"></i></a>
-							<a data-ng-show="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
-							<div data-ng-show="cart.hasItem(item)" class="cart-update">
-								<div data-ng-show="cart.hasItem(item)" class="cart-update-wrap">
-									<span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item,-1)">-</span>
-									<span class="cart-info noselect">
-										<span class="cart-qty noselect">{{cart.itemQuantity(item)}}</span> 
-										<span class="noselect">|</span>
-										<span class="cart-price noselect">{{cart.itemPrice(item) | currency}}</span>
-									</span>
-									<span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item,1)">+</span>
-								</div>
+						<div class="weight-wrapper">
+							<span class="price">{{item.price | currency}}</span>
+							<span class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</span>
+						</div>
+						<div class="buttons">
+
+						</div>
+					</div>
+					<div class="buttons">
+						<a data-ng-if="!isFavorite(item.product_id)" data-ng-click="addFavorite(item.product_id)" class="btn btn-primary pointer cart-favorite-button"><i class="fa fa-heart-o"></i></a>
+						<a data-ng-if="isFavorite(item.product_id)" data-ng-click="removeFavorite(item.product_id)" class="btn btn-primary pointer cart-favorite-button"><i class="fa fa-heart"></i></a>
+						<a data-ng-if="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
+						<div data-ng-if="cart.hasItem(item)" class="cart-update">
+							<div data-ng-if="cart.hasItem(item)" class="cart-update-wrap">
+								<span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item,-1)">-</span>
+								<span class="cart-info noselect">
+									<span class="cart-qty noselect">{{cart.itemQuantity(item)}}</span> 
+									<span class="noselect">|</span>
+									<span class="cart-price noselect">{{cart.itemPrice(item) | currency}}</span>
+								</span>
+								<span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item,1)">+</span>
 							</div>
-						</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="row">
+	<div data-ng-if="relatedCount>0" class="row">
 		<div class="product-table-header">
 			<div class="product-table-header-title">
 				<span class="title">Produtos Relacionados ({{relatedCount}})</span>
@@ -60,15 +65,19 @@
 								</div>
 							</div>
 							<div class="text">
-								<span class="brand">{{item.brand}}</span>
+								<span class="brand capitalize">{{item.brand | lowercase}}</span>
 								<h5><a data-ng-click="productDetails(item.product_id,item.id)" class="pointer">{{item.name}}</a></h5>
+								<span class="weight">({{item.weight}} {{item.weight_type}})</span>
 							</div>
 							<div class="price-buttons">
-								<p class="price">{{item.price | currency}}</p>
-								<p class="buttons">
-									<a data-ng-show="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
-									<div data-ng-show="cart.hasItem(item)" class="cart-update">
-										<div data-ng-show="cart.hasItem(item)" class="cart-update-wrap">
+								<div class="weight-wrapper">
+									<span class="price">{{item.price | currency}}</span>
+									<span class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</span>
+								</div>
+								<div class="buttons">
+									<a data-ng-if="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
+									<div data-ng-if="cart.hasItem(item)" class="cart-update">
+										<div data-ng-if="cart.hasItem(item)" class="cart-update-wrap">
 											<span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item,-1)">-</span>
 											<span class="cart-info noselect">
 												<span class="cart-qty noselect">{{cart.itemQuantity(item)}}</span> 
@@ -78,7 +87,7 @@
 											<span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item,1)">+</span>
 										</div>
 									</div>
-								</p>
+								</div>
 							</div>
 						</div>
 					</div>

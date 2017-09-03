@@ -56,7 +56,7 @@ app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchSer
 		}
 
 		if(param.menuSubcategory){
-			subcategory = param.menuSubcategory.replace(/-/g, ' ');;
+			subcategory = param.menuSubcategory.replace(/-/g, ' ');
 		}
 
 		var request = {

@@ -1,35 +1,35 @@
 <div menu></div>
-<div class="search-component-container container clearfix">
+<div class="search-component-container container">
 
     <div class="row col-lg-12">
-        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 side pull-left">
+        <div data-ng-if="data.length>0" class="col-lg-2 col-md-2 col-sm-12 col-xs-12 side pull-left">
             <div filterbar></div>
         </div>
 
-        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 main">
+        <div data-ng-if="data.length>0" class="col-lg-8 col-md-8 col-sm-12 col-xs-12 main">
             <div class="row">
                 <div class="search-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="search-page-result-info col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
+                    <div class="search-page-result-info col-lg-8 col-md-8 col-sm-8 col-xs-12 nopadding">
                         <p class="term">Pesquisa: '{{searchTerm}}'</p>
                         <p class="results">Resultados no {{activeRetailer}} <span class="total">({{totalProducts}})</span></p>
                     </div>
-                    <div class="search-page-result-filters col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
+                    <div class="search-page-result-filters col-lg-4 col-md-4 col-sm-4 col-xs-12 nopadding">
                         <div class="form-group">
                             <div class="search-page-select">
-                                <select class="form-control search-page-select-select" data-ng-change="resetCurrentPage()" data-ng-options="o.name for o in orderOptions | orderBy:'name' :true" data-ng-model="orderSelectedOption"></select>
+                                <select class="form-control search-page-select-select" id="orderOption" data-ng-model="orderSelectedOption" data-ng-change="changeOrder(orderSelectedOption)" data-ng-options="o.name for o in orderOptions" ></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="search-page-select">
                                 <label class="search-page-select-label">Produtos por Página:</label>
-                                <select data-ng-model="pageSize.value" id="pageSize" class="form-control search-page-select-select" data-ng-change="resetCurrentPage()" data-ng-options="options for options in pageSize.values">
+                                <select data-ng-model="pageSize.value" id="pageSize" class="form-control search-page-select-select" data-ng-change="changePageSize(pageSize.value)" data-ng-options="options for options in pageSize.values">
                                 </select>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="items-row">
                 <div data-ng-repeat="item in data | limitTo:pageSize.value">
                     <div class="search-page-item col-sm-6 col-xs-6">
                         <div class="product">
@@ -48,7 +48,7 @@
                                 <span class="weight">({{item.weight}} {{item.weight_type}})</span>
                             </div>
                             <div class="price-buttons">
-                            <div class="weight-wrapper">
+                                <div class="weight-wrapper">
                                     <span class="price">{{item.price | currency}}</span>
                                     <span class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</span>
                                 </div>
@@ -74,17 +74,42 @@
             <div class="row navigation-buttons">
                 <div data-ng-show="numberOfPages() > 1">
                     <button class="btn btn-primary" data-ng-disabled="currentPage == 1" data-ng-click="previousPage()">
-                      <span>Anterior</span>      
-                  </button>
-                  <span class="search-page-pagenumbers">{{currentPage}}/{{numberOfPages()}}</span>
-                  <button class="btn btn-primary" data-ng-disabled="currentPage >= numberOfPages()" data-ng-click="nextPage()">
-                    <span>Próximo</span>
-                </button>
+                        <span>Anterior</span>      
+                    </button>
+                    <span class="search-page-pagenumbers">{{currentPage}}/{{numberOfPages()}}</span>
+                    <button class="btn btn-primary" data-ng-disabled="currentPage >= numberOfPages()" data-ng-click="nextPage()">
+                        <span>Próximo</span>
+                    </button>
+                </div>
             </div>
         </div>
+        <div data-ng-if="data.length===0" class="noresults col-lg-10 col-md-10 col-sm-12 col-xs-12 main">
+            <div class="row">
+                <div class="search-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="search-page-result-info col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
+                        <p class="term">Pesquisa: '{{searchTerm}}'</p>
+                        <p class="results">Resultados no {{activeRetailer}} <span class="total">({{totalProducts}})</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="search-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="search-page-result-info message col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
+                        <p class="term">A pesquisa pelo termo <span class="warning-icon">{{searchTerm}}</span> não retornou resultados.</p>
+                        <div class="results">Dicas para pesquisa:
+                            <ul> 
+                                <li>Verifique a ortografia.</li>
+                                <li>Use um termo diferente.</li>
+                                <li>Utilize um termo mais genérico.</li>
+                                <li>Experimente pesquisar por marca ou categoria.</li>
+                            </ul> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 side pull-right">
+            <div cartinfobar></div>
+        </div>
     </div>
-    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 side pull-right">
-        <div cartinfobar></div>
-    </div>
-</div>
 </div>

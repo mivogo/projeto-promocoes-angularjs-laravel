@@ -5,7 +5,8 @@ import {
   Text,
   View,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import ProductList from "./ProductList";
@@ -27,8 +28,9 @@ class ShoppingCart extends Component {
 
   state = {
     token: "",
-    lists: [],
-    isLoading: false
+    products: '[]',
+    retailer_selected: 1,
+    isLoading: false,
   };
 
   renderHeader(headerName) {
@@ -87,6 +89,9 @@ class ShoppingCart extends Component {
         <Button
           style={{ flex: 1, borderColor: "red" }}
           textStyle={{ color: "red" }}
+          onPress={() => {
+              this.setState({ retailer_selected: 1 });
+            }}
         >
           <View
             style={{ flex: 1, flexDirection: "column", alignItems: "center" }}
@@ -101,6 +106,9 @@ class ShoppingCart extends Component {
         <Button
           style={{ flex: 1, borderColor: "green" }}
           textStyle={{ color: "green" }}
+          onPress={() => {
+              this.setState({ retailer_selected: 2 });
+            }}
         >
           <View
             style={{ flex: 1, flexDirection: "column", alignItems: "center" }}
@@ -115,6 +123,9 @@ class ShoppingCart extends Component {
         <Button
           style={{ flex: 1, borderColor: "black" }}
           textStyle={{ color: "black" }}
+          onPress={() => {
+              this.setState({ retailer_selected: 3 });
+            }}
         >
           <View
             style={{ flex: 1, flexDirection: "column", alignItems: "center" }}
@@ -156,7 +167,7 @@ class ShoppingCart extends Component {
   }
 
   componentWillMount() {
-    console.log("A MONTAR");
+    console.log("A MONTAR CARRINHO");
     this.setState({ isLoading: true });
     AsyncStorage.getItem("@Token").then(
       rtoken => {
@@ -167,31 +178,70 @@ class ShoppingCart extends Component {
       }
     );
 
-    const jsonObj = {
-      products: {
-        data: []
-      }
-    };
-    console.log(jsonObj);
-
     AsyncStorage.getItem("@Cart").then(
       cart => {
         cart = JSON.parse(cart);
         console.log("SERGIO");
         console.log(cart);
         const json = cart.products;
+        console.log("JSON");
         console.log(json);
+
         for (let i = 0; i < json.length; i++) {
-          console.log(json[i].data.name);
-          jsonObj.products["data"].push(json[i].data);
+        const url = "http://vps415122.ovh.net/api/retailer/productAvailability/"+json[i].product_id;
+        
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            console.log("Recebeu" + json[i].product_id);
+            console.log(responseJson);
+            newState = JSON.parse(this.state.products);
+            responseJson.push({ product_id: json[i].product_id, quantity: json[i].quantity });
+            newState.push(responseJson);         
+            console.log(newState);
+            this.setState({ products: JSON.stringify(newState) });
+          })
+          .catch(error => {
+            console.error(error);
+          });
         }
-        console.log(jsonObj);
-        this.setState({ products: jsonObj.products.data, isLoading: false });
+
+        this.setState({ isLoading: false });
+
       },
       error => {
         console.log(error);
       }
     );
+
+
+  }
+
+  renderProducts(){
+    const data = JSON.parse(this.state.products);
+    console.log('Rendering shit?!?!??!');
+    console.log(data);
+    console.log(this.state.isLoading);
+    console.log(this.state.retailer_selected - 1);
+    if (!this.state.isLoading) {
+    return data.map(product => {
+      console.log('Maia');
+      if (product[(this.state.retailer_selected - 1)].available) {
+        return (
+        <View key={product[3].product_id}>
+          <Text>{product[3].product_id}</Text>
+          <Text>{product[3].quantity}</Text>
+          <Text>{product[(this.state.retailer_selected - 1)].retailer_id}</Text>
+        </View>); 
+      }
+      }
+    );
+  }
   }
 
   render() {
@@ -201,10 +251,9 @@ class ShoppingCart extends Component {
       <View style={{ flex: 1 }}>
         {this.renderHeader("Carrinho")}
         {this.renderRetailerMenu()}
-        <ProductList
-          isItLoading={this.state.isLoading}
-          products={this.state.products}
-        />
+        <ScrollView>
+          {this.renderProducts()}
+        </ScrollView>
         {this.renderFooter()}
       </View>
     );

@@ -177,11 +177,9 @@ class ProductDetail extends Component {
                     1 +
                     ', "product_id": "' +
                     this.props.product.product_id +
-                    '", "data": ' +
-                    JSON.stringify(this.props.product) +
-                    "}"
+                    '"}'
                 );
-                cart["products"].push(products);
+                cart['products'].push(products);
                 AsyncStorage.setItem("@Cart", JSON.stringify(cart));
                 this.setState({ quantity: 1 });
               },

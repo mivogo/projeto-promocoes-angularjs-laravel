@@ -8,9 +8,7 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 
 	$scope.cart = CartService;
 	$scope.searchTerm = $stateParams.q;
-	if(!$stateParams.q){
-		$scope.searchTerm = $stateParams.menuSubcategory.replace(/-/g, ' ');
-	}
+
 	$scope.activeRetailer = FilterbarService.getRetailer().name;
 	
 	SearchService.clearUrl();
@@ -154,5 +152,6 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 		});
 		$('#' + selectId).html(soptions).prepend(foption);              
 	}
+
 
 });

@@ -1,0 +1,17 @@
+<div class="panel panel-default sidebar-menu cartinfobar">
+    <div class="panel-heading">
+        <h3 class="panel-title">Comparar preço total</h3>
+    </div>
+    <div class="panel-body">
+        <div data-ng-repeat="retailer in retailers">
+            <div class="pointer" data-ng-show="retailer.id != activeRetailer.id" data-ng-click="changeActiveRetailer(retailer)">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 retailer-price-box">
+                    <div class="table">
+                        <div class="retailer nopadding"><img class="img-responsive ng-scope" data-ng-src="{{retailer.img}}"/></div>
+                        <div class="price nopadding">{{retailerTotalCost(retailer.id) | currency}}<span data-ng-show="retailerHasUnavailableProducts(retailer.id)"> <i class="warning-icon fa fa-exclamation-circle"></i></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -115,6 +115,18 @@ app.service('FilterbarService', function ($cookies, CartService) {
     return service.retailerListItems;
   }
 
+  service.getRetailerWithId = function (id){
+    var retailer;
+
+    angular.forEach(service.retailerListItems, function(value){
+      if(value.id == id){
+        retailer = value;
+      }
+    });
+
+    return retailer;
+  }
+
   service.setRetailer = function (retailer){
     $cookies.putObject('myRetailer', retailer);
     service.retailer = retailer;

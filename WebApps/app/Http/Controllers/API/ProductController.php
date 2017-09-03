@@ -245,6 +245,7 @@ class ProductController extends Controller
 			}
 		}
 
+
 		$transformedProducts = [];
 		foreach($relatedProducts AS $p){
 			$pr = ProductRetailer::where('product_id',$p->id)->where('retailer_id',$retailerid)->first();
@@ -424,10 +425,48 @@ class ProductController extends Controller
 	}
 
 	private function itemFix($item, $retailer){
-		$item['Price'] = doubleval($item['Price']);
-		$item['Price_per_weight'] = doubleval($item['Price_per_weight']);
+
+		if($this->countDecimals($item['Price']) > 2){
+			$value = explode(".", $item['Price'], 2);
+			$value  = implode("", $value );
+			$item['Price'] = doubleval($value);
+		}else{
+			$item['Price'] = doubleval($item['Price']);
+		}
+
+		if(strcmp($item['Type_of_weight'], "None") == 0 && strcmp($item['Weight_Type'], "None") == 0){
+			$item['Type_of_weight'] = 'un';
+			$item['Weight_Type'] = 'un';
+			if($item['Weight'] <= 0){
+				$item['Weight'] = 1;
+			}
+		}
+
+		if(strcmp($item['Weight_Type'], "None") == 0){
+			$item['Weight_Type'] = $item['Type_of_weight'];
+			if($item['Weight'] <= 0){
+				$item['Weight'] = 1;
+			}
+		}
+
+		if(strcmp($item['Type_of_weight'], "None") == 0){
+			$item['Type_of_weight'] = $item['Weight_Type'];
+		}
+
+		if(!empty($item['Price_per_weight']) && $this->countDecimals($item['Price_per_weight']) > 2){
+			$value = explode(".", $item['Price_per_weight'], 2);
+			$value = implode("", $value);
+			$item['Price_per_weight'] = doubleval($value);
+		}else{
+			$item['Price_per_weight'] = doubleval($item['Price_per_weight']);
+		}
+
 		$item['ID'] = intval($item['ID']);
 		$item['Weight'] = doubleval($item['Weight']);
+
+		if(empty($item['Price_per_weight'])){
+			$item = $this->weightFix($item);
+		}
 
 		if(strcmp($item['Weight_Type'], "ml") == 0){
 			$item['Type_of_weight'] = 'l';
@@ -449,38 +488,42 @@ class ProductController extends Controller
 			$item['Type_of_weight'] = 'l';
 		}
 
+		if(strcmp($item['Type_of_weight'], "lt") == 0){
+			$item['Type_of_weight'] = 'l';
+		}
+
+		if(strcmp($item['Type_of_weight'], "unidade") == 0){
+			$item['Type_of_weight'] = 'un';
+		}
+
 		if(empty($item['Brand'])){
 			$item['Brand'] = $retailer->name;
 		}	
-
-		if(empty($item['Type_of_weight'])){
-			$item = $this->weightFix($item);
-		}
 
 		return $item;
 	}
 
 	private function weightDifference($item){
 		if(strcmp($item['Weight_Type'], "ml") == 0){
-			return 500;
+			return 100;
 		}
 
 		if(strcmp($item['Weight_Type'], "cl") == 0 || strcmp($item['Weight_Type'], "g") == 0){
-			return 50;
+			return 10;
 		}
 
 		return 1;
 	}
 
 	private function weightFix($item){
-		$value = 0.001;
+		$value = 1;
 
 		if(strcmp($item['Weight_Type'], "cl") == 0){
 			$value = 0.01;
 		}
 
-		if(strcmp($item['Weight_Type'], "l") == 0 || strcmp($item['Weight_Type'], "kg") == 0){
-			$value = 1;
+		if(strcmp($item['Weight_Type'], "ml") == 0 || strcmp($item['Weight_Type'], "g") == 0){
+			$value = 0.001;
 		}
 
 		$converted = $value * $item['Weight'];
@@ -666,5 +709,15 @@ class ProductController extends Controller
 		$difference = $productRetailer->base_price - $productRetailer->price;
 		return $difference / $productRetailer->base_price;
 	}
+
+	private function countDecimals($_float) { 
+		$_float = explode(".", $_float);
+
+		if(count($_float)>1){		
+			return strlen($_float[1]);
+		}
+
+		return 0;
+	} 
 	
 }

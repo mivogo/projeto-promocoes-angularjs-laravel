@@ -9,7 +9,7 @@ class ProductTransformer extends Transformer{
 		$brand = $product->brand;
 		$retailer = $info[0]->retailer;
 		return [
-		'id' => $info->id,
+		'id' => $info[0]['id'],
 		'product_id' => $product->id,
 		'name' => preg_replace('/\s+/', ' ', $product->name),
 		'price' => $info[0]['price'],
@@ -33,7 +33,7 @@ class ProductTransformer extends Transformer{
 		$response = array();
 
 		foreach($products AS $product){
-			array_push($reponse,$this->transform($product));
+			array_push($response, $this->transform($product));
 		}
 
 		return $response;

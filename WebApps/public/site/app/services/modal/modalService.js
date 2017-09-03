@@ -3,7 +3,7 @@
 */
 'use strict';
 
-app.service('ModalService', function ($uibModal, SearchService, ProductFactory, ProfileFactory, AuthService) {
+app.service('ModalService', function ($uibModal, SearchService, ProductFactory, ProfileFactory, RetailerFactory, FilterbarService, AuthService, CartService) {
 
   var service = this;
 
@@ -45,6 +45,19 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory, 
       });
     }
     return [];
+  }
+
+  var suggestionsRequest = function(){
+    var prid = CartService.getProductRetailerId();
+    var rid = FilterbarService.getRetailer().id;
+
+    return RetailerFactory.productSuggestions(prid,rid)            
+    .then(function (response) {
+      return response.data;
+    }, function (error) {
+      console.log('Unable to load shopping list products data: ' + error.data);
+    });
+
   }
 
 
@@ -166,7 +179,7 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory, 
 
   };
 
-  service.productSuggestionForm = function(replaceIndex, selectedProduct){
+  service.productSuggestionForm = function(replaceIndex){
     var modal = $uibModal.open({
       allowAnonymous: false,
       templateUrl: 'site/app/components/productSuggestion/productSuggestionView.html',
@@ -174,7 +187,7 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory, 
       windowClass: 'modal-productsuggestion',
       resolve: {
         replaceIndex: replaceIndex,
-        selectedProduct: selectedProduct,
+        suggestionsRequest: suggestionsRequest,
       }
     });
 

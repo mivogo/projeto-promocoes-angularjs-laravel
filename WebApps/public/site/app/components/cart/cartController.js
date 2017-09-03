@@ -4,11 +4,11 @@
 
 'use strict';
 
-app.controller('CartController', function ($scope, $uibModal, ModalService, CartService, AuthService) {
+app.controller('CartController', function ($scope, $uibModal, SearchService, ModalService, FilterbarService, CartService, AuthService) {
 	//console.log("Cart Controller reporting for duty.");
 
 	var updateCart = function(){
-		if(CartService.getTotalItems() === 0){
+		if(CartService.getTotalItems() == 0){
 			CartService.setListName('');
 			CartService.setListDescription('');
 		}
@@ -17,6 +17,9 @@ app.controller('CartController', function ($scope, $uibModal, ModalService, Cart
 	CartService.registerObserverCallback(updateCart);
 
 	$scope.cart = CartService; 
+	$scope.arrItems = CartService.getItems();
+	$scope.activeRetailer = FilterbarService.getRetailer();
+
 
 	$scope.saveList = function(){
 		if(AuthService.isAuthenticated()){
@@ -36,8 +39,11 @@ app.controller('CartController', function ($scope, $uibModal, ModalService, Cart
 			<p class="message" data-ng-bind="message">\
 			</div>\
 			<div class="modal-footer">\
-			<button class="btn btn-primary" data-ng-click="modal.close()">Sim</button>\
-			<button class="btn btn-default" data-ng-click="modal.dismiss()">Não</button>\
+			<div class="dialog-buttons">\
+			<a class="btn btn-primary" data-ng-click="modal.close()">Sim</a>\
+			<a class="button-spacer"></a>\
+			<a class="btn btn-default" data-ng-click="modal.dismiss()">Não</a>\
+			</div>\
 			</div>',
 			controller: function ($scope, $uibModalInstance) {
 				$scope.modal = $uibModalInstance;
@@ -53,7 +59,7 @@ app.controller('CartController', function ($scope, $uibModal, ModalService, Cart
 	}	
 
 	$scope.hasSuggestions = function(item){
-    	for(var i = 0; i <item.suggestions.length; i++) {
+		for(var i = 0; i <item.suggestions.length; i++) {
 			if(!CartService.hasItem(item.suggestions[i])){
 				return true;
 			}
@@ -63,7 +69,14 @@ app.controller('CartController', function ($scope, $uibModal, ModalService, Cart
 	}
 
 	$scope.suggestions = function(index,item){
-		ModalService.productSuggestionForm(index,item);
+		CartService.setProductRetailerId(item.data.id);
+		ModalService.productSuggestionForm(index);
+	}
+
+	$scope.productDetails = function(id, prid){
+		SearchService.setProductId(id);
+		SearchService.setProductRetailerId(prid);
+		ModalService.productForm();
 	}
 
 });

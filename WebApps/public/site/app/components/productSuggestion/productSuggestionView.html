@@ -1,36 +1,65 @@
 <div class="product-container">
 	<div class="row">
+		<div class="main-product-container">
+			<div class="main-product-container-left">
+				<div class="product-img-wrapper">
+					<div class="product-image">
+						<img data-ng-src="{{item.image}}" alt="" class="img-responsive">
+					</div>
+				</div>
+			</div>
+			<div class="main-product-container-main col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="product-info-wrapper">
+					<div class="text">
+						<span class="brand capitalize">{{item.brand | lowercase}}</span>
+						<h5>{{item.name}}</h5>
+						<span class="weight">({{item.weight}} {{item.weight_type}})</span>
+					</div>
+					<div class="price-buttons">
+						<div class="weight-wrapper">
+							<div class="price">{{item.price | currency}}</div>
+							<div class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
 		<div class="product-table-header">
 			<div class="product-table-header-title">
-				<span class="title">Produtos Sugeridos ({{suggestionsCount}})</span>
+				<span class="title">Produtos Sugeridos </span><span class="amount">({{suggestionsCount}})</span>
 			</div>
 		</div>
 		<div class="product-table-wrap">
 			<div class="product-table">
 				<div class="cell" data-ng-repeat="item in suggestions">
-					<div class="product-wrapper">
+					<div class="product-wrapper suggested-wrapper">
 						<div class="product">
 							<div class="flip-container">
 								<div class="flipper">
 									<div class="front">
-										<a data-ng-click="productDetails(item.product_id,item.id)" class="pointer">
-											<img data-ng-src="{{item.image}}" alt="" class="img-responsive">
-										</a>
+										<img data-ng-src="{{item.image}}" alt="" class="img-responsive">
 									</div>
 								</div>
 							</div>
 							<div class="text">
-								<span class="brand">{{item.brand}}</span>
+								<span class="brand capitalize">{{item.brand | lowercase}}</span>
 								<h5>{{item.name}}</h5>
+								<span class="weight">({{item.weight}} {{item.weight_type}})</span>
 							</div>
 							<div class="price-buttons">
-								<p class="price">{{item.price | currency}}</p>
-								<p class="buttons">
-									<a data-ng-show="!cart.hasItem(item)" data-ng-click="replaceWithSuggestion(item)" class="btn btn-primary pointer cart-add-button"><i class="glyphicon glyphicon-refresh"></i> Trocar</a>
-								</p>
+								<div class="weight-wrapper">
+									<span class="price">{{item.price | currency}}</span>
+									<span class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</span>
+								</div>
+								<div class="buttons">
+									<a data-ng-if="!cart.hasItem(item)" data-ng-click="replaceWithSuggestion(item)" class="btn btn-primary pointer cart-add-button"><i class="glyphicon glyphicon-refresh"></i> Trocar</a>
+								</div>
 							</div>
 						</div>
 					</div>
+					
 				</div>
 			</div>
 		</div>

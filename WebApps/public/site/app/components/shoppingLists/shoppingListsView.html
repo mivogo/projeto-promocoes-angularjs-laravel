@@ -2,7 +2,7 @@
 	<div class="panel panel-default profile-card col-sm-12 col-lg-12">
 		<div class="row">
 			<div class="panel-heading profile-title col-sm-12 col-lg-12 col-sm-12 col-xs-12">
-				<h3><i class="fa fa-user fa-fw"></i>Listas Guardadas</h3>
+				<h3><i class="fa fa-list fa-fw"></i>Listas Guardadas</h3>
 			</div>
 		</div>
 		<div class="panel-body profile-body col-sm-12 col-lg-12">
@@ -23,7 +23,7 @@
 					</thead>
 					<tbody>
 						<tr data-ng-repeat="list in lists">
-							<td> <span data-ng-click="removeList(list.id)" class="glyphicon glyphicon-remove pointer noselect"><md-tooltip md-direction="top">Eliminar</md-tooltip>
+							<td> <span data-ng-click="removeList(list.id)" class="glyphicon glyphicon-remove pointer noselect"><md-tooltip md-direction="top">Remover</md-tooltip>
 							</span></td>
 							<td><span data-ng-click="modifyList(list.id)" class="glyphicon glyphicon-edit pointer noselect"><md-tooltip md-direction="top">Modificar</md-tooltip></span></td>
 							<td><span data-ng-click="viewList(list.id)" class="glyphicon glyphicon-list pointer noselect"><md-tooltip md-direction="top">Listar</md-tooltip></span></td>

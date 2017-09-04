@@ -146,9 +146,11 @@ class ShoppingListController extends Controller
 		$products = $list->product;
 
 		foreach ($products as $product) {
-			$productretailer = $product->productretailer()->where('retailer_id',$retailerid)->first();
-			$new = (new ShoppingListTransformer)->transformProduct($product,$productretailer);
-			array_push($transformedProducts, $new);
+			if($product->active){
+				$productretailer = $product->productretailer()->where('retailer_id',$retailerid)->first();
+				$new = (new ShoppingListTransformer)->transformProduct($product,$productretailer);
+				array_push($transformedProducts, $new);
+			}
 		}
 
 		$transformedList = (new ShoppingListTransformer)->transform($list);

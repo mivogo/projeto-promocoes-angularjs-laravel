@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Model\Retailer;
 use App\Model\Product;
+use App\Model\ProductRetailer;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Utils\SmithWatermanGotoh;
@@ -75,6 +76,35 @@ class RetailerController extends Controller
 		}
 
 		return response()->json($response);
+	}
+
+	public function productSuggestions($prid,$rid){
+		$productRetailer = ProductRetailer::find($prid);
+		$r_product = Product::find($productRetailer->product_id);
+		$retailerid = $rid;
+
+		$suggestions = [];
+		$possibleSuggestions = Product::with('productretailer')->whereHas('productretailer',  function($query) use ($retailerid)  {
+			$query->where('retailer_id', $retailerid);
+		})
+		->where('sub_category_id',$r_product->sub_category_id)->get();
+
+		foreach ($possibleSuggestions as $product) {
+			if($this->suggestableResult($r_product,$product->name)){
+				$p = $product->productretailer()->where('retailer_id',$retailerid)->first();
+				$transformed = (new ProductTransformer)->transformWithRetailer($product,$p);
+				array_push($suggestions,$transformed);
+			}
+		}
+
+		$suggestions = array_values(array_sort($suggestions, function ($value) {
+			return $value['price'];
+		}));
+
+		$arr['product'] = (new ProductTransformer)->transformWithRetailer($r_product,$productRetailer);
+		$arr['suggestions'] = $suggestions;
+
+		return response()->json($arr);
 	}
 
 	private function suggestableResult($product, $itemName){

@@ -25,8 +25,11 @@ app.controller('DialogSaveShoppingListController', function ($scope, $state, $ui
         <p class="message" data-ng-bind="message">\
         </div>\
         <div class="modal-footer">\
-        <button class="btn btn-primary" data-ng-click="modal.close()">Sim</button>\
-        <button class="btn btn-default" data-ng-click="modal.dismiss()">Não</button>\
+        <div class="dialog-buttons">\
+        <a class="btn btn-primary" data-ng-click="modal.close()">Sim</a>\
+        <a class="button-spacer"></a>\
+        <a class="btn btn-default" data-ng-click="modal.dismiss()">Não</a>\
+        </div>\
         </div>',
         controller: function ($scope, $uibModalInstance) {
          $scope.modal = $uibModalInstance;

@@ -55,6 +55,16 @@ app.directive("cartinfobar", function() {
   };
 });
 
+app.directive("comparepanel", function() {
+  return {
+    restrict: 'A',
+    templateUrl: 'site/app/shared/comparepanel/comparepanelView.html',
+    scope: true,
+    replace: false,
+    controller: 'ComparePanelController'
+  };
+});
+
 app.directive("notification", function(){
   return {
     restrict: 'A',

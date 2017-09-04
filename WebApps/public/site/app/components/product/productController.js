@@ -3,29 +3,31 @@
 */
 'use strict';
 
-app.controller('ProductController', function ($scope, $state, CartService, ModalService, SearchService, AuthService, ProfileFactory, favoritesRequest, productRequest, Product) {
+app.controller('ProductController', function ($scope, $state, CartService, ModalService, SearchService, FilterbarService, AuthService, ProfileFactory, favoritesRequest, productRequest, Product) {
 	//console.log("Product Controller reporting for duty.");
 
 	var data = productRequest.product;
 	var related = productRequest.related;
 	var dataFavorites = favoritesRequest;
-
 	var favorites = [];
-
+	
 	$scope.cart = CartService;
 	$scope.item = Product.build(data);
 	$scope.related = [];
 	$scope.relatedCount = 0;
+	$scope.retailerPrices = [];
 
 
 	angular.forEach(related, function(data, key){
 		var product = Product.build(data);
-
-		$scope.related.push(
-			product
-		);
+		$scope.related.push(product);
 
 		$scope.relatedCount +=1;
+	});
+
+	angular.forEach(data.retailers_prices, function(value, key){
+		var retailer = FilterbarService.getRetailerWithId(value.retailer_id);
+		$scope.retailerPrices.push({retailer:retailer,price:value.price,base_price:value.base_price,hasDiscount:value.hasDiscount});
 	});
 
 	if(dataFavorites){
@@ -66,4 +68,5 @@ app.controller('ProductController', function ($scope, $state, CartService, Modal
 		SearchService.setProductRetailerId(prid);
 		ModalService.productForm();
 	}
+
 });

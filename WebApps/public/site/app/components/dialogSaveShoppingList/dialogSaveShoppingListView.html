@@ -12,8 +12,12 @@
 			<div class="form-group">
 				<input type="text" class="form-control" name="description" placeholder="Descrição" data-ng-model="description">
 			</div>
-			<button data-ng-disabled="shoppingListForm.name.$dirty && shoppingListForm.name.$invalid || shoppingListForm.name.$pristine && !name" class="btn btn-primary btn-modal" data-ng-click="saveList($event)">Guardar</button>
-			<button class="btn btn-primary btn-modal" data-ng-click="cancel()">Cancelar</button>
+			<div class="form-group dialog-buttons">
+				<a data-ng-disabled="shoppingListForm.name.$dirty && shoppingListForm.name.$invalid || shoppingListForm.name.$pristine && !name" class="btn btn-primary btn-modal" data-ng-click="saveList($event)">Guardar</a>
+				<a class="button-spacer"></a>
+				<a class="btn btn-default btn-modal" data-ng-click="cancel()">Cancelar</a>
+			</div>
+			<div class="clearfix"></div>
 		</form>
 	</div>
 </div>

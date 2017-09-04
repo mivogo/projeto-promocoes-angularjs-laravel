@@ -199,6 +199,7 @@ var cartState = {
 	templateUrl: 'site/app/components/cart/cartView.html',
 	controller: 'CartController',
 	resolve: {
+		retailerRequest: retailerRequest,
 		notificationsRequest: notificationsRequest,
 	}
 }
@@ -210,6 +211,7 @@ var favoriteProductState = {
 	controller: 'FavoriteProductsController',
 	resolve: {
 		loginRequired: loginRequired,
+		retailerRequest: retailerRequest,
 		favoritesRequest: favoritesRequest,
 		notificationsRequest: notificationsRequest,
 	}
@@ -221,8 +223,8 @@ var shoppingListState = {
 	templateUrl: 'site/app/components/shoppingLists/shoppingListsView.html',
 	controller: 'ShoppingListsController',
 	resolve: {
-		retailerRequest: retailerRequest,
 		loginRequired: loginRequired,
+		retailerRequest: retailerRequest,
 		shoppingListsRequest: shoppingListsRequest,
 		notificationsRequest: notificationsRequest,
 	}

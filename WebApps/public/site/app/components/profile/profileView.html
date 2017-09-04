@@ -7,16 +7,8 @@
       </div>
     </div>
     <div class="panel-body profile-body col-sm-12 col-lg-12">
-      <div class="form-group panel-body profile-avatar col-lg-2 col-md-2 col-sm-12 col-xs-12 pull-left">
-        <div class="row text-center">
-          <img src="/assets/img/user-avatar.jpg" alt="Avatar">
-        </div>
-        <div class="row text-center">
-          <button class="btn" data-ng-click="updateProfile()">Alterar</button>
-        </div>
-      </div>
 
-      <div class="form-group col-lg-10 col-md-10 col-sm-12 col-xs-12 pull-right">
+      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <label for="name">Nome</label><input type="text" name="name" id="name" class="form-control" placeholder="Nome" data-ng-model="name">
         </div>
@@ -43,8 +35,12 @@
             <label>-</label>
             <input class="form-control profile-zip ziptwo" type="text" placeholder = "000" pattern ="[0-9]{3}" data-ng-model="ziptwo">
           </div>
+
         </div>
       </div>
+    </div>
+    <div class="row text-center">
+      <button class="btn" data-ng-click="updateProfile()">Alterar</button>
     </div>
   </div>
   <div>

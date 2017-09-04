@@ -66,6 +66,7 @@
 <script src="site/app/shared/menu/menuController.js"></script>
 <script src="site/app/shared/notification/notificationController.js"></script>
 <script src="site/app/shared/cartinfobar/cartinfobarController.js"></script>
+<script src="site/app/shared/comparepanel/comparepanelController.js"></script>
 
 <script src="site/app/services/filterbar/filterService.js"></script>
 <script src="site/app/services/auth/authService.js"></script>

@@ -2,43 +2,53 @@
 	<div class="panel panel-default profile-card col-sm-12 col-lg-12">
 		<div class="row">
 			<div class="panel-heading profile-title col-sm-12 col-lg-12 col-sm-12 col-xs-12">
-				<h3><i class="fa fa-user fa-fw"></i>Produtos Favoritos</h3>
+				<h3><i class="fa fa-heart fa-fw"></i>Produtos Favoritos</h3>
 			</div>
 		</div>
-		<div class="panel-body profile-body col-sm-12 col-lg-12">
-			<div class="product-table-wrap">
-				<div class="product-table">
-					<div class="row" data-ng-repeat="item in favorites">
-						<div class="product-wrapper">
-							<div class="product">
-								<div class="flip-container">
-									<div class="flipper">
-										<div class="front">
-											<img data-ng-src="{{item.image}}" alt="" class="img-responsive">
+		<div class="favorite-panel-body profile-body col-sm-12 col-lg-12">
+			<div class="favorite-product-table-wrap">
+				<div class="favorite-product-wrapper nopadding" data-ng-repeat="item in favorites">
+					<div class="main-product-container">
+						<div class="main-product-container-left">
+							<div class="product-img-wrapper">
+								<div class="product-image">
+									<img data-ng-src="{{item.image}}" alt="" class="img-responsive">
+								</div>
+							</div>
+						</div>
+						<div class="main-product-container-main col-lg-7 col-md-7 col-sm-12 col-xs-12">
+							<div class="product-info-wrapper">
+								<div class="text">
+									<span class="brand capitalize">{{item.brand | lowercase}}</span>
+									<h5>{{item.name}}</h5>
+									<span class="weight">({{item.weight}} {{item.weight_type}})</span>
+								</div>
+								<div class="buttons">
+									<a data-ng-click="removeFavorite(item.product_id)" class="btn btn-primary pointer cart-favorite-button"><i class="fa fa-heart"></i></a>
+									<a data-ng-if="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button favorite-product-cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
+									<div data-ng-if="cart.hasItem(item)" class="cart-update favorite-product-cart-update">
+										<div data-ng-if="cart.hasItem(item)" class="cart-update-wrap">
+											<span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item,-1)">-</span>
+											<span class="cart-info noselect">
+												<span class="cart-qty noselect">{{cart.itemQuantity(item)}}</span> 
+												<span class="noselect">|</span>
+												<span class="cart-price noselect">{{cart.itemPrice(item) | currency}}</span>
+											</span>
+											<span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item,1)">+</span>
 										</div>
 									</div>
 								</div>
-								<div class="text">
-									<span class="brand">{{item.brand}}</span>
-									<h5><span>{{item.name}}</span></h5>
-								</div>
-								<div class="price-buttons">
-									<p class="price">{{item.price | currency}}</p>
-									<p class="buttons">
-										<a data-ng-click="removeFavorite(item.product_id)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-heart"></i></a>
-										<a data-ng-show="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
-										<div data-ng-show="cart.hasItem(item)" class="cart-update">
-											<div data-ng-show="cart.hasItem(item)" class="cart-update-wrap">
-												<span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item,-1)">-</span>
-												<span class="cart-info noselect">
-													<span class="cart-qty noselect">{{cart.itemQuantity(item)}}</span> 
-													<span class="noselect">|</span>
-													<span class="cart-price noselect">{{cart.itemPrice(item) | currency}}</span>
-												</span>
-												<span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item,1)">+</span>
-											</div>
+							</div>
+						</div>
+						<div class="main-product-container-prices col-lg-5 col-md-5 col-sm-12 col-xs-12">
+							<div class="prices-wrapper">
+								<div data-ng-repeat="prices in item.retailerPrices">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 retailer-price-box">
+										<div class="table">
+											<div class="retailer nopadding"><img class="img-responsive ng-scope" data-ng-src="{{prices.retailer.img}}"/></div>
+											<div class="price nopadding">{{prices.price | currency}}</div>
 										</div>
-									</p>
+									</div>
 								</div>
 							</div>
 						</div>

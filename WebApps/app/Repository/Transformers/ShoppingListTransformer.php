@@ -24,9 +24,11 @@ class ShoppingListTransformer extends Transformer{
 			$retailerid = $list->retailer_id;
 			$products = $list->product;
 			foreach ($products as $product) {
-				$sum +=1;
-				$qt += $product->pivot->quantity;
-				$price += ($product->productretailer()->where('retailer_id',$retailerid)->first()->price) * $product->pivot->quantity;
+				if($product->active){
+					$sum +=1;
+					$qt += $product->pivot->quantity;
+					$price += ($product->productretailer()->where('retailer_id',$retailerid)->first()->price) * $product->pivot->quantity;
+				}
 			}
 			
 			$new = (new ShoppingListTransformer)->transformWithQuantity($list,$sum,$qt,$price);
@@ -68,9 +70,10 @@ class ShoppingListTransformer extends Transformer{
 		'category' => $sub->category->name,
 		'image' => $info->image,
 		'pid' => $info->pid,
-		'link' => $info->link
+		'link' => $info->link,
+		'quantity' => $product->pivot->quantity
 		];	
-	
+		
 	}	
 
 }

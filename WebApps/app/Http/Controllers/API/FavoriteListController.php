@@ -71,8 +71,10 @@ class FavoriteListController extends Controller
 
 		$transformedProducts = [];
 		foreach($products AS $p){
-			$new = (new FavoriteListTransformer)->transform($p);
-			array_push($transformedProducts, $new);
+			if($p->active){
+				$new = (new FavoriteListTransformer)->transform($p);
+				array_push($transformedProducts, $new);
+			}
 		}
 
 		return response()->json($transformedProducts);

@@ -42,6 +42,6 @@ app.controller('MenuController', function ($scope, $location, $http, $rootScope,
 		var cat = catName.toLowerCase();
 		cat = cat.replace(/ /g, '-'); 
 
-		$state.go('search', {q: null, menuCategory: cat, menuSubcategory: sub}, {reload: true});
+		$state.go('search', {q: null, brand:null, category:null,menuCategory: cat, menuSubcategory: sub}, {reload: true});
 	}
 });

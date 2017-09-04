@@ -55,6 +55,7 @@ Route::group(['middleware' => 'cors'], function () {
 
 	//RETAILER
 	Route::post('/retailer/productAvailability/{id}', 'API\RetailerController@productAvailability');
+	Route::post('/retailer/productSuggestions/{prid}&rid={rid}', 'API\RetailerController@productSuggestions');
 
 	//VARIED DATA
 	Route::get('/retailers', 'API\RetailerController@showAll');

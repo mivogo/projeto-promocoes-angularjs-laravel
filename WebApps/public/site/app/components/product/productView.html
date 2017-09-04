@@ -8,7 +8,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="main-product-container-main">
+			<div class="main-product-container-main col-lg-7 col-md-7 col-sm-12 col-xs-12">
 				<div class="product-info-wrapper">
 					<div class="text">
 						<span class="brand capitalize">{{item.brand | lowercase}}</span>
@@ -17,11 +17,8 @@
 					</div>
 					<div class="price-buttons">
 						<div class="weight-wrapper">
-							<span class="price">{{item.price | currency}}</span>
-							<span class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</span>
-						</div>
-						<div class="buttons">
-
+							<div class="price">{{item.price | currency}}</div>
+							<div class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</div>
 						</div>
 					</div>
 					<div class="buttons">
@@ -42,12 +39,24 @@
 					</div>
 				</div>
 			</div>
+			<div class="main-product-container-prices col-lg-5 col-md-5 col-sm-12 col-xs-12">
+				<div class="prices-wrapper">
+					<div data-ng-repeat="item in retailerPrices">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 retailer-price-box">
+							<div class="table">
+								<div class="retailer nopadding"><img class="img-responsive ng-scope" data-ng-src="{{item.retailer.img}}"/></div>
+								<div class="price nopadding">{{item.price | currency}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div data-ng-if="relatedCount>0" class="row">
 		<div class="product-table-header">
 			<div class="product-table-header-title">
-				<span class="title">Produtos Relacionados ({{relatedCount}})</span>
+				<span class="title">Produtos Relacionados </span><span class="amount">({{relatedCount}})</span>
 			</div>
 		</div>
 		<div class="product-table-wrap">

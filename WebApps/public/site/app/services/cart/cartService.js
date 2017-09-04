@@ -10,6 +10,7 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
 
   service.listName = localStorage.getItem('listName');
   service.listDescription = localStorage.getItem('listDescription');
+  service.productRetailerId = null;
 
   service.carts = JSON.parse(localStorage.getItem('carts'));
   if(service.carts == null){
@@ -240,7 +241,9 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
   }
 
   service.replaceCartWithList = function(list){
-    service.emptyCarts();
+    angular.forEach(service.carts, function(arr) {
+      arr.splice(0,arr.length);
+    });
 
     var info = list.list;
     var products = list.products;
@@ -255,6 +258,9 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
     });
 
     service.activateCart(info.retailer_id);
+
+    updateLocalStorageCarts();
+    notifyObservers();
   }
 
   service.emptyCarts = function(){
@@ -276,6 +282,18 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
 
     totalCost = calculateTotalCost(arr);
     return totalCost;
+  }
+
+  service.clearProductRetailerId = function(){
+    service.productRetailerId = null;
+  }
+
+  service.setProductRetailerId = function(productRetailerId){
+    service.productRetailerId = productRetailerId;
+  }
+
+  service.getProductRetailerId = function(){
+    return service.productRetailerId;
   }
 
   service.setListName = function(name){

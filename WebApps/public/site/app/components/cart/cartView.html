@@ -1,48 +1,75 @@
 <div class="component-container container">
-	<div class="alert alert-warning" role="alert" data-ng-show="cart.getTotalItems() === 0">
-		Your cart is empty
+	<div class="cart-container col-lg-10 col-md-10 col-sm-12 col-xs-12 main" data-ng-if="cart.getTotalItems() === 0">
+		<div class="cart-retailer">
+			<span>Lista de compras no </span><img class="img-responsive ng-scope" data-ng-src="{{activeRetailer.img}}"/>
+		</div>
+		<div class="alert alert-warning" role="alert">
+			<span>A lista está vazia</span>
+		</div>
 	</div>
 
-	<div class="table-responsive col-lg-12" data-ng-show="cart.getTotalItems() > 0">
+	<div class="cart-container col-lg-10 col-md-10 col-sm-12 col-xs-12 main" data-ng-if="cart.getTotalItems() > 0">
 
-		<table class="table table-striped cart">
-			<thead>
-				<tr>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th>Quantity</th>
-					<th>Amount</th>
-					<th>Total</th>
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>Total:</td>
-					<td>{{ cart.totalCost() | currency }}</td>
-				</tr>
-			</tfoot>
-			<tbody>
-				<tr ng-repeat="item in cart.getItems() track by $index">
-					<td><span ng-click="cart.removeItemById(item.id)" class="glyphicon glyphicon-remove pointer noselect"></span></td>
-					<td data-ng-if="hasSuggestions(item)"><span ng-click="suggestions($index, item)" class="glyphicon glyphicon-refresh pointer noselect"></span></td>
-					<td data-ng-if="!hasSuggestions(item)"></td>
-					<td>{{ item.name }}</td>
-					<td><span class="glyphicon glyphicon-minus pointer noselect" data-ng-class="{'disabled':item.quantity==1}"
-						data-ng-click="cart.updateItemQuantity(item.data, -1)"></span>
-						<span class="cart-item-quantity noselect">  {{ item.quantity | number }}  </span>
-						<span class="glyphicon glyphicon-plus pointer noselect" data-ng-click="cart.updateItemQuantity(item.data, 1)"></span>
-					</td>
-					<td>{{ item.price | currency}}</td>
-					<td>{{ item.total | currency }}</td>
-				</tr>
-			</tbody>
-		</table>
-		<a data-ng-click="saveList()" class="btn btn-primary pointer cart-add-button"><i class="glyphicon glyphicons-floppy-saved"></i>Guardar Lista</a>
-		<a data-ng-click="clearList()" class="btn pointer cart-add-button"><i class="glyphicon glyphicons-trash"></i>Limpar Lista</a>
+		<div class="cart-retailer">
+			<div><span>Lista de produtos no </span><img class="img-responsive ng-scope" data-ng-src="{{activeRetailer.img}}"/></div>
+		</div>
+		<div class="table-responsive">
+			<div class="cart-table">
+				<div class="cart-table-row" data-ng-repeat="item in arrItems | orderBy : '-available' track by $index">
+					<div class="cart-product-table">
+						<div class="cart-product-cell cart-product-buttons">
+							<div class="buttons-table">
+								<div class="buttons-table-row">
+									<a data-ng-click="cart.removeItemById(item.id)" class="glyphicon glyphicon-trash pointer noselect"><md-tooltip md-direction="top">Remover</md-tooltip></a>
+								</div>
+								<div class="buttons-table-row ">
+									<a data-ng-if="hasSuggestions(item)" data-ng-click="suggestions($index, item)" class="glyphicon glyphicon-refresh pointer noselect"><md-tooltip md-direction="top">Trocar</md-tooltip></a>
+									<a data-ng-if="!hasSuggestions(item)"></a>
+								</div>
+							</div>
+						</div>
+						<div class="cart-product-cell cart-product-img">
+							<a data-ng-click="productDetails(item.id,item.data.id)" class="pointer">
+								<img data-ng-src="{{item.data.image}}" alt="" class="img-responsive">
+							</a>
+						</div>
+						<div class="cart-product-cell cart-product-info">
+							<div class="info-wrapper">
+								<span class="brand capitalize">{{item.data.brand | lowercase}}</span>
+								<h5 class="name"><a data-ng-click="productDetails(item.id,item.data.id)" class="pointer">{{item.name}}</a></h5>
+							</div>
+							<span class="price">{{item.price | currency}}</span><span data-ng-if="!item.available" class="no-wrap price-total-unavailable"><i class="warning-icon fa fa-exclamation-circle"></i> Indisp.</span>
+						</div>
+						<div data-ng-if="item.available" class="cart-product-cell cart-product-qt">
+							<span class="glyphicon glyphicon-minus pointer noselect" data-ng-class="{'disabled':item.quantity==1}"
+							data-ng-click="cart.updateItemQuantity(item.data, -1)"></span>
+							<span class="cart-item-quantity noselect">  {{ item.quantity | number }}  </span>
+							<span class="glyphicon glyphicon-plus pointer noselect" data-ng-click="cart.updateItemQuantity(item.data, 1)"></span>
+						</div>
+						<div data-ng-if="!item.available" class="cart-product-cell cart-product-qt">
+						</div>
+						<div data-ng-if="item.available" class="cart-product-cell cart-product-total">
+							<span class="price-total">{{ item.total | currency }}</span>
+						</div>
+						<div data-ng-if="!item.available" class="cart-product-cell cart-product-total">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="cart-table-footer col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix nopadding">
+			<div class="cart-table-buttons col-lg-8 col-md-8 col-sm-5 col-xs-5 nopadding">
+				<a data-ng-click="saveList()" class="btn btn-primary pointer cart-add-button"><i class="icon glyphicon glyphicon-save"></i>Guardar Lista</a>
+				<a data-ng-click="clearList()" class="btn btn-default pointer cart-add-button"><i class="icon glyphicon glyphicon-trash"></i>Limpar Lista</a>
+			</div>
+			<div class="cart-table-total col-lg-4 col-md-4 col-sm-5 col-xs-5 nopadding">
+				<span class="total">Total <span class="value">{{ cart.totalCost() | currency }}</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="cart-compare-panel col-lg-2 col-md-2 col-sm-12 col-xs-12 side pull-right nopadding">
+		<div comparepanel></div>
 	</div>
 </div>

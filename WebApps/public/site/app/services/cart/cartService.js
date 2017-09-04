@@ -241,26 +241,21 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
   }
 
   service.replaceCartWithList = function(list){
-    angular.forEach(service.carts, function(arr) {
-      arr.splice(0,arr.length);
-    });
+    service.emptyCarts();
 
     var info = list.list;
     var products = list.products;
 
     service.activeCart = null;
 
-    service.setListName(info.name);
-    service.setListDescription(info.description);
-
     angular.forEach(products, function(value, key) {
       service.addItem(value);
     });
 
     service.activateCart(info.retailer_id);
-
-    updateLocalStorageCarts();
-    notifyObservers();
+    
+    service.setListName(info.name);
+    service.setListDescription(info.description);
   }
 
   service.emptyCarts = function(){

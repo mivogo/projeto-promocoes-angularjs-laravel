@@ -3,7 +3,7 @@
 */
 'use strict';
 
-app.controller('PasswordController', function ($scope, $location, $http, $rootScope, $state, $auth, toastr, AuthService, ModalService, AuthFactory) {
+app.controller('PasswordController', function ($scope, toastr, AuthService, ModalService, AuthFactory) {
 	//console.log("Password Controller reporting for duty.");
 
 	$scope.changePassword = function() {
@@ -19,6 +19,10 @@ app.controller('PasswordController', function ($scope, $location, $http, $rootSc
 		}, function (error) {
 			console.log('Unable to load profile data: ' + error);
 		});
+	};
+
+	$scope.cancel = function(){
+		ModalService.CloseModalForm();
 	};
 
 

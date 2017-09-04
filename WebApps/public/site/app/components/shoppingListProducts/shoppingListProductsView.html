@@ -1,28 +1,37 @@
-<div class="component-container container">
+<div class="container">
 	<div class="panel panel-default profile-card col-sm-12 col-lg-12">
 		<div class="panel-body profile-body col-sm-12 col-lg-12">
-			<div class="table-responsive col-lg-12">
-				<table  class="table table-striped ngCart cart">
-					<thead>
-						<tr>
-							<th>Nome</th>
-							<th>Marca</th>
-							<th>Quantidade</th>
-							<th>Preço</th>
-							<th>Total</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr data-ng-repeat="product in products">
-							<td>{{ product.name }}</td>
-							<td>{{ product.brand }}</td>
-							<td>{{ product.quantity | number }}</td>
-							<td>{{ product.price | currency }}</td>
-							<td>{{ product.price * product.quantity | currency }}</td>
-						</tr>
-					</tbody>
-				</table>
-
+			<div class="list-container">
+				<div class="cart-retailer">
+					<div class="nopadding">
+						<p class="title">{{listName}}</p>
+						<p class="description">{{listDescription}}</p>
+					</div>
+				</div>
+				<div class="table-responsive">
+					<div class="cart-table">
+						<div class="cart-table-row" data-ng-repeat="product in products | orderBy : '-category' track by $index">
+							<div class="cart-product-table">
+								<div class="cart-product-cell cart-product-img">
+									<img data-ng-src="{{product.image}}" alt="" class="img-responsive">
+								</div>
+								<div class="cart-product-cell cart-product-info">
+									<div class="info-wrapper">
+										<span class="brand capitalize">{{product.brand | lowercase}}</span>
+										<h5 class="name">{{product.name}}</h5>
+									</div>
+									<span class="price">{{product.price | currency}}</span>
+								</div>
+								<div class="cart-product-cell cart-product-qt">
+									<span class="cart-item-quantity noselect">{{ product.quantity | number }}</span>
+								</div>
+								<div class="cart-product-cell cart-product-total">
+									<span class="price-total">{{ product.price * product.quantity | currency }}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

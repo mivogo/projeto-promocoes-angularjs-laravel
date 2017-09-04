@@ -198,19 +198,19 @@ class ProductDetail extends Component {
       );
     } else {
       return (
-        <View style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
+        <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center' }}>
           <Button
-            style={{ borderColor: "green" }}
+            style={{ borderColor: 'green' }}
             onPress={() => {
               this.subProduct();
             }}
           >
-            <MaterialIcons name="remove" size={50} style={{ color: "green" }} />
+            <MaterialIcons name='remove' size={50} style={{ color: 'green' }} />
           </Button>
 
-          <Button style={{ borderColor: "green", flex: 1 }}>
+          <Button style={{ borderColor: 'green', flex: 1 }}>
             <View
-              style={{ flex: 1, flexDirection: "column", alignItems: "center" }}
+              style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}
             >
               <Text>
                 {this.state.quantity} uni

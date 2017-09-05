@@ -85,9 +85,13 @@
 <script src="site/app/factories/cart/cartProductFactory.js"></script>
 
 <body data-ng-app="promocoesWebApp">
-	<div header></div>
-	<div ui-view class="view-content"></div>
-	<div footer></div>
+
+	<div id="container">
+		<div id="header" header></div>
+		<div id="body" ui-view class="view-content"></div>
+		<div id="footer" footer></div>
+	</div>
+
 </body>
 
 </html>

@@ -10,10 +10,15 @@
 
 	<div class="cart-container col-lg-10 col-md-10 col-sm-12 col-xs-12 main" data-ng-if="cart.getTotalItems() > 0">
 
-		<div class="cart-retailer">
-			<div><span>Lista de produtos no </span><img class="img-responsive ng-scope" data-ng-src="{{activeRetailer.img}}"/></div>
+		<div class="cart-retailer col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
+			<div class="pull-left  col-lg-8 col-md-8 col-sm-7 col-xs-7 nopadding">
+				<span>Lista de produtos no </span><img class="img-responsive ng-scope" data-ng-src="{{activeRetailer.img}}"/>
+			</div>
+			<div class="cart-table-total col-lg-4 col-md-4 col-sm-5 col-xs-5 nopadding">
+				<span class="total">Total <span class="value">{{ cart.totalCost() | currency }}</span></span>
+			</div>
 		</div>
-		<div class="table-responsive">
+		<div class="table-responsive clearfix">
 			<div class="cart-table">
 				<div class="cart-table-row" data-ng-repeat="item in arrItems | orderBy : '-available' track by $index">
 					<div class="cart-product-table">
@@ -59,12 +64,9 @@
 		</div>
 
 		<div class="cart-table-footer col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix nopadding">
-			<div class="cart-table-buttons col-lg-8 col-md-8 col-sm-5 col-xs-5 nopadding">
+			<div class="cart-table-buttons">
 				<a data-ng-click="saveList()" class="btn btn-primary pointer cart-add-button"><i class="icon glyphicon glyphicon-save"></i>Guardar Lista</a>
 				<a data-ng-click="clearList()" class="btn btn-default pointer cart-add-button"><i class="icon glyphicon glyphicon-trash"></i>Limpar Lista</a>
-			</div>
-			<div class="cart-table-total col-lg-4 col-md-4 col-sm-5 col-xs-5 nopadding">
-				<span class="total">Total <span class="value">{{ cart.totalCost() | currency }}</span>
 			</div>
 		</div>
 	</div>

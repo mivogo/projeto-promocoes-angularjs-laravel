@@ -1,6 +1,6 @@
 .modal-header {
-    padding: 15px 15px 0 15px;
-    border-bottom: none;
+	padding: 15px 15px 0 15px;
+	border-bottom: none;
 }
 
 .modal-body {
@@ -9,11 +9,28 @@
 }
 
 .modal-body .message {
-    margin: 10px 0 5px;
-    color: #5d5d5d;
-    font-size: 14px;
+	margin: 10px 0 5px;
+	color: #5d5d5d;
+	font-size: 14px;
 }
 
+.modal-shoppinglist .modal-dialog {
+	width: 825px;
+}
+
+.modal-shoppinglist .container .panel-body {
+	padding:10px 0;
+}
+
+.modal-shoppinglist .container .panel{
+	border: none;
+	-webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.modal-shoppinglist .container .list-container .table-responsive {
+	padding-bottom: 0px;
+}
 
 @media (min-width: 768px){
 
@@ -26,15 +43,25 @@
 @media (min-width: 992px){
 
 	.modal-shoppinglist .modal-dialog {
-		width: 978px;
+		width: 825px;
+	}
+
+	.modal-shoppinglist .container {
+		width: 825px;
 	}
 
 }
 
 @media (min-width: 1200px){
+
 	.modal-shoppinglist .modal-dialog {
-		width: 1170px;
+		width: 825px;
 	}
+
+	.modal-shoppinglist .container {
+		width: 825px;
+	}
+
 }
 
 

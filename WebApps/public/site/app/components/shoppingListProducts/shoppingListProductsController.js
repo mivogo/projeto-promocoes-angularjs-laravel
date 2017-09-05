@@ -16,7 +16,6 @@ app.controller('ShoppingListProductsController', function ($scope, $state, CartS
 	$scope.products = [];
 
 	angular.forEach(products, function(data, key){
-			console.log(data);
 		$scope.products.push(data);
 	});
 });

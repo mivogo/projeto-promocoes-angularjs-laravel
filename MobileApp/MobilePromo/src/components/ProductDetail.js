@@ -134,7 +134,7 @@ class ProductDetail extends Component {
               AsyncStorage.setItem("@Cart", JSON.stringify(cart));
               this.setState({ quantity: json[i].quantity });
             } else {
-              json.splice(i);
+              json.splice(i, 1);
               cart.products = json;
               AsyncStorage.setItem("@Cart", JSON.stringify(cart));
               this.setState({ quantity: 0 });
@@ -152,6 +152,7 @@ class ProductDetail extends Component {
     if (nextProps.favorites !== "") {
       this.checkIsFavorite(nextProps);
     }
+    this.setState({ retailer: nextProps.retailer });
   }
 
   componentDidMount() {
@@ -172,13 +173,16 @@ class ProductDetail extends Component {
             AsyncStorage.getItem("@Cart").then(
               cart => {
                 cart = JSON.parse(cart);
-                products = JSON.parse(
+                let products = JSON.parse(
                   '{ "quantity": ' +
                     1 +
                     ', "product_id": "' +
-                    this.props.product.product_id +
-                    '"}'
+                    this.props.product.product_id + 
+                    '", "retailer_id": ' + this.state.retailer +
+                    ' }'
                 );
+                console.log('ATENCAO');
+                console.log(products);
                 cart['products'].push(products);
                 AsyncStorage.setItem("@Cart", JSON.stringify(cart));
                 this.setState({ quantity: 1 });

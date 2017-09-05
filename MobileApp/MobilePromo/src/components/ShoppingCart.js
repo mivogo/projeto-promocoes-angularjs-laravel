@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import ProductList from './ProductList';
 import Button from 'apsl-react-native-button';
 
 class ShoppingCart extends Component {
@@ -28,13 +28,16 @@ class ShoppingCart extends Component {
 
   state = {
     token: '',
+    noProducts: false,
     products: '[]',
+    productToSubstitute: 0,
     retailer_selected: 1,
     isLoading: false,
     price_1: 0,
     price_2: 0,
     price_3: 0,
     showNameMenu: false,
+    showReplaceMenu: false,
     name: '',
     description: ''
   };
@@ -54,6 +57,67 @@ class ShoppingCart extends Component {
             this.componentWillMount();
           }
         }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  removeProduct(product_id) {
+    this.setState({ isLoading: true });
+    AsyncStorage.getItem('@Cart').then(
+      cart => {
+        cart = JSON.parse(cart);
+        const json = cart.products;
+        for (let i = 0; i < json.length; i++) {
+          if (product_id != json[i].product_id) {
+            json.splice(i,1);
+            console.log('Inesremove');
+            console.log(json);
+            cart.products = json;
+            AsyncStorage.setItem('@Cart', JSON.stringify(cart));
+            this.setState({ products: '[]' });
+            this.componentWillMount();
+          }
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  substituteProduct(product_id) {
+    this.setState({ isLoading: true });
+    AsyncStorage.getItem('@Cart').then(
+      cart => {
+        cart = JSON.parse(cart);
+        const json = cart.products;
+        let repeated = 0;
+          for (let i = 0; i < json.length; i++) {
+            if (product_id == json[i].product_id) {
+              repeated = 1;
+              json[i].quantity = json[i].quantity + 1;
+              cart.products = json;
+              AsyncStorage.setItem('@Cart', JSON.stringify(cart));
+              this.removeProduct(this.state.productToSubstitute);
+              this.setState({ products: '[]', showReplaceMenu: false });
+              this.componentWillMount();
+              }
+            }
+          if (repeated == 0) {
+          for (let i = 0; i < json.length; i++) {
+            if (this.state.productToSubstitute == json[i].product_id) {
+              json[i].product_id = product_id;
+              json[i].retailer_id = this.state.retailer_selected;
+              cart.products = json;
+              AsyncStorage.setItem('@Cart', JSON.stringify(cart));
+              this.setState({ products: '[]', showReplaceMenu: false });
+              this.componentWillMount();
+              }
+            }
+          }
       },
       error => {
         console.log(error);
@@ -119,7 +183,8 @@ class ShoppingCart extends Component {
             style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}
           >
             <Image
-              style={{ alignSelf: 'stretch' }}
+              style={{ height: 17, width: 100 }}
+              resizeMode='contain'
               source={{ uri: 'http://vps415122.ovh.net/images/Continente.png' }}
             />
             <Text>{this.state.price_1.toFixed(2).toString().replace('.', ',')}€</Text>
@@ -137,7 +202,8 @@ class ShoppingCart extends Component {
             style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}
           >
             <Image
-              style={{ alignSelf: 'stretch' }}
+              style={{ height: 17, width: 50 }}
+              resizeMode='contain'
               source={{ uri: 'http://vps415122.ovh.net/images/Jumbo.png' }}
             />
             <Text>{this.state.price_2.toFixed(2).toString().replace('.', ',')}€</Text>
@@ -155,7 +221,8 @@ class ShoppingCart extends Component {
             style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}
           >
             <Image
-              style={{ alignSelf: 'stretch' }}
+            style={{ height: 19, width: 60 }}
+            resizeMode='contain'
               source={{
                 uri: 'http://vps415122.ovh.net/images/Intermarche.png'
               }}
@@ -216,6 +283,75 @@ class ShoppingCart extends Component {
     );
   }
 
+  renderReplace(productId, price, quantity, numberSuggestions) {
+    if(numberSuggestions > 0){
+    return (
+    <View style={{ flex: 1 }}>
+
+    <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center' }}>
+      <Button
+        style={{ borderColor: 'red', marginLeft: 2, marginRight: 2, flex: 1 }}
+        isDisabled={true}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <MaterialIcons name='warning' size={40} style={{ color: 'red', margin: 2 }} />
+          <Text style={{ margin: 2 }}>Indisponível </Text>
+        </View>
+      </Button>
+    </View>
+
+    <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center' }}>
+      <Button
+        style={{ borderColor: 'green', marginLeft: 2, marginRight: 2, flex: 1 }}
+        onPress={() => {
+          this.setState({ productToSubstitute: productId, showReplaceMenu: true });
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <MaterialIcons name='refresh' size={40} style={{ color: 'green', margin: 2 }} />
+          <Text style={{ margin: 2 }}>Trocar </Text>
+          </View>
+      </Button>
+
+      <Button
+        style={{ borderColor: 'darkred', marginRight: 2, flex: 1 }}
+        onPress={() => {
+          this.removeProduct(productId, quantity);
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <MaterialIcons name='remove' size={40} style={{ color: 'darkred', margin: 2 }} />
+          <Text style={{ margin: 2 }}>Remover </Text>
+          </View>
+      </Button>
+    </View>
+    </View>);
+  }
+  return (
+  <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center' }}>
+    <Button
+      style={{ borderColor: 'red', marginLeft: 2, marginRight: 2, flex: 1 }}
+      isDisabled={true}
+    >
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <MaterialIcons name='warning' size={40} style={{ color: 'red', margin: 2 }} /> 
+      <Text>Indisponível </Text>
+    </View>
+    </Button>
+  <Button
+        style={{ borderColor: 'darkred', marginRight: 2, flex: 1 }}
+        onPress={() => {
+          this.addProduct(productId, quantity);
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <MaterialIcons name='remove' size={40} style={{ color: 'darkred' , margin: 2  }} />
+          <Text style={{ margin: 2 }}>Remover </Text>
+          </View>
+      </Button>
+  </View>);
+  }
+
   renderQuantity(productId, price, quantity) {
     const multPrice = (price * quantity)
     .toFixed(2)
@@ -267,7 +403,7 @@ class ShoppingCart extends Component {
             backgroundColor: "white"
           }}
         >
-          <Text>Guardar Lista:</Text>
+          <Text style={{ fontSize: 30 }}>Guardar Lista:</Text>
           <TextInput
             style={styles.inputStyle}
             onChangeText={text => this.setState({ name: text })}
@@ -284,7 +420,7 @@ class ShoppingCart extends Component {
 
           <Button
             onPress={() => {
-              this.registerPost();
+              this.saveList();
             }}
             style={styles.inputStyle}
             isLoading={this.state.isLoading}
@@ -297,8 +433,50 @@ class ShoppingCart extends Component {
   }
 
   saveList(){
+    console.log("SAVE LIST");
+    console.log(this.state.products);
+    let jsonToSend =  JSON.parse('{ "name": "' + this.state.name + '",' +
+    '"description": "' + this.state.description + '",' +
+    '"retailer_id": "' + this.state.retailer_selected + '",' +
+    '"products": []}');
+    console.log(jsonToSend);
+    let mountedProducts = JSON.parse(this.state.products);
+    for (let i = 0; i < mountedProducts.length; i++) {
+      console.log(mountedProducts[i]);
+      if (mountedProducts[i][this.state.retailer_selected - 1].available) {
+        console.log(mountedProducts[i][this.state.retailer_selected - 1].product.name);
+        console.log(mountedProducts[i][this.state.retailer_selected - 1].product.product_id);
+        console.log(mountedProducts[i][3].quantity);
+        console.log(jsonToSend['products']);
+        jsonToSend['products'].push({ id: mountedProducts[i][this.state.retailer_selected - 1].product.product_id, quantity: mountedProducts[i][3].quantity });
+      }
+    }
+    console.log(jsonToSend);
+    const url = 'http://vps415122.ovh.net/api/profile/shoppinglist';
+    const auth = "bearer " + this.state.token;
 
-  }
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: auth
+      },
+      body: JSON.stringify(jsonToSend)
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        Alert.alert(
+          'Lista guardada',
+          'Poderá consultar a lista sempre que quiser na opção "Listas guardadas',
+          [
+            {text: 'OK', onPress: () => this.setState({showNameMenu: false})},
+          ]
+        );
+      })
+      .catch(error => {
+        console.log(error);
+      });
+}
 
   renderFooter() {
     console.log('Render Footer Menu');
@@ -350,6 +528,9 @@ class ShoppingCart extends Component {
         const json = cart.products;
         console.log('JSON');
         console.log(json);
+        if (json.length == 0){
+          this.setState({ noProducts: true, isLoading: false });
+        } 
         for (let i = 0; i < json.length; i++) {
         const url = 'http://vps415122.ovh.net/api/retailer/productAvailability/' + json[i].product_id;
         
@@ -364,7 +545,7 @@ class ShoppingCart extends Component {
             console.log('Recebeu' + json[i].product_id);
             console.log(responseJson);
             const newState = JSON.parse(this.state.products);
-            responseJson.push({ product_id: json[i].product_id, quantity: json[i].quantity });
+            responseJson.push({ product_id: json[i].product_id, quantity: json[i].quantity, retailer_id: json[i].retailer_id });
             newState.push(responseJson);         
             console.log(newState);
             let newPrice1 = 0;
@@ -426,25 +607,103 @@ class ShoppingCart extends Component {
           </View>
         </View>); 
       }
+      return (
+        <View key={product[3].product_id} style={styles.BoxStyle}>
+          <View>
+            <Image style={styles.thumbnailUnavailableStyle} source={{ uri: product[product[3].retailer_id - 1].product.image }} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontWeight: 'bold' }}>{product[product[3].retailer_id - 1].product.brand}</Text>
+            <Text style={{ fontSize: 20 }}>{product[product[3].retailer_id - 1].product.name}</Text>
+            <Text>({product[product[3].retailer_id - 1].product.weight} {product[product[3].retailer_id - 1].product.weight_type})</Text>
+            <Text style={{ fontWeight: 'bold' }}>{product[product[3].retailer_id - 1].product.price} €</Text>
+            {this.renderReplace(product[3].product_id, product[product[3].retailer_id - 1].product.price, product[3].quantity, product[this.state.retailer_selected - 1].suggestions.length)}
+          </View>
+        </View>); 
       }
     );
   }
   }
 
+  renderReplaceMenu() {
+    console.log("RENDERREPLACEMENU");
+    const data = JSON.parse(this.state.products);
+    console.log(data);
+    for (let i = 0; i < data.length; i++) {
+      console.log(data[i][3].product_id + ' - ' + this.state.productToSubstitute);
+      if (data[i][3].product_id == this.state.productToSubstitute) {
+        console.log('Toby222222');
+        console.log(data[i][this.state.retailer_selected - 1]);
+        console.log(data[i][this.state.retailer_selected - 1].suggestions);
+        const suggestions = data[i][this.state.retailer_selected - 1].suggestions;
+        return suggestions.map(suggestion => {
+        return (
+        <View key={suggestion.product_id} style={styles.BoxStyle}>
+          <View>
+            <Image style={styles.thumbnailStyle} source={{ uri: suggestion.image }} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontWeight: 'bold' }}>{suggestion.brand}</Text>
+            <Text style={{ fontSize: 20 }}>{suggestion.name}</Text>
+            <Text>({ suggestion.weight } {suggestion.weight_type})</Text>
+            <Text style={{ fontWeight: 'bold', color: 'red' }}>{suggestion.price} €</Text>
+            <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center' }}>
+              <Button
+                style={{ borderColor: 'green', marginLeft: 2, marginRight: 2, flex: 1 }}
+                onPress={() => {
+                  this.substituteProduct(suggestion.product_id);
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <MaterialIcons name='refresh' size={40} style={{ color: 'green', margin: 2 }} />
+                  <Text style={{ margin: 2 }}>Trocar </Text>
+                  </View>
+              </Button>
+            </View>
+          </View>
+        </View>);
+        });
+      }
+    }
+  }
+
   render() {
     console.log('RENDER FAVORITE PRODUCTS');
     console.log(this.state.token);
+    if(this.state.noProducts){
+      return (
+        <View style={{ flex: 1 }}>
+          {this.renderHeader('Carrinho')}
+          {this.renderRetailerMenu()}
+          <Text>Não há produtos no carrinho</Text>
+          {this.renderFooter()}
+        </View>
+      );
+    }
     return (
       
       <View style={{ flex: 1 }}>
          <Modal
-          animationType={"slide"}
+          animationType={'fade'}
           visible={this.state.showNameMenu}
           transparent={true}
           onRequestClose={() =>
             this.setState({ showNameMenu: !this.state.showNameMenu })}
         >
           {this.renderNameMenu()}
+        </Modal>
+        <Modal
+          animationType={'fade'}
+          visible={this.state.showReplaceMenu}
+          onRequestClose={() =>
+            this.setState({ showReplaceMenu: !this.state.showReplaceMenu })}
+        >
+          <View style={{ flex: 1 }}>
+          {this.renderHeader('Carrinho')}
+            <ScrollView style={styles.scrollViewStyle} >
+              {this.renderReplaceMenu()}
+            </ScrollView>
+          </View>
         </Modal>
         {this.renderHeader('Carrinho')}
         {this.renderRetailerMenu()}
@@ -464,10 +723,29 @@ const styles = {
     width: 100,
     margin: 5
   },
+  thumbnailUnavailableStyle: {
+    height: 100,
+    flex: 1,
+    width: 100,
+    margin: 5,
+    opacity: 0.5
+  },
   BoxStyle: {
     flexDirection: 'row',
     flex: 1,
-    margin: 5
+    borderWidth: 1,
+    borderRadius: 2,
+    borderColor: '#ddd',
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 5,
+    marginBottom: 5
   },
   scrollViewStyle: {
     flex: 1

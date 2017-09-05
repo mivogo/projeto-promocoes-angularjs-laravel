@@ -3,12 +3,13 @@ import {
   AsyncStorage,
   ScrollView,
   Dimensions,
+  View,
   ActivityIndicator
 } from "react-native";
 import ProductDetail from "./ProductDetail";
 
 class ProductList extends Component {
-  state = { products: [], favorites: [], token: "", isLoading: false };
+  state = { products: [], favorites: [], token: "", retailer: 1, isLoading: false };
 
   componentWillReceiveProps(nextProps) {
     AsyncStorage.getItem("@Token").then(
@@ -27,7 +28,7 @@ class ProductList extends Component {
     } else {
       this.setState({ isLoading: false });
     }
-    this.setState({ products: nextProps.products });
+    this.setState({ products: nextProps.products, retailer: nextProps.retailer });
   }
 
   getFavorites(token) {
@@ -58,6 +59,7 @@ class ProductList extends Component {
     if (!this.state.isLoading) {
       return data.map(product =>
         <ProductDetail
+          retailer={this.state.retailer}
           key={product.id}
           product={product}
           favorites={this.state.favorites}
@@ -75,9 +77,11 @@ class ProductList extends Component {
   render() {
     console.log(" RENDER RENDER");
     return (
+      <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         {this.renderProducts()}
       </ScrollView>
+      </View>
     );
   }
 }

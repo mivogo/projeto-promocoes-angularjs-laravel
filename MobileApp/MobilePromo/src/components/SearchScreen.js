@@ -251,8 +251,6 @@ class SearchScreen extends Component {
         <View
           style={{
             padding: 10,
-            borderColor: "blue",
-            borderWidth: 1,
             backgroundColor: "white"
           }}
         >
@@ -321,8 +319,6 @@ class SearchScreen extends Component {
         <View
           style={{
             padding: 10,
-            borderColor: "blue",
-            borderWidth: 1,
             backgroundColor: "white"
           }}
         >
@@ -404,6 +400,7 @@ class SearchScreen extends Component {
 
         {this.renderHeader("Resultados")}
         <ProductList
+          retailer={this.state.retailer}
           isItLoading={this.state.isLoading}
           products={this.state.products.data}
         />
@@ -442,7 +439,6 @@ const styles = {
     marginTop: 10
   },
   headerStyle: {
-    borderWidth: 1,
     backgroundColor: "#F8F8F8",
     flexDirection: "row",
     height: 60,
@@ -455,7 +451,6 @@ const styles = {
     position: "relative"
   },
   footerStyle: {
-    borderWidth: 1,
     backgroundColor: "#F8F8F8",
     alignSelf: "center",
     flexDirection: "row",

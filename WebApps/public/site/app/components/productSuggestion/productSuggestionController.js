@@ -16,7 +16,8 @@ app.controller('ProductSuggestionController', function ($scope, $uibModal, $stat
 
 	angular.forEach(suggestionsList, function(item){
 		if(!CartService.hasItem(item)){
-			$scope.suggestions.push(item);
+			var product = Product.build(item);
+			$scope.suggestions.push(product);
 		}
 		$scope.suggestionsCount +=1;
 	});

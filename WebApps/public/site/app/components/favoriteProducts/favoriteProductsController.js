@@ -30,6 +30,10 @@ app.controller('FavoriteProductsController', function ($scope, $state, Product, 
 		i = i+1;
 	});
 
+	$scope.numberProducts = function(){
+		return $scope.favorites.length;
+	}
+
 	$scope.removeFavorite = function(id){
 		ProfileFactory.removeFavoriteProduct(id)            
 		.then(function (response) {

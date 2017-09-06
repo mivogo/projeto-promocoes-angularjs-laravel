@@ -40,7 +40,7 @@ class Login extends Component {
     const jsonObj = {
       products: []
     };
-    console.log("A ENVIAR");
+    
     AsyncStorage.setItem("@Cart", JSON.stringify(jsonObj));
   }
 
@@ -50,14 +50,14 @@ class Login extends Component {
 
   loginPost() {
     this.setState({ isLoading: true });
-    console.log("MOUNTOU");
+    
     let jsonRequest = "";
     const url = "http://vps415122.ovh.net/api/login";
     jsonRequest += '{"email": "' + this.state.email + '",';
     jsonRequest += '"password": "' + this.state.password + '"}';
 
-    console.log(url);
-    console.log(jsonRequest);
+    
+    
 
     fetch(url, {
       method: "POST",
@@ -89,26 +89,26 @@ class Login extends Component {
             isLogged: false,
             isLoading: false
           });
-          console.log("Erro a loggar");
+          
         }
       })
       .catch(error => {
         this.setState({ isLoading: false });
-        console.error(error);
+        
       });
   }
 
   registerPost() {
     this.setState({ isLoading: true });
-    console.log("MOUNTOU");
+    
     let jsonRequest = "";
     const url = "http://vps415122.ovh.net/api/register";
     jsonRequest += '{"name": "' + this.state.name + '",';
     jsonRequest += '"email": "' + this.state.email + '",';
     jsonRequest += '"password": "' + this.state.password + '"}';
 
-    console.log(url);
-    console.log(jsonRequest);
+    
+    
 
     fetch(url, {
       method: "POST",
@@ -136,17 +136,17 @@ class Login extends Component {
             isLogged: false,
             isLoading: false
           });
-          console.log("Erro a Registar");
+          
         }
       })
       .catch(error => {
         this.setState({ isLoading: false });
-        console.error(error);
+        
       });
   }
 
   renderRegisterMenu() {
-    console.log("Render Search Menu");
+    
     return (
       <View style={styles.modalRegisterStyle}>
         <View

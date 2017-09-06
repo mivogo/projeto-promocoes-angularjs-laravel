@@ -3,13 +3,14 @@ import {
   Text,
   ScrollView,
   View,
-  Button,
   AsyncStorage,
   TouchableOpacity,
   ActivityIndicator,
+  Image,
   Modal
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Button from "apsl-react-native-button";
 import ProductList from "./ProductList";
 
 class UserListProducts extends Component {
@@ -174,52 +175,85 @@ class UserListProducts extends Component {
   }
 
   renderListsPreview() {
+
     if (this.state.lists.length !== 0 && !this.state.isLoading) {
       return this.state.lists.map(row =>
         <View
           key={row.id}
           style={{
             flex: 1,
-            flexDirection: "row",
+            borderWidth: 1,
+            borderRadius: 2,
+            borderColor: "#ddd",
+            borderBottomWidth: 0,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 2,
+            elevation: 2,
             marginLeft: 5,
             marginRight: 5,
-            marginTop: 10
+            marginTop: 5,
+            marginBottom: 5
           }}
         >
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontWeight: "bold" }}>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+        <Image
+              style={{ height: 100, width: 400, margin: 2 }}
+              resizeMode="contain"
+              source={{
+                uri: 'http://vps415122.ovh.net/images/' + row.retailer_id + '.png'
+              }}
+            />
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <View style={{ flex: 1, margin: 5, justifyContent: 'flex-end'}}>
+            <Text style={{ fontWeight: "bold", fontSize: 20 }}>
               {row.name}
             </Text>
             <Text>
               {row.description}
             </Text>
           </View>
-          <View>
+          <View style={{ margin: 5, justifyContent: 'flex-end' }}>
             <Text>
-              {row.total_products} produtos
+              Quantidade: {row.total_products}
             </Text>
-            <Text>
-              {row.total_price.toString().replace(".", ",")}€
+            <Text style={{ fontWeight: "bold", color: "red" }}>
+              Total: {row.total_price.toString().replace(".", ",")} €
             </Text>
           </View>
-          <View style={{ width: 10 }} />
-          <Button
-            onPress={() => {
-              this.userListPost(row.id);
-              this.setState({ selectedList: row.name, showList: true });
-            }}
-            title="Ver"
-            color="green"
-          />
-          <View style={{ width: 10 }} />
-          <Button
-            onPress={() => {
-              this.userListDeletePost(row.id);
-            }}
-            title="Apagar"
-            color="red"
-          />
-        </View>
+          </View>
+          <View style={{ flexDirection:'row', flex: 1}}>
+            <Button
+              style={{
+                  borderColor: "green",
+                  marginLeft: 2,
+                  marginRight: 2,
+                  flex: 1
+                }}
+              textStyle={{ color: "green" }}
+              onPress={() => {
+                this.userListPost(row.id);
+                this.setState({ selectedList: row.name, showList: true });
+              }}
+            >    Ver    
+            </Button>
+            <Button
+              style={{
+                  borderColor: "red",
+                  marginLeft: 2,
+                  marginRight: 2,
+                  flex: 1
+                }}
+              textStyle={{ color: "red" }}
+              onPress={() => {
+                this.userListDeletePost(row.id);
+              }}
+            >    Apagar    
+            </Button>
+          </View>
+          </View>
       );
     }
     return (

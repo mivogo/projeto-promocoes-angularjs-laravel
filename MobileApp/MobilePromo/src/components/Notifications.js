@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import {
   Text,
   View,
-  Button,
   AsyncStorage,
   TouchableOpacity,
   ScrollView,
   ActivityIndicator
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Button from "apsl-react-native-button";
 import ProductList from "./ProductList";
 
 class Notifications extends Component {
@@ -161,12 +161,20 @@ class Notifications extends Component {
     return (
       <View style={styles.footerStyle}>
         <Button
+          style={{
+            borderColor: "red",
+            marginLeft: 2,
+            marginRight: 2,
+            flex: 1
+          }}
+          textStyle={{ color: "red" }}
           onPress={() => {
             this.removeAllNotificationsPost();
             this.notificationsGet();
           }}
-          title="Apagar Todos"
-        />
+        >
+        Apagar Todos
+        </Button>
       </View>
     );
   }

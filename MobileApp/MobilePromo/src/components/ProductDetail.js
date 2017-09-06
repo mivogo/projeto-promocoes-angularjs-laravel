@@ -25,8 +25,8 @@ class ProductDetail extends Component {
         "http://vps415122.ovh.net/api/profile/favorites/delete/" +
         this.props.product.product_id;
       const auth = "bearer " + this.state.token;
-      console.log("FAVORITE AUTH");
-      console.log(auth);
+      
+      
       fetch(url, {
         method: "POST",
         headers: {
@@ -36,19 +36,19 @@ class ProductDetail extends Component {
       })
         .then(response => response.json())
         .then(responseJson => {
-          console.log("Apagou favorite");
+          
           this.setState({ isFavorite: false });
         })
         .catch(error => {
-          console.error(error);
+          
         });
     } else {
       const url =
         "http://vps415122.ovh.net/api/profile/favorites/" +
         this.props.product.product_id;
       const auth = "bearer " + this.state.token;
-      console.log("FAVORITE AUTH");
-      console.log(auth);
+      
+      
       fetch(url, {
         method: "POST",
         headers: {
@@ -58,18 +58,18 @@ class ProductDetail extends Component {
       })
         .then(response => response.json())
         .then(responseJson => {
-          console.log("Adicionou favorite");
+          
           this.setState({ isFavorite: true });
         })
         .catch(error => {
-          console.error(error);
+          
         });
     }
   }
 
   checkIsFavorite(nextProps) {
-    console.log("PING PING PING");
-    console.log(this.props.favorites);
+    
+    
     for (let i = 0; i < nextProps.favorites.length; i++) {
       console.log(
         this.props.product.product_id +
@@ -77,7 +77,7 @@ class ProductDetail extends Component {
           nextProps.favorites[i].product_id
       );
       if (this.props.product.product_id == nextProps.favorites[i].product_id) {
-        console.log("PONG!");
+        
         this.setState({ isFavorite: true });
       }
     }
@@ -95,7 +95,7 @@ class ProductDetail extends Component {
         }
       },
       error => {
-        console.log(error);
+        
       }
     );
   }
@@ -115,7 +115,7 @@ class ProductDetail extends Component {
         }
       },
       error => {
-        console.log(error);
+        
       }
     );
   }
@@ -143,7 +143,7 @@ class ProductDetail extends Component {
         }
       },
       error => {
-        console.log(error);
+        
       }
     );
   }
@@ -181,14 +181,14 @@ class ProductDetail extends Component {
                     '", "retailer_id": ' + this.state.retailer +
                     ' }'
                 );
-                console.log('ATENCAO');
-                console.log(products);
+                
+                
                 cart['products'].push(products);
                 AsyncStorage.setItem("@Cart", JSON.stringify(cart));
                 this.setState({ quantity: 1 });
               },
               error => {
-                console.log(error);
+                
               }
             );
           }}
@@ -250,7 +250,7 @@ class ProductDetail extends Component {
                 this.addRemoveFavorite();
               },
               error => {
-                console.log(error);
+                
               }
             );
           }}
@@ -269,7 +269,7 @@ class ProductDetail extends Component {
                 this.addRemoveFavorite();
               },
               error => {
-                console.log(error);
+                
               }
             );
           }}

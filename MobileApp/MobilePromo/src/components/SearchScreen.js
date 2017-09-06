@@ -99,7 +99,7 @@ class SearchScreen extends Component {
   }
 
   renderHeader(headerName) {
-    console.log("Render Header Menu");
+    
     return (
       <View style={styles.headerStyle}>
         {/* Menu icon and click action */}
@@ -162,7 +162,150 @@ class SearchScreen extends Component {
   }
 
   renderFooter() {
-    console.log("Render Footer Menu");
+    if(this.state.page == 1){
+      return(<View style={styles.footerStyle}>
+      {/* Anterior */}
+      <TouchableOpacity
+        disabled = {true}
+        onPress={() => {
+          this.productsPost(false, this.state.page - 1);
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            flex: 1,
+            alignItems: "center"
+          }}
+        >
+          <MaterialIcons
+            name="skip-previous"
+            size={40}
+            style={{ color: "black", padding: 5 }}
+          />
+          <Text style={styles.footerTextStyle}>Anterior</Text>
+        </View>
+      </TouchableOpacity>
+
+      {/* Páginas */}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          flex: 1,
+          alignItems: "center"
+        }}
+      >
+        <Text style={styles.footerTextStyle}>
+          {this.state.page}
+        </Text>
+
+        <Text style={styles.footerTextStyle}>/</Text>
+
+        <Text style={styles.footerTextStyle}>
+          {this.state.total_pages}
+        </Text>
+      </View>
+
+      {/* Próximo */}
+      <TouchableOpacity
+        onPress={() => {
+          this.productsPost(false, this.state.page + 1);
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            flex: 1,
+            alignItems: "center"
+          }}
+        >
+          <Text style={styles.footerTextStyle}>Próximo</Text>
+          <MaterialIcons
+            name="skip-next"
+            size={40}
+            style={{ color: "black", padding: 5 }}
+          />
+        </View>
+      </TouchableOpacity>
+    </View>
+    );
+    }
+    if(this.state.page == this.state.total_pages){
+      return(
+      <View style={styles.footerStyle}>
+      {/* Anterior */}
+      <TouchableOpacity
+        onPress={() => {
+          this.productsPost(false, this.state.page - 1);
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            flex: 1,
+            alignItems: "flex-start"
+          }}
+        >
+          <MaterialIcons
+            name="skip-previous"
+            size={40}
+            style={{ color: "black", padding: 5 }}
+          />
+          <Text style={styles.footerTextStyle}>Anterior</Text>
+        </View>
+      </TouchableOpacity>
+
+      {/* Páginas */}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          flex: 1,
+          alignItems: "center"
+        }}
+      >
+        <Text style={styles.footerTextStyle}>
+          {this.state.page}
+        </Text>
+
+        <Text style={styles.footerTextStyle}>/</Text>
+
+        <Text style={styles.footerTextStyle}>
+          {this.state.total_pages}
+        </Text>
+      </View>
+
+      {/* Próximo */}
+      <TouchableOpacity
+        disabled = {true}
+        onPress={() => {
+          this.productsPost(false, this.state.page + 1);
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            flex: 1,
+            alignItems: "flex-end"
+          }}
+        >
+          <Text style={styles.footerTextStyle}>Próximo</Text>
+          <MaterialIcons
+            name="skip-next"
+            size={40}
+            style={{ color: "black", padding: 5 }}
+          />
+        </View>
+      </TouchableOpacity>
+    </View>
+      );
+    }
+    else{
     return (
       <View style={styles.footerStyle}>
         {/* Anterior */}
@@ -232,6 +375,7 @@ class SearchScreen extends Component {
         </TouchableOpacity>
       </View>
     );
+    }
   }
 
   convertRetailerIDtoName() {
@@ -245,13 +389,26 @@ class SearchScreen extends Component {
   }
 
   renderSearchMenu() {
-    console.log("Render Search Menu");
+    
     return (
       <View style={styles.modalSearchStyle}>
         <View
           style={{
-            padding: 10,
-            backgroundColor: "white"
+            padding: 10, 
+            backgroundColor: 'white',
+            borderWidth: 1,
+            borderRadius: 2,
+            borderColor: "#ddd",
+            borderBottomWidth: 0,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 2,
+            elevation: 2,
+            marginLeft: 5,
+            marginRight: 5,
+            marginTop: 5,
+            marginBottom: 5
           }}
         >
           {/* Pesquisa */}
@@ -291,10 +448,10 @@ class SearchScreen extends Component {
   }
 
   renderFilterBrands() {
-    console.log("Render Filter Brands");
+    
     if (!this.state.isLoading && this.state.brands.length !== 0) {
-      console.log("Debug 2");
-      console.log(this.state.brands);
+      
+      
       return this.state.brands.map((brand, index) =>
         <Picker.Item key={index} label={brand} value={brand} />
       );
@@ -302,10 +459,10 @@ class SearchScreen extends Component {
   }
 
   renderFilterCategories() {
-    console.log("Render Filter Categories");
+    
     if (!this.state.isLoading && this.state.categories.length !== 0) {
-      console.log("Debug 2");
-      console.log(this.state.categories);
+      
+      
       return this.state.categories.map((category, index) =>
         <Picker.Item key={index} label={category} value={category} />
       );
@@ -313,13 +470,27 @@ class SearchScreen extends Component {
   }
 
   renderFilterMenu() {
-    console.log("Render Filter Menu");
+    
     return (
       <View style={styles.modalFilterStyle}>
         <View
           style={{
             padding: 10,
-            backgroundColor: "white"
+            backgroundColor: 'white',
+            borderWidth: 1,
+            borderRadius: 2,
+            borderColor: '#ddd',
+            borderBottomWidth: 0,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 2,
+            elevation: 2,
+            marginLeft: 5,
+            marginRight: 5,
+            marginTop: 5,
+            marginBottom: 5
+
           }}
         >
           {/* Ordenação */}
@@ -375,11 +546,11 @@ class SearchScreen extends Component {
   }
 
   render() {
-    console.log("Render");
+    
     return (
       <View style={{ flex: 1 }}>
         <Modal
-          animationType={"slide"}
+          animationType={"fade"}
           visible={this.state.isSearchMenuVisible}
           onRequestClose={() =>
             this.setSearchMenuVisible(!this.state.isSearchMenuVisible)}
@@ -389,7 +560,7 @@ class SearchScreen extends Component {
         </Modal>
 
         <Modal
-          animationType={"slide"}
+          animationType={"fade"}
           visible={this.state.isFilterMenuVisible}
           onRequestClose={() =>
             this.setFilterMenuVisible(!this.state.isFilterMenuVisible)}
@@ -455,13 +626,15 @@ const styles = {
     alignSelf: "center",
     flexDirection: "row",
     height: 60,
-    paddingTop: 5,
-    paddingBottom: 5,
-    shadowColor: "black",
-    shadowOffset: { width: 20, height: 20 },
-    shadowOpacity: 0.5,
-    elevation: 10,
-    position: "relative"
+    borderWidth: 1,
+    borderRadius: 2,
+    borderColor: "#ddd",
+    borderBottomWidth: 0,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2
   },
   headerTextStyle: {
     fontSize: 20

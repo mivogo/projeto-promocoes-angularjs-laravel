@@ -3,11 +3,11 @@ PATH=/root/.composer/vendor/bin:/root/.composer/vendor/bin:/usr/local/sbin:/usr/
 echo "Fetching for Products"
 ./clean.sh
 echo "Scrapping Jumbo"
-scrapy crawl jumbo -o jumbo.json
+scrapy crawl jumbo -o jumbo.json &> log.jumbo.txt
 echo "Scrapping Continente"
-scrapy crawl continente -o continente.json
+scrapy crawl continente -o continente.json &> log.continente.txt
 echo "Scrapping Intermarche"
-scrapy crawl intermarche -o intermarche.json
+scrapy crawl intermarche -o intermarche.json &> log.intermarche.txt
 echo "Converting and sending files to API"
-python divide_files.py
+python divide_files.py &> log.divideFiles.txt
 echo "Jsons created"

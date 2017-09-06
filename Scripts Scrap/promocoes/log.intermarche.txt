@@ -1,0 +1,373 @@
+2017-09-06 21:39:25 [scrapy.utils.log] INFO: Scrapy 1.4.0 started (bot: promocoes)
+2017-09-06 21:39:25 [scrapy.utils.log] INFO: Overridden settings: {'NEWSPIDER_MODULE': 'promocoes.spiders', 'FEED_URI': 'intermarche.json', 'SPIDER_MODULES': ['promocoes.spiders'], 'BOT_NAME': 'promocoes', 'ROBOTSTXT_OBEY': True, 'FEED_FORMAT': 'json', 'FEED_EXPORT_ENCODING': 'utf-8'}
+2017-09-06 21:39:25 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.feedexport.FeedExporter',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.corestats.CoreStats']
+2017-09-06 21:39:25 [easyprocess] DEBUG: param: "['Xvfb', '-help']" 
+2017-09-06 21:39:25 [easyprocess] DEBUG: command: ['Xvfb', '-help']
+2017-09-06 21:39:25 [easyprocess] DEBUG: joined command: Xvfb -help
+2017-09-06 21:39:25 [easyprocess] DEBUG: process was started (pid=4598)
+2017-09-06 21:39:25 [easyprocess] DEBUG: process has ended
+2017-09-06 21:39:25 [easyprocess] DEBUG: return code=0
+2017-09-06 21:39:25 [easyprocess] DEBUG: stdout=
+2017-09-06 21:39:25 [easyprocess] DEBUG: stderr=use: X [:<display>] [option]
+-a #                   default pointer acceleration (factor)
+-ac                    disable access control restrictions
+-audit int             set audit trail level
+-auth file             select authorization file
+-br                    create root window with black background
++bs                    enable any backing store support
+-bs                    disable any backing store support
+-c                     turns off key-click
+c #                    key-click volume (0-100)
+-cc int                default color visual class
+-nocursor              disable the cursor
+-core                  generate core dump on fatal error
+-displayfd fd          file descriptor to write display number to when ready to connect
+-dpi int               screen resolution in dots per inch
+-dpms                  disables VESA DPMS monitor control
+-deferglyphs [none|all|16] defer loading of [no|all|16-bit] glyphs
+-f #                   bell base (0-100)
+-fc string             cursor font
+-fn string             default font name
+-fp string             default font path
+-help                  prints message with these options
++iglx                  Allow creating indirect GLX contexts
+-iglx                  Prohibit creating indirect GLX contexts (default)
+-I                     ignore all remaining arguments
+-ld int                limit data space to N Kb
+-lf int                limit number of open files to N
+-ls int                limit stack space to N Kb
+-nolock                disable the locking mechanism
+-maxclients n          set maximum number of clients (power of two)
+-nolisten string       don't listen on protocol
+-listen string         listen on protocol
+-noreset               don't reset after last client exists
+-background [none]     create root window with no background
+-reset                 reset after last client exists
+-p #                   screen-saver pattern duration (minutes)
+-pn                    accept failure to listen on all ports
+-nopn                  reject failure to listen on all ports
+-r                     turns off auto-repeat
+r                      turns on auto-repeat 
+-render [default|mono|gray|color] set render color alloc policy
+-retro                 start with classic stipple and cursor
+-s #                   screen-saver timeout (minutes)
+-seat string           seat to run on
+-t #                   default pointer threshold (pixels/t)
+-terminate             terminate at server reset
+-to #                  connection time out
+-tst                   disable testing extensions
+ttyxx                  server started from init on /dev/ttyxx
+v                      video blanking for screen-saver
+-v                     screen-saver without video blanking
+-wm                    WhenMapped default backing-store
+-wr                    create root window with white background
+-maxbigreqsize         set maximal bigrequest size 
++xinerama              Enable XINERAMA extension
+-xinerama              Disable XINERAMA extension
+-dumbSched             Disable smart scheduling, enable old behavior
+-schedInterval int     Set scheduler interval in msec
+-sigstop               Enable SIGSTOP based startup
++extension name        Enable extension
+-extension name        Disable extension
+-query host-name       contact named host for XDMCP
+-broadcast             broadcast for XDMCP
+-multicast [addr [hops]] IPv6 multicast for XDMCP
+-indirect host-name    contact named host for indirect XDMCP
+-port port-num         UDP port number to send messages to
+-from local-address    specify the local address to connect from
+-once                  Terminate server after one session
+-class display-class   specify display class to send in manage
+-cookie xdm-auth-bits  specify the magic cookie for XDMCP
+-displayID display-id  manufacturer display ID for request
+[+-]accessx [ timeout [ timeout_mask [ feedback [ options_mask] ] ] ]
+                       enable/disable accessx key sequences
+-ardelay               set XKB autorepeat delay
+-arinterval            set XKB autorepeat interval
+-screen scrn WxHxD     set screen's width, height, depth
+-pixdepths list-of-int support given pixmap depths
++/-render		   turn on/off RENDER extension support(default on)
+-linebias n            adjust thin line pixelization
+-blackpixel n          pixel value for black
+-whitepixel n          pixel value for white
+-fbdir directory       put framebuffers in mmap'ed files in directory
+-shmem                 put framebuffers in shared memory
+2017-09-06 21:39:25 [easyprocess] DEBUG: param: "['xauth', '-h']" 
+2017-09-06 21:39:25 [easyprocess] DEBUG: command: ['xauth', '-h']
+2017-09-06 21:39:25 [easyprocess] DEBUG: joined command: xauth -h
+2017-09-06 21:39:25 [easyprocess] DEBUG: process was started (pid=4599)
+2017-09-06 21:39:25 [easyprocess] DEBUG: process has ended
+2017-09-06 21:39:25 [easyprocess] DEBUG: return code=1
+2017-09-06 21:39:25 [easyprocess] DEBUG: stdout=
+2017-09-06 21:39:25 [easyprocess] DEBUG: stderr=usage:  xauth [-options ...] [command arg ...]
+
+where options include:
+    -f authfilename                name of authority file to use
+    -v                             turn on extra messages
+    -q                             turn off extra messages
+    -i                             ignore locks on authority file
+    -b                             break locks on authority file
+    -V                             show version number of xauth
+
+and commands have the following syntax:
+
+    add dpyname protoname hexkey   add entry
+    exit                           save changes and exit program
+    extract filename dpyname...    extract entries into file
+    help [topic]                   print help
+    info                           print information about entries
+    list [dpyname...]              list entries
+    merge filename...              merge entries from files
+    nextract filename dpyname...   numerically extract entries
+    nlist [dpyname...]             numerically list entries
+    nmerge filename...             numerically merge entries
+    quit                           abort changes and exit program
+    remove dpyname...              remove entries
+    source filename                read commands from file
+    version                        show version number of xauth
+    ?                              list available commands
+    generate dpyname protoname [options]  use server to generate entry
+    options are:
+      timeout n    authorization expiration time in seconds
+      trusted      clients using this entry are trusted
+      untrusted    clients using this entry are untrusted
+      group n      clients using this entry belong to application group n
+      data hexkey  auth protocol specific data needed to generate the entry
+
+
+A dash may be used with the "merge" and "source" to read from the
+standard input.  Commands beginning with "n" use numeric format.
+
+2017-09-06 21:39:25 [easyprocess] DEBUG: param: "['Xvfb', '-br', '-nolisten', 'tcp', '-screen', '0', '1920x1080x24', ':1000']" 
+2017-09-06 21:39:25 [easyprocess] DEBUG: command: ['Xvfb', '-br', '-nolisten', 'tcp', '-screen', '0', '1920x1080x24', ':1000']
+2017-09-06 21:39:25 [easyprocess] DEBUG: joined command: Xvfb -br -nolisten tcp -screen 0 1920x1080x24 :1000
+2017-09-06 21:39:25 [easyprocess] DEBUG: param: "['xauth', '-h']" 
+2017-09-06 21:39:25 [easyprocess] DEBUG: command: ['xauth', '-h']
+2017-09-06 21:39:25 [easyprocess] DEBUG: joined command: xauth -h
+2017-09-06 21:39:25 [easyprocess] DEBUG: process was started (pid=4600)
+2017-09-06 21:39:25 [easyprocess] DEBUG: process has ended
+2017-09-06 21:39:25 [easyprocess] DEBUG: return code=1
+2017-09-06 21:39:25 [easyprocess] DEBUG: stdout=
+2017-09-06 21:39:25 [easyprocess] DEBUG: stderr=usage:  xauth [-options ...] [command arg ...]
+
+where options include:
+    -f authfilename                name of authority file to use
+    -v                             turn on extra messages
+    -q                             turn off extra messages
+    -i                             ignore locks on authority file
+    -b                             break locks on authority file
+    -V                             show version number of xauth
+
+and commands have the following syntax:
+
+    add dpyname protoname hexkey   add entry
+    exit                           save changes and exit program
+    extract filename dpyname...    extract entries into file
+    help [topic]                   print help
+    info                           print information about entries
+    list [dpyname...]              list entries
+    merge filename...              merge entries from files
+    nextract filename dpyname...   numerically extract entries
+    nlist [dpyname...]             numerically list entries
+    nmerge filename...             numerically merge entries
+    quit                           abort changes and exit program
+    remove dpyname...              remove entries
+    source filename                read commands from file
+    version                        show version number of xauth
+    ?                              list available commands
+    generate dpyname protoname [options]  use server to generate entry
+    options are:
+      timeout n    authorization expiration time in seconds
+      trusted      clients using this entry are trusted
+      untrusted    clients using this entry are untrusted
+      group n      clients using this entry belong to application group n
+      data hexkey  auth protocol specific data needed to generate the entry
+
+
+A dash may be used with the "merge" and "source" to read from the
+standard input.  Commands beginning with "n" use numeric format.
+
+2017-09-06 21:39:25 [easyprocess] DEBUG: param: "['Xvfb', '-br', '-nolisten', 'tcp', '-screen', '0', '1920x1080x24', ':1001']" 
+2017-09-06 21:39:25 [easyprocess] DEBUG: command: ['Xvfb', '-br', '-nolisten', 'tcp', '-screen', '0', '1920x1080x24', ':1001']
+2017-09-06 21:39:25 [easyprocess] DEBUG: joined command: Xvfb -br -nolisten tcp -screen 0 1920x1080x24 :1001
+2017-09-06 21:39:25 [easyprocess] DEBUG: process was started (pid=4601)
+2017-09-06 21:39:25 [pyvirtualdisplay.abstractdisplay] DEBUG: DISPLAY=:1001
+2017-09-06 21:39:26 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session {"capabilities": {"alwaysMatch": {"platform": "ANY", "browserName": "chrome", "version": "", "chromeOptions": {"args": ["--no-sandbox"], "extensions": []}}, "firstMatch": []}, "desiredCapabilities": {"platform": "ANY", "browserName": "chrome", "version": "", "chromeOptions": {"args": ["--no-sandbox"], "extensions": []}}}
+2017-09-06 21:39:28 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:39:28 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2017-09-06 21:39:28 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2017-09-06 21:39:28 [scrapy.middleware] INFO: Enabled item pipelines:
+[]
+2017-09-06 21:39:28 [scrapy.core.engine] INFO: Spider opened
+2017-09-06 21:39:28 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2017-09-06 21:39:28 [scrapy.extensions.telnet] DEBUG: Telnet console listening on 127.0.0.1:6023
+2017-09-06 21:39:28 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/robots.txt> (referer: None)
+2017-09-06 21:39:28 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10152-porco> (referer: None)
+2017-09-06 21:39:28 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10152-porco", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:39:29 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:39:34 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:39:34 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:39:34 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:39:34 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:39:39 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10151-novilhovitela-e-vitelao> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10152-porco)
+2017-09-06 21:39:40 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10151-novilhovitela-e-vitelao", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:39:40 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:39:45 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:39:45 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:39:45 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:39:45 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:39:50 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10154-aves-e-coelho> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10151-novilhovitela-e-vitelao)
+2017-09-06 21:39:50 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10154-aves-e-coelho", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:39:51 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:39:56 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:39:56 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:39:56 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:39:56 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:01 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10153-salsichas> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10154-aves-e-coelho)
+2017-09-06 21:40:01 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10153-salsichas", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:40:01 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:06 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:40:06 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:06 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:40:07 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:12 [scrapy.core.scraper] DEBUG: Scraped from <200 https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10153-salsichas>
+{'Category': u'Frescos', 'Price_per_weight': u'8.36', 'Name': u'Salsichas churrasco cl\xe1ssicas', 'Weight_Type': 'g', 'Price': u'2.09', 'Sub-Category': u'Talho', 'Type_of_weight': u'kg', 'Weight': '250.0', 'Brand': u'Quinta Velha', 'ID': u'5964', 'Link': u'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10153-salsichas', 'Image': u'https://driveimg3.intermarche.com/pt/Ressources/images/produit/zoom/FF37EF50FA6C9BCE115B23D1717C1F66-quinta-velha-salsichas-churrasco-classicas.jpg'}
+2017-09-06 21:40:12 [scrapy.core.scraper] DEBUG: Scraped from <200 https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10153-salsichas>
+{'Category': u'Frescos', 'Price_per_weight': u'8.64', 'Name': u'Salsichas churrasco com ervas', 'Weight_Type': 'g', 'Price': u'2.16', 'Sub-Category': u'Talho', 'Type_of_weight': u'kg', 'Weight': '250.0', 'Brand': u'Quinta Velha', 'ID': u'5965', 'Link': u'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10153-salsichas', 'Image': u'https://driveimg4.intermarche.com/pt/Ressources/images/produit/zoom/3929453A43812EA9464AC9A171DFFD83-quinta-velha-salsichas-churrasco-com-ervas.jpg'}
+2017-09-06 21:40:12 [scrapy.core.scraper] DEBUG: Scraped from <200 https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10153-salsichas>
+{'Category': u'Frescos', 'Price_per_weight': u'8.64', 'Name': u'Salsichas churro picantes', 'Weight_Type': 'g', 'Price': u'2.16', 'Sub-Category': u'Talho', 'Type_of_weight': u'kg', 'Weight': '250.0', 'Brand': u'Quinta Velha', 'ID': u'14236', 'Link': u'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10153-salsichas', 'Image': u'https://driveimg3.intermarche.com/pt/Ressources/images/produit/zoom/F0D7A082F3E08389EB25C8537945CCAB-quinta-velha-salsichas-churro-picantes.jpg'}
+2017-09-06 21:40:12 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10150-miudezas> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10153-salsichas)
+2017-09-06 21:40:12 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10150-miudezas", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:40:12 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:17 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:40:17 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:17 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:40:17 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:22 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10143-bacalhau> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/talho/10150-miudezas)
+2017-09-06 21:40:22 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10143-bacalhau", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:40:23 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:28 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:40:28 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:28 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:40:28 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:33 [scrapy.core.scraper] DEBUG: Scraped from <200 https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10143-bacalhau>
+{'Category': u'Frescos', 'Price_per_weight': u'7.48', 'Name': u'Caldeirada', 'Weight_Type': 'g', 'Price': u'2.99', 'Sub-Category': u'Peixaria', 'Type_of_weight': u'kg', 'Weight': '400.0', 'Brand': u'Bacalhau', 'ID': u'15218', 'Link': u'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10143-bacalhau', 'Image': u'https://driveimg1.intermarche.com/pt/Ressources/images/produit/zoom/26B327EC716EBDDDF3E532FADB80FD8D-bacalhau-caldeirada.jpg'}
+2017-09-06 21:40:33 [scrapy.extensions.logstats] INFO: Crawled 7 pages (at 7 pages/min), scraped 4 items (at 4 items/min)
+2017-09-06 21:40:33 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10145-peixe-fresco> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10143-bacalhau)
+2017-09-06 21:40:33 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10145-peixe-fresco", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:40:33 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:38 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:40:39 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:39 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:40:39 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:44 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10147-peixe-congelado-inteiro> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10145-peixe-fresco)
+2017-09-06 21:40:44 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10147-peixe-congelado-inteiro", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:40:44 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:49 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:40:49 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:49 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:40:49 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:40:54 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10147-peixe-congelado-inteiro)
+2017-09-06 21:40:54 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:40:55 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:00 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:41:00 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:00 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:41:00 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:05 [scrapy.core.scraper] DEBUG: Scraped from <200 https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado>
+{'Category': u'Frescos', 'Price_per_weight': u'11.59', 'Name': u'Lombo de Bacalhau Higienizado', 'Weight_Type': 'g', 'Price': u'3.48', 'Sub-Category': u'Peixaria', 'Type_of_weight': u'kg', 'Weight': '300.0', 'Brand': u'Boa Pesca', 'ID': u'15162', 'Link': u'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado', 'Image': u'https://driveimg1.intermarche.com/pt/Ressources/images/produit/zoom/E0380226A99E3513956AC3E0819102F8-boa-pesca-lombo-de-bacalhau-higienizado.jpg'}
+2017-09-06 21:41:05 [scrapy.core.scraper] DEBUG: Scraped from <200 https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado>
+{'Category': u'Frescos', 'Price_per_weight': u'9.99', 'Name': u'Bacalhau Posta Higienizada', 'Weight_Type': 'g', 'Price': u'3.50', 'Sub-Category': u'Peixaria', 'Type_of_weight': u'kg', 'Weight': '350.0', 'Brand': u'Boa Pesca', 'ID': u'15163', 'Link': u'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado', 'Image': u'https://driveimg3.intermarche.com/pt/Ressources/images/produit/zoom/BB4F9BAA2B71FCDF062350A2A135AE6B-boa-pesca-bacalhau-posta-higienizada.jpg'}
+2017-09-06 21:41:05 [scrapy.core.scraper] DEBUG: Scraped from <200 https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado>
+{'Category': u'Frescos', 'Price_per_weight': u'8.99', 'Name': u'Posta de Salm\xe3o', 'Weight_Type': 'g', 'Price': u'1.80', 'Sub-Category': u'Peixaria', 'Type_of_weight': u'kg', 'Weight': '200.0', 'Brand': u'Peixe Congelado Higienizado', 'ID': u'15169', 'Link': u'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado', 'Image': u'https://driveimg1.intermarche.com/pt/Ressources/images/produit/zoom/F62F86D74089D5E12C2D30850F055F78-peixe-congelado-higienizado-posta-de-salmao.jpg'}
+2017-09-06 21:41:05 [scrapy.core.scraper] DEBUG: Scraped from <200 https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado>
+{'Category': u'Frescos', 'Price_per_weight': u'8.99', 'Name': u'Polvo Inteiro', 'Weight_Type': 'kg', 'Price': u'13.49', 'Sub-Category': u'Peixaria', 'Type_of_weight': u'kg', 'Weight': '1.5', 'Brand': u'Peixe Congelado Higienizado', 'ID': u'15170', 'Link': u'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado', 'Image': u'https://driveimg4.intermarche.com/pt/Ressources/images/produit/zoom/2C822FDBA3730F70F94DFB9B0C681B97-peixe-congelado-higienizado-polvo-inteiro.jpg'}
+2017-09-06 21:41:05 [scrapy.core.scraper] DEBUG: Scraped from <200 https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado>
+{'Category': u'Frescos', 'Price_per_weight': u'7.49', 'Name': u'Posta de Pescada para Cozer', 'Weight_Type': 'g', 'Price': u'1.50', 'Sub-Category': u'Peixaria', 'Type_of_weight': u'kg', 'Weight': '200.0', 'Brand': u'Peixe Congelado Higienizado', 'ID': u'15172', 'Link': u'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado', 'Image': u'https://driveimg2.intermarche.com/pt/Ressources/images/produit/zoom/4A906E5325100B5F33E946932BD236B5-peixe-congelado-higienizado-posta-de-pescada-para-cozer-n3.jpg'}
+2017-09-06 21:41:05 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10144-marisco-fresco> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10817-peixe-congelado-higienizado)
+2017-09-06 21:41:05 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10144-marisco-fresco", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:41:06 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:11 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:41:11 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:11 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:41:11 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:16 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10428-marisco-congelado> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10144-marisco-fresco)
+2017-09-06 21:41:16 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10428-marisco-congelado", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:41:16 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:21 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:41:21 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:21 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:41:21 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:26 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10146-salmao-fumado-e-especialidades> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10428-marisco-congelado)
+2017-09-06 21:41:26 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10146-salmao-fumado-e-especialidades", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:41:27 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:32 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:41:32 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:32 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:41:32 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:37 [scrapy.core.scraper] DEBUG: Scraped from <200 https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10146-salmao-fumado-e-especialidades>
+{'Category': u'Frescos', 'Price_per_weight': u'5.75', 'Name': u'20 del\xedcias do mar frescas', 'Weight_Type': 'g', 'Price': u'2.30', 'Sub-Category': u'Peixaria', 'Type_of_weight': u'kg', 'Weight': '400.0', 'Brand': u'Top Budget', 'ID': u'4097', 'Link': u'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10146-salmao-fumado-e-especialidades', 'Image': u'https://driveimg2.intermarche.com/pt/Ressources/images/produit/zoom/181C45F5E307E2C99AAFF75ECCC6FD3E-top-budget-20-delicias-do-mar-frescas.jpg'}
+2017-09-06 21:41:37 [scrapy.extensions.logstats] INFO: Crawled 13 pages (at 6 pages/min), scraped 10 items (at 6 items/min)
+2017-09-06 21:41:37 [scrapy.core.scraper] DEBUG: Scraped from <200 https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10146-salmao-fumado-e-especialidades>
+{'Category': u'Frescos', 'Price_per_weight': u'24.95', 'Name': u'Salm\xe3o Fumado', 'Weight_Type': 'g', 'Price': u'4.99', 'Sub-Category': u'Peixaria', 'Type_of_weight': u'kg', 'Weight': '200.0', 'Brand': u'Top Budget', 'ID': u'12716', 'Link': u'https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10146-salmao-fumado-e-especialidades', 'Image': u'https://driveimg4.intermarche.com/pt/Ressources/images/produit/zoom/287C68E26E71874F2C13C9E9EF5D1C77-top-budget-salmao-fumado.jpg'}
+2017-09-06 21:41:37 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/legumes/1001-alfaces-e-outras-saladas> (referer: https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/peixaria/10146-salmao-fumado-e-especialidades)
+2017-09-06 21:41:37 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/url {"url": "https://lojaonline.intermarche.pt/24-guimaraes/rayon/frescos/legumes/1001-alfaces-e-outras-saladas", "sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:41:38 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:43 [selenium.webdriver.remote.remote_connection] DEBUG: GET http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/source {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:41:43 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:43 [selenium.webdriver.remote.remote_connection] DEBUG: POST http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619/execute {"sessionId": "65b1dba903ac80e3131e23f02bc41619", "args": [], "script": "window.scrollTo(0, document.body.scrollHeight);"}
+2017-09-06 21:41:43 [selenium.webdriver.remote.remote_connection] DEBUG: Finished Request
+2017-09-06 21:41:47 [scrapy.crawler] INFO: Received SIGINT, shutting down gracefully. Send again to force 
+2017-09-06 21:41:47 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2017-09-06 21:41:47 [scrapy.extensions.feedexport] INFO: Stored json feed (11 items) in: intermarche.json
+2017-09-06 21:41:47 [selenium.webdriver.remote.remote_connection] DEBUG: DELETE http://127.0.0.1:54488/session/65b1dba903ac80e3131e23f02bc41619 {"sessionId": "65b1dba903ac80e3131e23f02bc41619"}
+2017-09-06 21:41:47 [pyvirtualdisplay.abstractdisplay] DEBUG: unset DISPLAY
+2017-09-06 21:41:47 [easyprocess] DEBUG: stopping process (pid=4601 cmd="['Xvfb', '-br', '-nolisten', 'tcp', '-screen', '0', '1920x1080x24', ':1001']")
+2017-09-06 21:41:47 [easyprocess] DEBUG: process was already stopped
+2017-09-06 21:41:47 [easyprocess] DEBUG: process has ended
+2017-09-06 21:41:47 [easyprocess] DEBUG: return code=0
+2017-09-06 21:41:47 [easyprocess] DEBUG: stdout=
+2017-09-06 21:41:47 [easyprocess] DEBUG: stderr=
+2017-09-06 21:41:47 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'downloader/request_bytes': 11714,
+ 'downloader/request_count': 14,
+ 'downloader/request_method_count/GET': 14,
+ 'downloader/response_bytes': 654696,
+ 'downloader/response_count': 14,
+ 'downloader/response_status_count/200': 14,
+ 'finish_reason': 'shutdown',
+ 'finish_time': datetime.datetime(2017, 9, 6, 19, 41, 47, 804884),
+ 'item_scraped_count': 11,
+ 'log_count/DEBUG': 146,
+ 'log_count/INFO': 11,
+ 'memusage/max': 58372096,
+ 'memusage/startup': 50180096,
+ 'request_depth_max': 13,
+ 'response_received_count': 14,
+ 'scheduler/dequeued': 13,
+ 'scheduler/dequeued/memory': 13,
+ 'scheduler/enqueued': 14,
+ 'scheduler/enqueued/memory': 14,
+ 'start_time': datetime.datetime(2017, 9, 6, 19, 39, 28, 254717)}
+2017-09-06 21:41:47 [scrapy.core.engine] INFO: Spider closed (shutdown)

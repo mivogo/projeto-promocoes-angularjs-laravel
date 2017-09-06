@@ -1,0 +1,13 @@
+Numero de linhas 13
+['intermarche.json0.json', 'intermarche.json1.json', 'intermarche.json2.json', 'intermarche.json3.json', 'intermarche.json4.json', 'intermarche.json5.json', 'intermarche.json6.json', 'intermarche.json7.json', 'intermarche.json8.json', 'intermarche.json9.json', 'intermarche.json10.json', 'intermarche.json11.json', 'intermarche.json12.json']
+Sending intermarche.json0.json
+intermarche.json0.json has finished
+False
+Traceback (most recent call last):
+  File "divide_files.py", line 54, in <module>
+    send_files_to_api()
+  File "divide_files.py", line 49, in send_files_to_api
+    print(r.raise_for_status())
+  File "/usr/local/lib/python2.7/dist-packages/requests/models.py", line 935, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Internal Server Error for url: http://vps415122.ovh.net/api/products

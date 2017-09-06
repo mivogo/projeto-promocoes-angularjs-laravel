@@ -26,12 +26,16 @@ class Notifications extends Component {
   };
 
   state = {
-    token: "",
+    token: '',
+    logMode: '',
     notifications: [],
     isLoading: false
   };
 
   componentWillMount() {
+    AsyncStorage.getItem("@LogMode").then(logMode => {
+    this.setState({ logMode: logMode});
+    if (logMode != "Visitor") {
     AsyncStorage.getItem("@Token").then(
       rtoken => {
         this.setState({ token: rtoken });
@@ -41,6 +45,8 @@ class Notifications extends Component {
         console.log(error);
       }
     );
+    }
+    });
   }
 
   notificationsGet() {
@@ -221,15 +227,38 @@ class Notifications extends Component {
 
   render() {
     console.log("RENDER NOTIFICATIONS");
-    return (
-      <View style={{ flex: 1 }}>
-        {this.renderHeader("Notificações")}
-        <ScrollView>
-          {this.renderNotifications()}
-        </ScrollView>
-        {this.renderFooter()}
-      </View>
-    );
+    const logMode = AsyncStorage.getItem("@LogMode");
+
+    if (this.state.logMode == "Visitor") {
+      return (
+        <View style={{ flex: 1 }}>
+          {this.renderHeader("Notificações")}
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View>
+            <MaterialIcons
+              name="warning"
+              size={24}
+              style={{ color: 'red' }}
+            />
+            </View>
+            <View>
+            <Text style={{ fontSize: 20, textAlign: 'center' }}>Funcionalidade apenas disponível para utilizadores loggados</Text>
+            </View>
+          </View>
+        </View>
+      );
+    }
+    else{
+      return (
+        <View style={{ flex: 1 }}>
+          {this.renderHeader("Notificações")}
+          <ScrollView>
+            {this.renderNotifications()}
+          </ScrollView>
+          {this.renderFooter()}
+        </View>
+      );
+    }
   }
 }
 

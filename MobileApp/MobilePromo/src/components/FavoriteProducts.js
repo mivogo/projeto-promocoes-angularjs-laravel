@@ -20,14 +20,16 @@ class FavoriteProducts extends Component {
   };
 
   state = {
-    token: "",
+    token: '',
+    lodMode: '',
     products: [],
     isLoading: false
   };
 
   componentWillMount() {
     console.log("A MONTAR");
-
+    AsyncStorage.getItem("@LogMode").then(logMode => {
+      this.setState({ logMode: logMode});
     AsyncStorage.getItem("@Token").then(
       rtoken => {
         this.setState({ token: rtoken });
@@ -37,6 +39,7 @@ class FavoriteProducts extends Component {
         console.log(error);
       }
     );
+  });
   }
 
   favoritePost() {
@@ -120,6 +123,27 @@ class FavoriteProducts extends Component {
   render() {
     console.log("RENDER FAVORITE PRODUCTS");
     console.log(this.state.token);
+
+    if (this.state.logMode == 'Visitor') {
+    return (
+      <View style={{ flex: 1 }}>
+        {this.renderHeader("Produtos Favoritos")}
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View>
+            <MaterialIcons
+              name="warning"
+              size={24}
+              style={{ color: 'red' }}
+            />
+            </View>
+            <View>
+            <Text style={{ fontSize: 20, textAlign: 'center' }}>Funcionalidade apenas disponível para utilizadores loggados</Text>
+            </View>
+        </View>
+      </View>
+    );
+  }
+  else{
     return (
       <View style={{ flex: 1 }}>
         {this.renderHeader("Produtos Favoritos")}
@@ -130,6 +154,7 @@ class FavoriteProducts extends Component {
       </View>
     );
   }
+}
 }
 
 const styles = {

@@ -26,6 +26,7 @@ class SearchScreen extends Component {
   state = {
     page: 1,
     total_pages: 0,
+    noProducts: false,
     isSearchMenuVisible: true,
     isFilterMenuVisible: false,
     isLoading: true,
@@ -67,24 +68,48 @@ class SearchScreen extends Component {
       .then(response => response.json())
       .then(responseJson => {
         if (filterMode) {
+          if (responseJson.products.total == 0){
+            this.setState({
+              noProducts: true,
+              products: responseJson.products,
+              page: 0,
+              total_pages: 0,
+              isLoading: false
+            });
+          } else {
           this.setState({
+            noProducts: false,
             products: responseJson.products,
             page: responseJson.products.current_page,
             total_pages: responseJson.products.last_page,
             isLoading: false
           });
+          }
         } else {
-          this.setState({
+          if (responseJson.products.total == 0) {
+            this.setState({
+            noProducts: true,
             products: responseJson.products,
             brands: responseJson.brands,
             categories: responseJson.categories,
-            page: responseJson.products.current_page,
-            total_pages: responseJson.products.last_page,
+            page: 0,
+            total_pages: 0,
             isLoading: false
-          });
-        }
-      });
-  }
+            });
+          } else {
+            this.setState({
+              noProducts: false,
+              products: responseJson.products,
+              brands: responseJson.brands,
+              categories: responseJson.categories,
+              page: responseJson.products.current_page,
+              total_pages: responseJson.products.last_page,
+              isLoading: false
+            });
+          }
+      }
+  });
+}
 
   componentWillMount() {
     this.productsPost(false, 1);
@@ -546,7 +571,47 @@ class SearchScreen extends Component {
   }
 
   render() {
-    
+    console.log(this.state.noProducts);
+    if (this.state.noProducts) {
+      return (
+      <View style={{ flex: 1 }}>
+      <Modal
+        animationType={"fade"}
+        visible={this.state.isSearchMenuVisible}
+        onRequestClose={() =>
+          this.setSearchMenuVisible(!this.state.isSearchMenuVisible)}
+        transparent={true}
+      >
+        {this.renderSearchMenu()}
+      </Modal>
+
+      <Modal
+        animationType={"fade"}
+        visible={this.state.isFilterMenuVisible}
+        onRequestClose={() =>
+          this.setFilterMenuVisible(!this.state.isFilterMenuVisible)}
+        transparent={true}
+      >
+        {this.renderFilterMenu()}
+      </Modal>
+
+      {this.renderHeader("Resultados")}
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View>
+            <MaterialIcons
+              name="warning"
+              size={24}
+              style={{ color: 'red' }}
+            />
+            </View>
+            <View>
+            <Text style={{ fontSize: 20, textAlign: 'center' }}>A pesquisa não retornou resultados</Text>
+            </View>
+      </View>
+      {this.renderFooter()}
+    </View>
+    );
+    } else {
     return (
       <View style={{ flex: 1 }}>
         <Modal
@@ -578,6 +643,7 @@ class SearchScreen extends Component {
         {this.renderFooter()}
       </View>
     );
+  }
   }
 }
 

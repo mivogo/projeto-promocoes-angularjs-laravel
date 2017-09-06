@@ -27,9 +27,10 @@ class ShoppingCart extends Component {
   };
 
   state = {
-    token: "",
+    token: '',
+    logMode: '',
     noProducts: false,
-    products: "[]",
+    products: '[]',
     productToSubstitute: 0,
     retailer_selected: 1,
     isLoading: false,
@@ -38,8 +39,8 @@ class ShoppingCart extends Component {
     price_3: 0,
     showNameMenu: false,
     showReplaceMenu: false,
-    name: "",
-    description: ""
+    name: '',
+    description: ''
   };
 
   addProduct(product_id, quantity) {
@@ -545,122 +546,16 @@ class ShoppingCart extends Component {
     );
   }
 
-  saveList() {
-    let jsonToSend = JSON.parse(
-      '{ "name": "' +
-        this.state.name +
-        '",' +
-        '"description": "' +
-        this.state.description +
-        '",' +
-        '"retailer_id": "' +
-        this.state.retailer_selected +
-        '",' +
-        '"products": []}'
-    );
-
-    let mountedProducts = JSON.parse(this.state.products);
-    for (let i = 0; i < mountedProducts.length; i++) {
-      if (mountedProducts[i][this.state.retailer_selected - 1].available) {
-        jsonToSend["products"].push({
-          id:
-            mountedProducts[i][this.state.retailer_selected - 1].product
-              .product_id,
-          quantity: mountedProducts[i][3].quantity
-        });
-      }
-    }
-
-    const url = "http://vps415122.ovh.net/api/profile/shoppinglist";
-    const auth = "bearer " + this.state.token;
-
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: auth
-      },
-      body: JSON.stringify(jsonToSend)
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        Alert.alert(
-          "Lista guardada",
-          'Poderá consultar a lista sempre que quiser na opção "Listas guardadas',
-          [
-            {
-              text: "OK",
-              onPress: () => this.setState({ showNameMenu: false })
-            }
-          ]
-        );
-      })
-      .catch(error => {});
-  }
-
-  renderFooter() {
-    return (
-      <View style={{ justifyContent: 'flex-end' }}>
-        <View>
-          <Button
-            style={{ 
-              borderWidth: 1,
-              borderColor: "blue",
-              borderBottomWidth: 0,
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 2,
-              elevation: 2,
-              marginLeft: 5,
-              marginRight: 5,
-              marginTop: 5,
-              marginBottom: 5
-              }}
-            textStyle={{ color: "blue" }}
-            onPress={() => {
-              this.setState({ showNameMenu: true });
-            }}
-          >
-            Guardar Lista
-          </Button>
-        </View>
-        <View>
-          <Button
-            style={{
-              borderWidth: 1,
-              borderColor: "red",
-              borderBottomWidth: 0,
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 2,
-              elevation: 2,
-              marginLeft: 5,
-              marginRight: 5,
-              marginTop: 5,
-              marginBottom: 5
-             }}
-            textStyle={{ color: "red" }}
-            onPress={() => {
-              this.cleanCart();
-            }}
-          >
-            Limpar Lista
-          </Button>
-        </View>
-      </View>
-    );
-  }
-
   componentWillMount() {
     this.setState({ isLoading: true, price_1: 0, price_2: 0, price_3: 0 });
+    AsyncStorage.getItem("@LogMode").then(logMode => {
+      this.setState({ logMode: logMode });
+    });
+
     AsyncStorage.getItem("@Token").then(
       rtoken => {
         this.setState({ token: rtoken });
-      },
-      error => {}
-    );
+    });
 
     AsyncStorage.getItem("@Cart").then(
       cart => {
@@ -727,6 +622,130 @@ class ShoppingCart extends Component {
       error => {}
     );
   }
+
+  saveList() {
+    let jsonToSend = JSON.parse(
+      '{ "name": "' +
+        this.state.name +
+        '",' +
+        '"description": "' +
+        this.state.description +
+        '",' +
+        '"retailer_id": "' +
+        this.state.retailer_selected +
+        '",' +
+        '"products": []}'
+    );
+
+    let mountedProducts = JSON.parse(this.state.products);
+    for (let i = 0; i < mountedProducts.length; i++) {
+      if (mountedProducts[i][this.state.retailer_selected - 1].available) {
+        jsonToSend["products"].push({
+          id:
+            mountedProducts[i][this.state.retailer_selected - 1].product
+              .product_id,
+          quantity: mountedProducts[i][3].quantity
+        });
+      }
+    }
+
+    const url = "http://vps415122.ovh.net/api/profile/shoppinglist";
+    const auth = "bearer " + this.state.token;
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: auth
+      },
+      body: JSON.stringify(jsonToSend)
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        Alert.alert(
+          "Lista guardada",
+          'Poderá consultar a lista sempre que quiser na opção "Listas guardadas"',
+          [
+            {
+              text: "OK",
+              onPress: () => this.setState({ showNameMenu: false })
+            }
+          ]
+        );
+      })
+      .catch(error => {});
+  }
+
+  renderFooter() {
+    return (
+      <View style={{ justifyContent: 'flex-end' }}>
+        <View>
+          <Button
+            style={{ 
+              borderWidth: 1,
+              borderColor: "blue",
+              borderBottomWidth: 0,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.1,
+              shadowRadius: 2,
+              elevation: 2,
+              marginLeft: 5,
+              marginRight: 5,
+              marginTop: 5,
+              marginBottom: 5
+              }}
+            textStyle={{ color: "blue" }}
+            onPress={() => {
+              if (this.state.logMode != 'Visitor') {
+                this.setState({ showNameMenu: true });
+              } else {
+                Alert.alert(
+                "Erro",
+                'Funcionalidade apenas disponível para utilizadores loggados',
+                [
+                  {
+                    text: "OK",
+                    onPress: () => this.setState({ showNameMenu: false })
+                  }
+                ]
+              );
+              }
+            }
+            }
+          >
+            Guardar Lista
+          </Button>
+        </View>
+        <View>
+          <Button
+            style={{
+              borderWidth: 1,
+              borderColor: "red",
+              borderBottomWidth: 0,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.1,
+              shadowRadius: 2,
+              elevation: 2,
+              marginLeft: 5,
+              marginRight: 5,
+              marginTop: 5,
+              marginBottom: 5
+             }}
+            textStyle={{ color: "red" }}
+            onPress={() => {
+              this.cleanCart();
+            }}
+          >
+            Limpar Lista
+          </Button>
+        </View>
+      </View>
+    );
+  }
+
+
 
   renderProducts() {
     const data = JSON.parse(this.state.products);

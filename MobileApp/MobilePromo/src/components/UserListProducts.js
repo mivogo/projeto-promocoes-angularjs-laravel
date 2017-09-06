@@ -29,8 +29,9 @@ class UserListProducts extends Component {
 
   state = {
     showList: false,
-    selectedList: "",
-    token: "",
+    logMode: '',
+    selectedList: '',
+    token: '',
     lists: [],
     products: [],
     isLoading: false,
@@ -163,6 +164,8 @@ class UserListProducts extends Component {
 
   componentWillMount() {
     console.log("A MONTAR");
+    AsyncStorage.getItem("@LogMode").then(logMode => {
+    this.setState({ logMode: logMode});
     AsyncStorage.getItem("@Token").then(
       rtoken => {
         this.setState({ token: rtoken });
@@ -172,6 +175,7 @@ class UserListProducts extends Component {
         console.log(error);
       }
     );
+  });
   }
 
   renderListsPreview() {
@@ -294,6 +298,25 @@ class UserListProducts extends Component {
   render() {
     console.log("RENDER FAVORITE PRODUCTS");
     console.log(this.state.token);
+    if (this.state.logMode == "Visitor") {
+      return (
+        <View style={{ flex: 1 }}>
+          {this.renderHeader("Listas Guardadas")}
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View>
+            <MaterialIcons
+              name="warning"
+              size={24}
+              style={{ color: 'red' }}
+            />
+            </View>
+            <View>
+            <Text style={{ fontSize: 20, textAlign: 'center' }}>Funcionalidade apenas disponível para utilizadores loggados</Text>
+            </View>
+          </View>
+        </View>
+      );
+    } else {
     return (
       <View style={{ flex: 1 }}>
         <Modal
@@ -309,12 +332,9 @@ class UserListProducts extends Component {
         <ScrollView>
           {this.renderListsPreview()}
         </ScrollView>
-        {/*<ProductList 
-        isItLoading={this.state.isLoading}
-        products={this.state.products}
-    />*/}
       </View>
     );
+    }
   }
 }
 

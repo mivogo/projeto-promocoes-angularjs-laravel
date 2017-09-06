@@ -20,6 +20,9 @@ app.factory('Product', function () {
     this.category = category;
     this.image = image;
     this.link = link;
+    if(hasDiscount){
+      this.discountPercentage = ((base_price-price)/base_price)*100;
+    }
   }
 
   /**

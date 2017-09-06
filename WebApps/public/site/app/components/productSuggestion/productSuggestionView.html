@@ -34,9 +34,12 @@
 		<div class="product-table-wrap">
 			<div class="product-table">
 				<div class="cell" data-ng-repeat="item in suggestions">
-					<div class="product-wrapper suggested-wrapper">
+					<div class="product-wrapper">
 						<div class="product">
 							<div class="flip-container">
+								<div data-ng-show="item.hasDiscount==1" class="discount">
+									<span class="percentage">{{item.discountPercentage | number:0}}%</span>
+								</div>
 								<div class="flipper">
 									<div class="front">
 										<img data-ng-src="{{item.image}}" alt="" class="img-responsive">
@@ -48,18 +51,22 @@
 								<h5>{{item.name}}</h5>
 								<span class="weight">({{item.weight}} {{item.weight_type}})</span>
 							</div>
-							<div class="price-buttons">
-								<div class="weight-wrapper">
-									<span class="price">{{item.price | currency}}</span>
-									<span class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</span>
-								</div>
-								<div class="buttons">
-									<a data-ng-if="!cart.hasItem(item)" data-ng-click="replaceWithSuggestion(item)" class="btn btn-primary pointer cart-add-button"><i class="glyphicon glyphicon-refresh"></i> Trocar</a>
+							<div class="price-buttons-wrapper">
+								<div class="price-buttons">
+									<div class="weight-wrapper">
+										<div data-ng-show="item.hasDiscount==1" class="base-price">
+											<span>{{item.base_price | currency}}</span>
+										</div>
+										<span class="price">{{item.price | currency}}</span>
+										<span class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</span>
+									</div>
+									<div class="buttons">
+										<a data-ng-if="!cart.hasItem(item)" data-ng-click="replaceWithSuggestion(item)" class="btn btn-primary pointer cart-add-button"><i class="glyphicon glyphicon-refresh"></i> Trocar</a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					
 				</div>
 			</div>
 		</div>

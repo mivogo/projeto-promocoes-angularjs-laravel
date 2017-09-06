@@ -6,7 +6,7 @@
 			</div>
 		</div>
 		<div class="favorite-panel-body profile-body col-sm-12 col-lg-12">
-			<div class="favorite-product-table-wrap">
+			<div class="favorite-product-table-wrap" data-ng-if="numberProducts() > 0">
 				<div class="favorite-product-wrapper nopadding" data-ng-repeat="item in favorites">
 					<div class="main-product-container">
 						<div class="main-product-container-left">
@@ -54,6 +54,10 @@
 						</div>
 					</div>
 				</div>
+			</div>
+
+			<div class="col-lg-12" data-ng-if="numberProducts() == 0">
+				<span>Não tem produtos favoritos associados ao seu perfil.</span>
 			</div>
 		</div>
 	</div>

@@ -9,7 +9,10 @@ app.controller('ProfileNotificationsController', function ($scope, $state, Filte
 
 	$scope.notifications = allNotificationsRequest;
 
-	console.log($scope.notifications);
+
+	$scope.numberNotifications = function(){
+		return $scope.notifications.length;
+	}
 
 	$scope.markAsRead = function(id){
 		NotificationService.markAsRead(id);

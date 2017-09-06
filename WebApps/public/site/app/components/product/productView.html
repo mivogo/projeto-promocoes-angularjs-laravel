@@ -4,6 +4,9 @@
 			<div class="main-product-container-left">
 				<div class="product-img-wrapper">
 					<div class="product-image">
+						<div data-ng-show="item.hasDiscount==1" class="discount">
+							<span class="percentage">{{item.discountPercentage | number:0}}%</span>
+						</div>
 						<img data-ng-src="{{item.image}}" alt="" class="img-responsive">
 					</div>
 				</div>
@@ -17,7 +20,7 @@
 					</div>
 					<div class="price-buttons">
 						<div class="weight-wrapper">
-							<div class="price">{{item.price | currency}}</div>
+							<div class="price"><span data-ng-show="item.hasDiscount==1" class="base-price">{{item.base_price | currency}}</span><span>{{item.price | currency}}</span></div>
 							<div class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</div>
 						</div>
 					</div>
@@ -65,6 +68,9 @@
 					<div class="product-wrapper">
 						<div class="product">
 							<div class="flip-container">
+								<div data-ng-show="item.hasDiscount==1" class="discount">
+									<span class="percentage">{{item.discountPercentage | number:0}}%</span>
+								</div>
 								<div class="flipper">
 									<div class="front">
 										<a data-ng-click="productDetails(item.product_id,item.id)" class="pointer">
@@ -78,22 +84,27 @@
 								<h5><a data-ng-click="productDetails(item.product_id,item.id)" class="pointer">{{item.name}}</a></h5>
 								<span class="weight">({{item.weight}} {{item.weight_type}})</span>
 							</div>
-							<div class="price-buttons">
-								<div class="weight-wrapper">
-									<span class="price">{{item.price | currency}}</span>
-									<span class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</span>
-								</div>
-								<div class="buttons">
-									<a data-ng-if="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
-									<div data-ng-if="cart.hasItem(item)" class="cart-update">
-										<div data-ng-if="cart.hasItem(item)" class="cart-update-wrap">
-											<span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item,-1)">-</span>
-											<span class="cart-info noselect">
-												<span class="cart-qty noselect">{{cart.itemQuantity(item)}}</span> 
-												<span class="noselect">|</span>
-												<span class="cart-price noselect">{{cart.itemPrice(item) | currency}}</span>
-											</span>
-											<span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item,1)">+</span>
+							<div class="price-buttons-wrapper">
+								<div class="price-buttons">
+									<div class="weight-wrapper">
+										<div data-ng-show="item.hasDiscount==1" class="base-price">
+											<span>{{item.base_price | currency}}</span>
+										</div>
+										<span class="price">{{item.price | currency}}</span>
+										<span class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</span>
+									</div>
+									<div class="buttons">
+										<a data-ng-if="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
+										<div data-ng-if="cart.hasItem(item)" class="cart-update">
+											<div data-ng-if="cart.hasItem(item)" class="cart-update-wrap">
+												<span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item,-1)">-</span>
+												<span class="cart-info noselect">
+													<span class="cart-qty noselect">{{cart.itemQuantity(item)}}</span> 
+													<span class="noselect">|</span>
+													<span class="cart-price noselect">{{cart.itemPrice(item) | currency}}</span>
+												</span>
+												<span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item,1)">+</span>
+											</div>
 										</div>
 									</div>
 								</div>

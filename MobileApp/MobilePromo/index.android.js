@@ -1,48 +1,47 @@
-import React, { Component } from "react";
-import { AppRegistry, Button } from "react-native";
-import { DrawerNavigator } from "react-navigation";
-import SearchScreen from "./src/components/SearchScreen";
-import FavoriteProducts from "./src/components/FavoriteProducts";
-import UserListsProducts from "./src/components/UserListProducts";
-import Notifications from "./src/components/Notifications";
-import ShoppingCart from "./src/components/ShoppingCart";
-import Login from "./src/components/Login";
+import { AppRegistry } from 'react-native';
+import { DrawerNavigator } from 'react-navigation';
+import SearchScreen from './src/components/SearchScreen';
+import FavoriteProducts from './src/components/FavoriteProducts';
+import UserListsProducts from './src/components/UserListProducts';
+import Notifications from './src/components/Notifications';
+import ShoppingCart from './src/components/ShoppingCart';
+import Login from './src/components/Login';
 
 const DrawerExample = DrawerNavigator(
   {
     Conta: {
-      path: "/",
+      path: '/',
       screen: Login
     },
     Pesquisar: {
-      path: "/",
+      path: '/',
       screen: SearchScreen
     },
     Carrinho: {
-      path: "/",
+      path: '/',
       screen: ShoppingCart
     },
-    "Produtos Favoritos": {
-      path: "/",
+    'Produtos Favoritos': {
+      path: '/',
       screen: FavoriteProducts
     },
-    "Listas guardadas": {
-      path: "/",
+    'Listas guardadas': {
+      path: '/',
       screen: UserListsProducts
     },
     Notificações: {
-      path: "/",
+      path: '/',
       screen: Notifications
     }
   },
   {
-    initialRouteName: "Conta",
-    drawerPosition: "left",
+    initialRouteName: 'Conta',
+    drawerPosition: 'left',
     contentOptions: {
-      activeTintColor: "red"
+      activeTintColor: 'red'
     }
   }
 );
 
 //Render it to the device
-AppRegistry.registerComponent("MobilePromo", () => DrawerExample);
+AppRegistry.registerComponent('MobilePromo', () => DrawerExample);

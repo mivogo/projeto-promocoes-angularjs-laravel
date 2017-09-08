@@ -26,31 +26,29 @@ class Notifications extends Component {
   };
 
   state = {
-    token: '',
-    logMode: '',
+    token: "",
+    logMode: "",
+    noNotifications: false,
     notifications: [],
     isLoading: false
   };
 
   componentWillMount() {
     AsyncStorage.getItem("@LogMode").then(logMode => {
-    this.setState({ logMode: logMode});
-    if (logMode != "Visitor") {
-    AsyncStorage.getItem("@Token").then(
-      rtoken => {
-        this.setState({ token: rtoken });
-        this.notificationsGet();
-      },
-      error => {
-        console.log(error);
+      this.setState({ logMode: logMode });
+      if (logMode != "Visitor") {
+        AsyncStorage.getItem("@Token").then(
+          rtoken => {
+            this.setState({ token: rtoken });
+            this.notificationsGet();
+          },
+          error => {}
+        );
       }
-    );
-    }
     });
   }
 
   notificationsGet() {
-    console.log("RENDER NOTIFICATIONS GET");
     this.setState({ isLoading: true });
     const url = "http://vps415122.ovh.net/api/profile/notificationNotRead";
     const auth = "bearer " + this.state.token;
@@ -63,15 +61,22 @@ class Notifications extends Component {
     })
       .then(response => response.json())
       .then(responseJson => {
+        if (responseJson.length == 0) {
+          this.setState({
+            notifications: responseJson,
+            isLoading: false,
+            noNotifications: true,
+          });
+        } else {
         this.setState({
           notifications: responseJson,
-          isLoading: false
+          isLoading: false,
+          noNotifications: false
         });
+        }
       })
       .catch(error => {
-        console.log("Erro Pedido");
         this.setState({ isLoading: false });
-        console.error(error);
       });
   }
 
@@ -87,11 +92,13 @@ class Notifications extends Component {
       }
     })
       .then(response => response.json())
+      .then(responseJson => {
+        this.notificationsGet();
+      })
       .then(() => {})
       .catch(error => {
-        console.log("Erro Pedido");
+
         this.setState({ isLoading: false });
-        console.error(error);
       });
   }
 
@@ -108,14 +115,11 @@ class Notifications extends Component {
     })
       .then(response => response.json())
       .catch(error => {
-        console.log("Erro Pedido");
         this.setState({ isLoading: false });
-        console.error(error);
       });
   }
 
   renderHeader(headerName) {
-    console.log("Render Header Menu");
     return (
       <View style={styles.headerStyle}>
         {/* Menu icon and click action */}
@@ -139,9 +143,7 @@ class Notifications extends Component {
             alignItems: "center"
           }}
         >
-          <Text style={styles.headerTextStyle}>
-            {headerName}
-          </Text>
+          <Text style={styles.headerTextStyle}>{headerName}</Text>
         </View>
 
         {/* Search Menu */}
@@ -163,108 +165,167 @@ class Notifications extends Component {
   }
 
   renderFooter() {
-    console.log("Render Footer Menu");
     return (
       <View style={styles.footerStyle}>
         <Button
           style={{
-            borderColor: "red",
+            borderColor: "darkred",
             marginLeft: 2,
             marginRight: 2,
             flex: 1
           }}
-          textStyle={{ color: "red" }}
+          textStyle={{ color: "darkred" }}
           onPress={() => {
             this.removeAllNotificationsPost();
             this.notificationsGet();
           }}
         >
-        Apagar Todos
+          Apagar Todos
         </Button>
       </View>
     );
   }
 
   renderNotifications() {
-    console.log(this.state.notifications.length);
-    if (this.state.notifications.length !== 0 && !this.state.isLoading) {
-      return this.state.notifications.map(row =>
+      return this.state.notifications.map(row => (
         <View
           key={row.id}
-          style={{
-            flex: 1,
-            flexDirection: "row",
+        >
+          <View style={{ 
+            padding: 10,
+            backgroundColor: 'white',
+            borderWidth: 1,
+            borderRadius: 2,
+            borderColor: '#ddd',
+            borderBottomWidth: 0,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 2,
+            elevation: 2,
             marginLeft: 5,
             marginRight: 5,
-            marginTop: 10
-          }}
-        >
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontWeight: "bold" }}>
-              {row.product_name} no {row.retailer_name} encontra-se com{" "}
-              {row.percentage}% de desconto: {row.base_price} -> {row.price}
-            </Text>
-          </View>
-          <View style={{ width: 10 }} />
-          <Button
-            onPress={() => {
-              this.removeNotificationsPost(row.id);
-              this.notificationsGet();
-            }}
-            title="Apagar"
-            color="red"
-          />
+            marginTop: 5,
+            marginBottom: 5
+             }}>
+             <View>
+               <Text style={{ color: 'gray' }}>{row.created}</Text>
+             </View>
+             <View style={{ flexDirection: 'row' }}>
+                <View>
+                  <Text>
+                  <Text style={{ fontWeight: 'bold', color: 'rgb(51, 122, 183)' }}>
+                  {row.product_name}
+                  </Text>
+                  <Text> no </Text>
+                  <Text>{row.retailer_name}</Text>
+                  <Text> encontra-se com </Text>
+                  <Text>{row.percentage}%</Text>
+                  <Text> de desconto: </Text>
+                 </Text>
+                </View>
+              </View>
+              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ textDecorationLine: 'line-through' }}>{row.base_price} €</Text>
+                <View style={{ flex: 1 }} />
+                <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20 }} >{row.price} €</Text>
+              </View>
+              <View style={{ height: 10 }} />
+                <View>
+                  <Button
+                    style={{
+                      borderColor: 'red',
+                      marginLeft: 2,
+                      marginRight: 2,
+                      flex: 1
+                    }}
+                    textStyle={{ color: 'red' }}
+                    onPress={() => {
+                      this.removeNotificationsPost(row.id);
+                    }}
+                  >
+                  Apagar
+                  </Button>
+                </View>
         </View>
-      );
-    }
-    return (
-      <ActivityIndicator
-        size="large"
-        style={{ flex: 1, alignSelf: "center", justifyContent: "center" }}
-      />
-    );
+        </View>
+        
+      ));
   }
 
   render() {
-    console.log("RENDER NOTIFICATIONS");
-    const logMode = AsyncStorage.getItem("@LogMode");
-
+    const logMode = AsyncStorage.getItem('@LogMode');
     if (this.state.logMode == "Visitor") {
       return (
         <View style={{ flex: 1 }}>
-          {this.renderHeader("Notificações")}
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          {this.renderHeader('Notificações')}
+          <View
+            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          >
             <View>
-            <MaterialIcons
-              name="warning"
-              size={24}
-              style={{ color: 'red' }}
-            />
+              <MaterialIcons
+                name='warning'
+                size={24}
+                style={{ color: 'red' }}
+              />
             </View>
             <View>
-            <Text style={{ fontSize: 20, textAlign: 'center' }}>Funcionalidade apenas disponível para utilizadores loggados</Text>
+              <Text style={{ fontSize: 20, textAlign: 'center' }}>
+                Funcionalidade apenas disponível para utilizadores loggados
+              </Text>
             </View>
           </View>
         </View>
       );
     }
-    else{
-      return (
-        <View style={{ flex: 1 }}>
-          {this.renderHeader("Notificações")}
-          <ScrollView>
-            {this.renderNotifications()}
-          </ScrollView>
+    if (this.state.noNotifications) {
+        return (
+          <View style={{ flex: 1 }}>
+            {this.renderHeader('Notificações')}
+            <View
+            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          >
+            <View>
+              <MaterialIcons
+                name="warning"
+                size={24}
+                style={{ color: 'red' }}
+              />
+            </View>
+            <View>
+              <Text style={{ fontSize: 20, textAlign: 'center' }}>
+                Não há notificações para mostrar.
+              </Text>
+            </View>
+          </View>
+            {this.renderFooter()}
+          </View>
+        );
+      }
+      if(this.state.isLoading){
+        return (
+          <View style={{ flex: 1 }}>
+          {this.renderHeader('Notificações')}
+          <ActivityIndicator
+            size="large"
+            style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }}
+          />
           {this.renderFooter()}
-        </View>
+          </View>
       );
+      }
+        return (
+          <View style={{ flex: 1 }}>
+            {this.renderHeader('Notificações')}
+            <ScrollView>{this.renderNotifications()}</ScrollView>
+            {this.renderFooter()}
+          </View>
+        );
     }
-  }
 }
 
 const styles = {
   footerStyle: {
-    borderWidth: 1,
     backgroundColor: "#F8F8F8",
     alignSelf: "center",
     flexDirection: "row",
@@ -278,7 +339,6 @@ const styles = {
     position: "relative"
   },
   headerStyle: {
-    borderWidth: 1,
     backgroundColor: "#F8F8F8",
     flexDirection: "row",
     height: 60,
@@ -292,20 +352,6 @@ const styles = {
   },
   headerTextStyle: {
     fontSize: 20
-  },
-  containerStyle: {
-    borderWidth: 1,
-    borderRadius: 2,
-    borderColor: "#ddd",
-    borderBottomWidth: 0,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: 10
   }
 };
 

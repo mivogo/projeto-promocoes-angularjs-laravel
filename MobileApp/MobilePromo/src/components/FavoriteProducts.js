@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import {
   Text,
   View,
-  Button,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import ProductList from "./ProductList";
@@ -20,35 +20,16 @@ class FavoriteProducts extends Component {
   };
 
   state = {
-    token: '',
-    lodMode: '',
+    lodMode: "",
     products: [],
+    favorites: [],
     isLoading: false
   };
 
-  componentWillMount() {
-    console.log("A MONTAR");
-    AsyncStorage.getItem("@LogMode").then(logMode => {
-      this.setState({ logMode: logMode});
-    AsyncStorage.getItem("@Token").then(
-      rtoken => {
-        this.setState({ token: rtoken });
-        this.favoritePost();
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  });
-  }
-
-  favoritePost() {
-    console.log("RENDER FAVORITE POST");
+  getFavorites(token) {
     this.setState({ isLoading: true });
     const url = "http://vps415122.ovh.net/api/profile/favorites";
-    const auth = "bearer " + this.state.token;
-    console.log("Auth");
-    console.log(auth);
+    const auth = "bearer " + token;
     fetch(url, {
       method: "GET",
       headers: {
@@ -58,22 +39,48 @@ class FavoriteProducts extends Component {
     })
       .then(response => response.json())
       .then(responseJson => {
-        console.log("FavoritePost");
-        console.log(responseJson);
+        this.setState({ favorites: responseJson, isLoading: false });
+      });
+  }
+
+  componentWillMount() {
+    AsyncStorage.getItem("@LogMode").then(logMode => {
+      this.setState({ logMode: logMode });
+      AsyncStorage.getItem("@Token").then(
+        rtoken => {
+          this.getFavorites(rtoken);
+          this.favoritePost(rtoken);
+        },
+        error => {}
+      );
+    });
+  }
+
+  favoritePost(token) {
+    this.setState({ isLoading: true });
+    const url = "http://vps415122.ovh.net/api/profile/favorites";
+    const auth = "bearer " + token;
+
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: auth
+      }
+    })
+      .then(response => response.json())
+      .then(responseJson => {
         this.setState({
           products: responseJson,
           isLoading: false
         });
       })
       .catch(error => {
-        console.log("DEU MERDA");
         this.setState({ isLoading: false });
-        console.error(error);
       });
   }
 
   renderHeader(headerName) {
-    console.log("Render Header Menu");
     return (
       <View style={styles.headerStyle}>
         {/* Menu icon and click action */}
@@ -97,16 +104,14 @@ class FavoriteProducts extends Component {
             alignItems: "center"
           }}
         >
-          <Text style={styles.headerTextStyle}>
-            {headerName}
-          </Text>
+          <Text style={styles.headerTextStyle}>{headerName}</Text>
         </View>
 
         {/* Search Menu */}
         <View>
           <TouchableOpacity
             onPress={() => {
-              this.favoritePost();
+              this.componentWillMount();
             }}
           >
             <MaterialIcons
@@ -121,45 +126,55 @@ class FavoriteProducts extends Component {
   }
 
   render() {
-    console.log("RENDER FAVORITE PRODUCTS");
-    console.log(this.state.token);
-
-    if (this.state.logMode == 'Visitor') {
-    return (
-      <View style={{ flex: 1 }}>
-        {this.renderHeader("Produtos Favoritos")}
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <View>
-            <MaterialIcons
-              name="warning"
-              size={24}
-              style={{ color: 'red' }}
-            />
-            </View>
-            <View>
-            <Text style={{ fontSize: 20, textAlign: 'center' }}>Funcionalidade apenas disponível para utilizadores loggados</Text>
-            </View>
+    if (this.state.isLoading) {
+      return (
+        <View style={{ flex: 1 }}>
+          {this.renderHeader("Produtos Favoritos")}
+          <ActivityIndicator
+            size="large"
+            style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }}
+          />
         </View>
-      </View>
-    );
+      );
+    }
+    if (this.state.logMode == "Visitor") {
+      return (
+        <View style={{ flex: 1 }}>
+          {this.renderHeader("Produtos Favoritos")}
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <View>
+              <MaterialIcons
+                name="warning"
+                size={24}
+                style={{ color: "red" }}
+              />
+            </View>
+            <View>
+              <Text style={{ fontSize: 20, textAlign: "center" }}>
+                Funcionalidade apenas disponível para utilizadores loggados
+              </Text>
+            </View>
+          </View>
+        </View>
+      );
+    } else {
+      return (
+        <View style={{ flex: 1 }}>
+          {this.renderHeader("Produtos Favoritos")}
+          <ProductList
+            products={this.state.products}
+            favorites={this.state.favorites}
+          />
+        </View>
+      );
+    }
   }
-  else{
-    return (
-      <View style={{ flex: 1 }}>
-        {this.renderHeader("Produtos Favoritos")}
-        <ProductList
-          isItLoading={this.state.isLoading}
-          products={this.state.products}
-        />
-      </View>
-    );
-  }
-}
 }
 
 const styles = {
   headerStyle: {
-    borderWidth: 1,
     backgroundColor: "#F8F8F8",
     flexDirection: "row",
     height: 60,

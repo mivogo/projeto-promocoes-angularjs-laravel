@@ -11,15 +11,15 @@ import {
   TextInput,
   Alert
 } from "react-native";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Button from "apsl-react-native-button";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Button from 'apsl-react-native-button';
 
 class ShoppingCart extends Component {
   static navigationOptions = {
-    tabBarLabel: "Favorite Products",
+    tabBarLabel: 'Favorite Products',
     drawerIcon: ({ tintColor }) => (
       <MaterialIcons
-        name="shopping-cart"
+        name='shopping-cart'
         size={24}
         style={{ color: tintColor }}
       />
@@ -64,16 +64,13 @@ class ShoppingCart extends Component {
             data[i][3].quantity = data[i][3].quantity + 1;
           } else {
             if (data[i][0].available) {
-              newPrice1 =
-                newPrice1 + data[i][0].product.price;
+              newPrice1 = newPrice1 + data[i][0].product.price;
             }
             if (data[i][1].available) {
-              newPrice2 =
-                newPrice2 + data[i].product.price;
+              newPrice2 = newPrice2 + data[i][1].product.price;
             }
             if (data[i][2].available) {
-              newPrice3 =
-                newPrice3 + data[i].product.price;
+              newPrice3 = newPrice3 + data[i][2].product.price;
             }
           }
         }
@@ -93,19 +90,16 @@ class ShoppingCart extends Component {
       cart => {
         cart = JSON.parse(cart);
         const json = cart.products;
-        console.log("Antes - JSON");
-        console.log(json);
+
         let newJson = [];
         for (let i = 0; i < json.length; i++) {
           if (product_id != json[i].product_id) {
             newJson.push(json[i]);
           }
         }
-        console.log("Depois - JSON");
-        console.log(newJson);
+
         const data = JSON.parse(this.state.products);
-        console.log("Antes - DATA");
-        console.log(data);
+
         let newData = [];
         let newPrice1 = this.state.price_1;
         let newPrice2 = this.state.price_2;
@@ -121,17 +115,16 @@ class ShoppingCart extends Component {
             }
             if (data[i][1].available) {
               newPrice2 =
-                newPrice2 - data[i][3].quantity * data[i].product.price;
+                newPrice2 - data[i][3].quantity * data[i][1].product.price;
             }
             if (data[i][2].available) {
               newPrice3 =
-                newPrice3 - data[i][3].quantity * data[i].product.price;
+                newPrice3 - data[i][3].quantity * data[i][2].product.price;
             }
           }
         }
         cart.products = newJson;
-        console.log("Depois - DATA");
-        console.log(newData);
+
         AsyncStorage.setItem("@Cart", JSON.stringify(cart));
         this.setState({
           price_1: newPrice1,
@@ -139,9 +132,7 @@ class ShoppingCart extends Component {
           price_3: newPrice3,
           products: JSON.stringify(newData)
         });
-
-      },
-      error => {}
+      }
     );
   }
 
@@ -200,16 +191,13 @@ class ShoppingCart extends Component {
                   data[i][3].quantity = data[i][3].quantity - 1;
                 } else {
                   if (data[i][0].available) {
-                    newPrice1 =
-                      newPrice1 - data[i][0].product.price;
+                    newPrice1 = newPrice1 - data[i][0].product.price;
                   }
                   if (data[i][1].available) {
-                    newPrice2 =
-                      newPrice2 - data[i].product.price;
+                    newPrice2 = newPrice2 - data[i][1].product.price;
                   }
                   if (data[i][2].available) {
-                    newPrice3 =
-                      newPrice3 - data[i].product.price;
+                    newPrice3 = newPrice3 - data[i][2].product.price;
                   }
                 }
               }
@@ -239,15 +227,18 @@ class ShoppingCart extends Component {
   }
 
   renderRetailerMenu() {
+    let colors = ['white','white','white'];
+    colors[this.state.retailer_selected - 1] = 'lightgrey';
     return (
       <View style={{ flexDirection: "row" }}>
         {/* Picker Retailer */}
         <Button
-          style={{ flex: 1, borderColor: "red", margin: 5 }}
+          style={{ flex: 1, borderColor: "red", margin: 5, backgroundColor: colors[0].toString() }}
           textStyle={{ color: "red" }}
           isLoading={this.state.isLoading}
           onPress={() => {
             this.setState({ retailer_selected: 1 });
+            AsyncStorage.setItem('@Retailer', 1);            
           }}
         >
           <View
@@ -267,35 +258,37 @@ class ShoppingCart extends Component {
           </View>
         </Button>
         <Button
-          style={{ flex: 1, borderColor: "green", margin: 5 }}
+          style={{ flex: 1, borderColor: "green", margin: 5, backgroundColor: colors[1].toString() }}
           textStyle={{ color: "green" }}
           isLoading={this.state.isLoading}
           onPress={() => {
             this.setState({ retailer_selected: 2 });
+            AsyncStorage.setItem('@Retailer', 2);
           }}
         >
           <View
-            style={{ flex: 1, flexDirection: "column", alignItems: "center" }}
+            style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}
           >
             <Image
               style={{ height: 17, width: 50 }}
-              resizeMode="contain"
+              resizeMode='contain'
               source={{ uri: "http://vps415122.ovh.net/images/2.png" }}
             />
             <Text>
               {this.state.price_2
                 .toFixed(2)
                 .toString()
-                .replace(".", ",")}€
+                .replace('.', ',')}€
             </Text>
           </View>
         </Button>
         <Button
-          style={{ flex: 1, borderColor: "black", margin: 5 }}
-          textStyle={{ color: "black" }}
+          style={{ flex: 1, borderColor: 'black', margin: 5, backgroundColor: colors[2].toString() }}
+          textStyle={{ color: 'black' }}
           isLoading={this.state.isLoading}
           onPress={() => {
             this.setState({ retailer_selected: 3 });
+            AsyncStorage.setItem('@Retailer', 3);
           }}
         >
           <View
@@ -547,14 +540,14 @@ class ShoppingCart extends Component {
   }
 
   componentWillMount() {
+    AsyncStorage.setItem('@MenuAvailable', 'Yes');
     this.setState({ isLoading: true, price_1: 0, price_2: 0, price_3: 0 });
     AsyncStorage.getItem("@LogMode").then(logMode => {
       this.setState({ logMode: logMode });
     });
 
-    AsyncStorage.getItem("@Token").then(
-      rtoken => {
-        this.setState({ token: rtoken });
+    AsyncStorage.getItem("@Token").then(rtoken => {
+      this.setState({ token: rtoken });
     });
 
     AsyncStorage.getItem("@Cart").then(
@@ -681,11 +674,11 @@ class ShoppingCart extends Component {
       <View style={{ justifyContent: 'flex-end' }}>
         <View>
           <Button
-            style={{ 
+            style={{
               borderWidth: 1,
-              borderColor: "blue",
+              borderColor: 'blue',
               borderBottomWidth: 0,
-              shadowColor: "#000",
+              shadowColor: '#000',
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.1,
               shadowRadius: 2,
@@ -694,25 +687,24 @@ class ShoppingCart extends Component {
               marginRight: 5,
               marginTop: 5,
               marginBottom: 5
-              }}
-            textStyle={{ color: "blue" }}
+            }}
+            textStyle={{ color: 'blue' }}
             onPress={() => {
-              if (this.state.logMode != 'Visitor') {
+              if (this.state.logMode != "Visitor") {
                 this.setState({ showNameMenu: true });
               } else {
                 Alert.alert(
-                "Erro",
-                'Funcionalidade apenas disponível para utilizadores loggados',
-                [
-                  {
-                    text: "OK",
-                    onPress: () => this.setState({ showNameMenu: false })
-                  }
-                ]
-              );
+                  "Erro",
+                  "Funcionalidade apenas disponível para utilizadores loggados",
+                  [
+                    {
+                      text: "OK",
+                      onPress: () => this.setState({ showNameMenu: false })
+                    }
+                  ]
+                );
               }
-            }
-            }
+            }}
           >
             Guardar Lista
           </Button>
@@ -732,7 +724,7 @@ class ShoppingCart extends Component {
               marginRight: 5,
               marginTop: 5,
               marginBottom: 5
-             }}
+            }}
             textStyle={{ color: "red" }}
             onPress={() => {
               this.cleanCart();
@@ -745,13 +737,71 @@ class ShoppingCart extends Component {
     );
   }
 
-
-
   renderProducts() {
     const data = JSON.parse(this.state.products);
     if (!this.state.isLoading) {
       return data.map(product => {
         if (product[this.state.retailer_selected - 1].available) {
+          if(product[this.state.retailer_selected - 1].product.hasDiscount == 1){
+          return (
+            <View key={product[3].product_id} style={styles.BoxStyle}>
+              <View>
+                <Image
+                  style={styles.thumbnailStyle}
+                  source={{
+                    uri: product[this.state.retailer_selected - 1].product.image
+                  }}
+                >
+                <View style={{ 
+                    backgroundColor: 'red', 
+                    borderRadius: 5, 
+                    borderWidth: 1, 
+                    borderColor: 'darkred', 
+                    height: 50, 
+                    width: 50, 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    shadowColor: '#000',
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 2,
+                    elevation: 2,
+                    marginLeft: 3
+                    }}>
+                    <Text style={{ color: 'white', fontSize: 20 }}>
+                      {((1-(product[this.state.retailer_selected - 1].product.price/product[this.state.retailer_selected - 1].product.base_price))*100).toFixed(0)}%
+                    </Text>
+                  </View>
+                </Image>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontWeight: "bold" }}>
+                  {product[this.state.retailer_selected - 1].product.brand}
+                </Text>
+                <Text style={{ fontSize: 20 }}>
+                  {product[this.state.retailer_selected - 1].product.name}
+                </Text>
+                <Text>
+                  ({
+                    product[this.state.retailer_selected - 1].product.weight
+                  }{" "}
+                  {
+                    product[this.state.retailer_selected - 1].product
+                      .weight_type
+                  })
+                </Text>
+                <Text style={{ fontWeight: "bold", color: "red" }}>
+                  {product[this.state.retailer_selected - 1].product.price} €
+                </Text>
+                {this.renderQuantity(
+                  product[3].product_id,
+                  product[this.state.retailer_selected - 1].product.price,
+                  product[3].quantity
+                )}
+              </View>
+            </View>
+          );
+        } else {
           return (
             <View key={product[3].product_id} style={styles.BoxStyle}>
               <View>
@@ -789,6 +839,7 @@ class ShoppingCart extends Component {
               </View>
             </View>
           );
+        }
         }
         return (
           <View key={product[3].product_id} style={styles.BoxStyle}>
@@ -848,19 +899,19 @@ class ShoppingCart extends Component {
                 <Text>
                   ({suggestion.weight} {suggestion.weight_type})
                 </Text>
-                <Text style={{ fontWeight: "bold", color: "red" }}>
+                <Text style={{ fontWeight: 'bold', color: 'red' }}>
                   {suggestion.price} €
                 </Text>
                 <View
                   style={{
-                    flexDirection: "row",
+                    flexDirection: 'row',
                     flex: 1,
-                    alignItems: "center"
+                    alignItems: 'center'
                   }}
                 >
                   <Button
                     style={{
-                      borderColor: "green",
+                      borderColor: 'green',
                       marginLeft: 2,
                       marginRight: 2,
                       flex: 1
@@ -895,13 +946,11 @@ class ShoppingCart extends Component {
         <View style={{ flex: 1 }}>
           {this.renderHeader("Carrinho")}
           {this.renderRetailerMenu()}
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <MaterialIcons
-            name="warning"
-            size={24}
-            style={{ color: 'red' }}
-          />
-          <Text style={{ fontSize: 20 }}>Não há produtos no carrinho</Text>
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <MaterialIcons name="warning" size={24} style={{ color: "red" }} />
+            <Text style={{ fontSize: 20 }}>Não há produtos no carrinho</Text>
           </View>
           {this.renderFooter()}
         </View>

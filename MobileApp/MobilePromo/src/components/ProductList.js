@@ -9,27 +9,18 @@ import {
 import ProductDetail from "./ProductDetail";
 
 class ProductList extends Component {
-  state = { products: [], favorites: [], token: "", retailer: 1, isLoading: false };
-
-  componentWillReceiveProps(nextProps) {
+  state = {
+    favorites: []
+  };
+  
+  componentWillMount() {
     AsyncStorage.getItem("@Token").then(
       rtoken => {
         this.getFavorites(rtoken);
-      },
-      error => {
-        console.log(error);
       }
-    );
-
-    this.getFavorites();
-
-    if (nextProps.isItLoading) {
-      this.setState({ isLoading: true });
-    } else {
-      this.setState({ isLoading: false });
-    }
-    this.setState({ products: nextProps.products, retailer: nextProps.retailer });
+      );
   }
+
 
   getFavorites(token) {
     const url = "http://vps415122.ovh.net/api/profile/favorites";
@@ -43,44 +34,35 @@ class ProductList extends Component {
     })
       .then(response => response.json())
       .then(responseJson => {
-        console.log("Recebeu favoritos");
-        this.setState({ favorites: responseJson, isLoading: false });
+        this.setState({ favorites: responseJson });
       })
-      .catch(error => {
-        console.error(error);
-      });
+      .catch(error => {});
   }
 
   width = Dimensions.get("window").width;
 
   renderProducts() {
-    console.log(" Render Products -------------------------------------");
-    const data = this.state.products;
-    if (!this.state.isLoading) {
-      return data.map(product =>
+    console.log(' ProductList - RenderProducts ');
+    const data = this.props.products;
+    const retailer = this.props.retailer;
+    console.log(data);
+    console.log(retailer);
+      return data.map(product => (
         <ProductDetail
-          retailer={this.state.retailer}
+          retailer={retailer}
           key={product.id}
           product={product}
           favorites={this.state.favorites}
         />
-      );
-    }
-    return (
-      <ActivityIndicator
-        size="large"
-        style={{ flex: 1, alignSelf: "center", justifyContent: "center" }}
-      />
-    );
+      ));
   }
 
   render() {
-    console.log(" RENDER RENDER");
     return (
       <View style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        {this.renderProducts()}
-      </ScrollView>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          {this.renderProducts()}
+        </ScrollView>
       </View>
     );
   }
@@ -88,9 +70,9 @@ class ProductList extends Component {
 
 const styles = {
   contentContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around"
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around'
   }
 };
 

@@ -14,8 +14,8 @@ import Button from "apsl-react-native-button";
 
 class ProductDetail extends Component {
   state = {
-    quantity: "0",
-    token: "",
+    quantity: '0',
+    logMode: '',
     isFavorite: false
   };
 
@@ -68,14 +68,7 @@ class ProductDetail extends Component {
   }
 
   checkIsFavorite(nextProps) {
-    
-    
     for (let i = 0; i < nextProps.favorites.length; i++) {
-      console.log(
-        this.props.product.product_id +
-          " - " +
-          nextProps.favorites[i].product_id
-      );
       if (this.props.product.product_id == nextProps.favorites[i].product_id) {
         
         this.setState({ isFavorite: true });
@@ -156,6 +149,9 @@ class ProductDetail extends Component {
   }
 
   componentDidMount() {
+    AsyncStorage.getItem("@LogMode").then(logMode => {
+      this.setState({ logMode: logMode });
+    });
     this.checkIsInCart();
   }
 
@@ -239,6 +235,7 @@ class ProductDetail extends Component {
   }
 
   renderButtonFavorite() {
+    if (this.state.logMode != 'Visitor') {
     if (this.state.isFavorite) {
       return (
         <Button
@@ -283,6 +280,7 @@ class ProductDetail extends Component {
       );
     }
   }
+  }
 
   render() {
     const {
@@ -292,10 +290,12 @@ class ProductDetail extends Component {
       image,
       link,
       price,
+      base_price,
       weight,
       weight_type,
       price_weight,
       type_weight,
+      hasDiscount,
       subcategory
     } = this.props.product;
     const {
@@ -308,7 +308,82 @@ class ProductDetail extends Component {
 
     const newPrice = price.toString().replace(".", ",");
     const newPriceWeight = price_weight.toString().replace(".", ",");
+    if(hasDiscount == 1){
+    return (
+      <Card>
+        <CardSection>
+          <View style={thumbnailContainerStyle}>
+            <Image style={thumbnailStyle} source={{ uri: image }}>
+              <View style={{ 
+                backgroundColor: 'red', 
+                borderRadius: 5, 
+                borderWidth: 1, 
+                borderColor: 'darkred', 
+                height: 50, 
+                width: 50, 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.1,
+                shadowRadius: 2,
+                elevation: 2,
+                marginLeft: 3
+                 }}>
+                <Text style={{ color: 'white', fontSize: 20 }}>
+                  {((1-(price/base_price))*100).toFixed(0)}%
+                </Text>
+              </View>
+              </Image>
+          </View>
+          <View style={headerContentStyle}>
+          <Text style={{ fontWeight: "bold" }}>
+                  {brand}
+                </Text>
+                <Text style={{ fontSize: 20 }}>
+                  {name}
+                </Text>
+                <Text>
+                  ({
+                    weight
+                  }{" "}
+                  {
+                    weight_type
+                  })
+                </Text>
+                <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-end'}}>
+                <View style={{ justifyContent: 'flex-end' }}>
+                  <Text style={{ textDecorationLine: 'line-through' }}>
+                    {base_price} €</Text>
+                  </View>
+                  <View style={{ flex: 1 }} />
+                </View>
+                <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-end'}}>
+                  <View style={{ justifyContent: 'flex-end' }}>
+                    <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20 }}>
+                    {price} €
+                    </Text>
+                  </View>
+                  
+                  <View style={{ flex: 1 }} />
 
+                  <View style={{ justifyContent: 'flex-end' }}>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    {price} €</Text>
+                  </View>
+                </View>
+          </View>
+        </CardSection>
+        <View style={buttonStyle}>
+          <CardSection>
+            {/* Botão de Adicionar */}
+            {this.renderButtonCart()}
+            {this.renderButtonFavorite()}
+          </CardSection>
+        </View>
+      </Card>
+    );
+  } else {
     return (
       <Card>
         <CardSection>
@@ -316,22 +391,35 @@ class ProductDetail extends Component {
             <Image style={thumbnailStyle} source={{ uri: image }} />
           </View>
           <View style={headerContentStyle}>
-            <Text style={headerTextStyle}>
-              {name}
-            </Text>
-            <Text>
-              {brand}
-            </Text>
-            <Text>
-              {category} > {subcategory}
-            </Text>
-            <Text>
-              {weight}
-              {weight_type}
-            </Text>
-            <Text>
-              {newPrice}€/un ({newPriceWeight}€/{type_weight})
-            </Text>
+
+          <Text style={{ fontWeight: "bold" }}>
+                  {brand}
+                </Text>
+                <Text style={{ fontSize: 20 }}>
+                  {name}
+                </Text>
+                <Text>
+                  ({
+                    weight
+                  }{" "}
+                  {
+                    weight_type
+                  })
+                </Text>
+                <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-end'}}>
+                  <View style={{ justifyContent: 'flex-end' }}>
+                    <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20 }}>
+                    {price} €
+                    </Text>
+                  </View>
+                  
+                  <View style={{ flex: 1 }} />
+
+                  <View style={{ justifyContent: 'flex-end' }}>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    {price} €</Text>
+                  </View>
+                </View>
           </View>
         </CardSection>
         <View style={buttonStyle}>
@@ -345,6 +433,7 @@ class ProductDetail extends Component {
     );
   }
 }
+}
 
 const styles = {
   buttonStyle: {
@@ -352,6 +441,7 @@ const styles = {
   },
   headerContentStyle: {
     flexDirection: "column",
+    flex: 1,
     justifyContent: "space-around"
   },
   headerTextStyle: {

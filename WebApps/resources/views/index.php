@@ -37,6 +37,8 @@
 <script src="site/assets/libs/angular-aria.min.js"></script>
 <script src="site/assets/libs/angular-animate.min.js"></script>
 <script src="site/assets/libs/angular-consent.js"></script>
+<script src="site/assets/libs/pdfmake.js"></script>
+<script src="site/assets/libs/vfs_fonts.js"></script>
 
 <script src="site/assets/js/query.js"></script>
 
@@ -83,6 +85,7 @@
 <script src="site/app/factories/product/productFactory.js"></script>
 <script src="site/app/factories/retailer/retailerRequestFactory.js"></script>
 <script src="site/app/factories/cart/cartProductFactory.js"></script>
+<script src="site/app/factories/pdf/pdfFactory.js"></script>
 
 <body data-ng-app="promocoesWebApp">
 

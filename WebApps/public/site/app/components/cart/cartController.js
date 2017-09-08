@@ -4,7 +4,7 @@
 
 'use strict';
 
-app.controller('CartController', function ($scope, $uibModal, SearchService, ModalService, FilterbarService, CartService, AuthService) {
+app.controller('CartController', function ($scope, $uibModal, SearchService, ModalService, FilterbarService, CartService, AuthService, PDFFactory) {
 	//console.log("Cart Controller reporting for duty.");
 
 	var updateCart = function(){
@@ -77,6 +77,15 @@ app.controller('CartController', function ($scope, $uibModal, SearchService, Mod
 		SearchService.setProductId(id);
 		SearchService.setProductRetailerId(prid);
 		ModalService.productForm();
+	}
+
+
+	$scope.createPDF = function(){
+		var date = new Date();
+		var dateFormat = date.getDate().toString()+(date.getMonth()+1).toString()+date.getFullYear().toString()+'_'+date.getHours().toString()+date.getMinutes().toString();
+
+		var dd = PDFFactory.createProductListPDF($scope.arrItems,$scope.activeRetailer.name,$scope.cart.totalCost());
+		pdfMake.createPdf(dd).download('PromoSite_ListaProdutos_'+$scope.activeRetailer.name+'_'+dateFormat+'.pdf');
 	}
 
 });

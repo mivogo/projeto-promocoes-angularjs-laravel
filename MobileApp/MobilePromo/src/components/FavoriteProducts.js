@@ -26,37 +26,8 @@ class FavoriteProducts extends Component {
     isLoading: false
   };
 
-  getFavorites(token) {
-    this.setState({ isLoading: true });
-    const url = "http://vps415122.ovh.net/api/profile/favorites";
-    const auth = "bearer " + token;
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: auth
-      }
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({ favorites: responseJson, isLoading: false });
-      });
-  }
 
-  componentWillMount() {
-    AsyncStorage.getItem("@LogMode").then(logMode => {
-      this.setState({ logMode: logMode });
-      AsyncStorage.getItem("@Token").then(
-        rtoken => {
-          this.getFavorites(rtoken);
-          this.favoritePost(rtoken);
-        },
-        error => {}
-      );
-    });
-  }
-
-  favoritePost(token) {
+  favoritePost(favs,token) {
     this.setState({ isLoading: true });
     const url = "http://vps415122.ovh.net/api/profile/favorites";
     const auth = "bearer " + token;
@@ -72,12 +43,43 @@ class FavoriteProducts extends Component {
       .then(responseJson => {
         this.setState({
           products: responseJson,
+          favorites: favs,
           isLoading: false
         });
       })
       .catch(error => {
         this.setState({ isLoading: false });
       });
+  }
+
+
+  getFavorites(token) {
+    this.setState({ isLoading: true });
+    const url = "http://vps415122.ovh.net/api/profile/favorites";
+    const auth = "bearer " + token;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: auth
+      }
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        this.favoritePost(responseJson, token);
+      });
+  }
+
+  componentWillMount() {
+    AsyncStorage.getItem("@LogMode").then(logMode => {
+      this.setState({ logMode: logMode });
+      AsyncStorage.getItem("@Token").then(
+        rtoken => {
+          this.getFavorites(rtoken);
+        },
+        error => {}
+      );
+    });
   }
 
   renderHeader(headerName) {

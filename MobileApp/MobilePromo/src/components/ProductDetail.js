@@ -155,6 +155,17 @@ class ProductDetail extends Component {
     this.checkIsInCart();
   }
 
+  convertRetailer(retailerName){
+    if(retailerName == 'Continente'){
+      return 1;
+    }
+    if(retailerName == 'Jumbo'){
+      return 2;
+    } else {
+      return 3;
+    }
+  }
+
   renderButtonCart() {
     const newPrice = this.props.product.price.toString().replace(".", ",");
     const multPrice = (this.props.product.price * this.state.quantity)
@@ -174,11 +185,9 @@ class ProductDetail extends Component {
                     1 +
                     ', "product_id": "' +
                     this.props.product.product_id + 
-                    '", "retailer_id": ' + this.state.retailer +
+                    '", "retailer_id": ' + this.convertRetailer(this.props.product.retailer) +
                     ' }'
                 );
-                
-                
                 cart['products'].push(products);
                 AsyncStorage.setItem("@Cart", JSON.stringify(cart));
                 this.setState({ quantity: 1 });
@@ -369,7 +378,7 @@ class ProductDetail extends Component {
 
                   <View style={{ justifyContent: 'flex-end' }}>
                   <Text style={{ fontWeight: 'bold' }}>
-                    {price} €</Text>
+                    {price_weight} €/{type_weight} </Text>
                   </View>
                 </View>
           </View>
@@ -414,10 +423,9 @@ class ProductDetail extends Component {
                   </View>
                   
                   <View style={{ flex: 1 }} />
-
                   <View style={{ justifyContent: 'flex-end' }}>
                   <Text style={{ fontWeight: 'bold' }}>
-                    {price} €</Text>
+                   {price_weight} €/{type_weight}</Text>
                   </View>
                 </View>
           </View>

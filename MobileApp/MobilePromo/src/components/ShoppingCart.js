@@ -111,18 +111,21 @@ class ShoppingCart extends Component {
           } else {
             if (data[i][0].available) {
               newPrice1 =
-                newPrice1 - data[i][3].quantity * data[i][0].product.price;
+                (newPrice1 - data[i][3].quantity * data[i][0].product.price);
             }
             if (data[i][1].available) {
               newPrice2 =
-                newPrice2 - data[i][3].quantity * data[i][1].product.price;
+                (newPrice2 - data[i][3].quantity * data[i][1].product.price);
             }
             if (data[i][2].available) {
               newPrice3 =
-                newPrice3 - data[i][3].quantity * data[i][2].product.price;
+                (newPrice3 - data[i][3].quantity * data[i][2].product.price);
             }
           }
         }
+        console.log(' Debug Shopping Cart !!!');
+        console.log(newJson);
+        console.log(newData);
         cart.products = newJson;
 
         AsyncStorage.setItem("@Cart", JSON.stringify(cart));
@@ -150,7 +153,7 @@ class ShoppingCart extends Component {
             cart.products = json;
             AsyncStorage.setItem("@Cart", JSON.stringify(cart));
             this.removeProduct(this.state.productToSubstitute);
-            this.setState({ products: "[]", showReplaceMenu: false });
+            this.setState({ products: '[]', showReplaceMenu: false, isLoading: false });
             this.componentWillMount();
           }
         }
@@ -161,7 +164,7 @@ class ShoppingCart extends Component {
               json[i].retailer_id = this.state.retailer_selected;
               cart.products = json;
               AsyncStorage.setItem("@Cart", JSON.stringify(cart));
-              this.setState({ products: "[]", showReplaceMenu: false });
+              this.setState({products: '[]', showReplaceMenu: false, isLoading: false });
               this.componentWillMount();
             }
           }
@@ -227,13 +230,14 @@ class ShoppingCart extends Component {
   }
 
   renderRetailerMenu() {
-    let colors = ['white','white','white'];
+    let colors = ['white', 'white', 'white'];
     colors[this.state.retailer_selected - 1] = 'lightgrey';
+    
     return (
       <View style={{ flexDirection: "row" }}>
         {/* Picker Retailer */}
         <Button
-          style={{ flex: 1, borderColor: "red", margin: 5, backgroundColor: colors[0].toString() }}
+          style={{ flex: 1, borderColor: "red", margin: 5, backgroundColor: colors[0] }}
           textStyle={{ color: "red" }}
           isLoading={this.state.isLoading}
           onPress={() => {
@@ -250,15 +254,15 @@ class ShoppingCart extends Component {
               source={{ uri: "http://vps415122.ovh.net/images/1.png" }}
             />
             <Text>
-              {this.state.price_1
+              {Math.abs(this.state.price_1)
                 .toFixed(2)
                 .toString()
-                .replace(".", ",")}€
+                .replace(".", ",")} €
             </Text>
           </View>
         </Button>
         <Button
-          style={{ flex: 1, borderColor: "green", margin: 5, backgroundColor: colors[1].toString() }}
+          style={{ flex: 1, borderColor: "green", margin: 5, backgroundColor: colors[1] }}
           textStyle={{ color: "green" }}
           isLoading={this.state.isLoading}
           onPress={() => {
@@ -275,15 +279,15 @@ class ShoppingCart extends Component {
               source={{ uri: "http://vps415122.ovh.net/images/2.png" }}
             />
             <Text>
-              {this.state.price_2
-                .toFixed(2)
-                .toString()
-                .replace('.', ',')}€
+            {Math.abs(this.state.price_2)
+              .toFixed(2)
+              .toString()
+              .replace('.', ',')} €
             </Text>
           </View>
         </Button>
         <Button
-          style={{ flex: 1, borderColor: 'black', margin: 5, backgroundColor: colors[2].toString() }}
+          style={{ flex: 1, borderColor: 'black', margin: 5, backgroundColor: colors[2] }}
           textStyle={{ color: 'black' }}
           isLoading={this.state.isLoading}
           onPress={() => {
@@ -302,10 +306,10 @@ class ShoppingCart extends Component {
               }}
             />
             <Text>
-              {this.state.price_3
-                .toFixed(2)
-                .toString()
-                .replace(".", ",")}€
+            {Math.abs(this.state.price_3)
+              .toFixed(2)
+              .toString()
+              .replace(".", ",")} €
             </Text>
           </View>
         </Button>
@@ -446,7 +450,7 @@ class ShoppingCart extends Component {
         <Button
           style={{ borderColor: "darkred", marginRight: 2, flex: 1 }}
           onPress={() => {
-            this.addProduct(productId, quantity);
+            this.removeProduct(productId, quantity);
           }}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -543,15 +547,21 @@ class ShoppingCart extends Component {
     AsyncStorage.setItem('@MenuAvailable', 'Yes');
     this.setState({ isLoading: true, price_1: 0, price_2: 0, price_3: 0 });
     AsyncStorage.getItem("@LogMode").then(logMode => {
+      console.log(' DEBUG LOGMODE ');
+      console.log(logMode);
       this.setState({ logMode: logMode });
     });
 
     AsyncStorage.getItem("@Token").then(rtoken => {
+      console.log(' DEBUG TOKEN ');
+      console.log(rtoken);
       this.setState({ token: rtoken });
     });
 
     AsyncStorage.getItem("@Cart").then(
       cart => {
+        console.log(' DEBUG CART ');
+        console.log(cart);
         cart = JSON.parse(cart);
         const json = cart.products;
         if (json.length == 0) {
@@ -559,8 +569,7 @@ class ShoppingCart extends Component {
         }
         for (let i = 0; i < json.length; i++) {
           const url =
-            "http://vps415122.ovh.net/api/retailer/productAvailability/" +
-            json[i].product_id;
+            "http://vps415122.ovh.net/api/retailer/productAvailability/" + json[i].product_id.toString();
 
           fetch(url, {
             method: "POST",
@@ -617,6 +626,56 @@ class ShoppingCart extends Component {
   }
 
   saveList() {
+    const url = "http://vps415122.ovh.net/api/profile/shoppinglist/nameTaken";
+    const auth = "bearer " + this.state.token;
+    const name = '{ "name": "' + this.state.name + '" }';
+    console.log(name);
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: auth
+      },
+      body: name
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+      console.log('SAVELIST ACEITOU');
+      console.log(responseJson.error);
+      if (responseJson.error == null) {
+        Alert.alert(
+          'Lista repetida',
+          'Já existe uma lista com nome igual, deseja substituí-la? ',
+          [
+            {text: 'Sim', onPress: () => {
+              this.postSave();
+            }},
+            {text: 'Não'}
+          ]
+        );
+      } else {
+        this.postSave();
+      }
+      })
+      .catch(error => {
+      console.log('SAVELIST REJEITOU');      
+        Alert.alert(
+          'Lista repetida',
+          'Já existe uma lista com nome igual, deseja substituí-la? ',
+          [
+            {text: 'Sim', onPress: () => {
+              this.postSave();
+            }},
+            {text: 'Não'}
+          ]
+        );
+      });
+
+  }
+
+  postSave(){
+
     let jsonToSend = JSON.parse(
       '{ "name": "' +
         this.state.name +
@@ -633,7 +692,7 @@ class ShoppingCart extends Component {
     let mountedProducts = JSON.parse(this.state.products);
     for (let i = 0; i < mountedProducts.length; i++) {
       if (mountedProducts[i][this.state.retailer_selected - 1].available) {
-        jsonToSend["products"].push({
+        jsonToSend['products'].push({
           id:
             mountedProducts[i][this.state.retailer_selected - 1].product
               .product_id,
@@ -644,29 +703,35 @@ class ShoppingCart extends Component {
 
     const url = "http://vps415122.ovh.net/api/profile/shoppinglist";
     const auth = "bearer " + this.state.token;
-
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: auth
-      },
-      body: JSON.stringify(jsonToSend)
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        Alert.alert(
-          "Lista guardada",
-          'Poderá consultar a lista sempre que quiser na opção "Listas guardadas"',
-          [
-            {
-              text: "OK",
-              onPress: () => this.setState({ showNameMenu: false })
-            }
-          ]
-        );
-      })
-      .catch(error => {});
+    
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: auth
+          },
+          body: JSON.stringify(jsonToSend)
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            Alert.alert(
+              'Lista guardada com sucesso',
+              'A lista guardada poderá ser consultada no menu "Listas guardadas"',
+              [
+                {text: 'OK', onPress: () => {
+                  this.setState({ showNameMenu: false });
+                }}
+              ]
+            );
+          }).catch(error => {
+            Alert.alert(
+              'Erro ao guardar a lista',
+              'Servidor inacessível',
+              [
+                {text: 'OK'}
+              ]
+            );
+          });
   }
 
   renderFooter() {
@@ -677,12 +742,6 @@ class ShoppingCart extends Component {
             style={{
               borderWidth: 1,
               borderColor: 'blue',
-              borderBottomWidth: 0,
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 2,
-              elevation: 2,
               marginLeft: 5,
               marginRight: 5,
               marginTop: 5,
@@ -713,19 +772,13 @@ class ShoppingCart extends Component {
           <Button
             style={{
               borderWidth: 1,
-              borderColor: "red",
-              borderBottomWidth: 0,
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 2,
-              elevation: 2,
+              borderColor: 'red',
               marginLeft: 5,
               marginRight: 5,
               marginTop: 5,
               marginBottom: 5
             }}
-            textStyle={{ color: "red" }}
+            textStyle={{ color: 'red' }}
             onPress={() => {
               this.cleanCart();
             }}
@@ -790,9 +843,18 @@ class ShoppingCart extends Component {
                       .weight_type
                   })
                 </Text>
-                <Text style={{ fontWeight: "bold", color: "red" }}>
-                  {product[this.state.retailer_selected - 1].product.price} €
-                </Text>
+                <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-end'}}>
+                  <View style={{ justifyContent: 'flex-end' }}>
+                    <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20 }}>
+                    {product[this.state.retailer_selected - 1].product.price} €
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }} />
+                  <View style={{ justifyContent: 'flex-end' }}>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    {product[this.state.retailer_selected - 1].product.price_weight} €/{product[this.state.retailer_selected - 1].product.type_weight} </Text>
+                  </View>
+                </View>
                 {this.renderQuantity(
                   product[3].product_id,
                   product[this.state.retailer_selected - 1].product.price,
@@ -828,9 +890,18 @@ class ShoppingCart extends Component {
                       .weight_type
                   })
                 </Text>
-                <Text style={{ fontWeight: "bold", color: "red" }}>
+                <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-end'}}>
+                <View style={{ justifyContent: 'flex-end' }}>
+                  <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20 }}>
                   {product[this.state.retailer_selected - 1].product.price} €
-                </Text>
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }} />
+                <View style={{ justifyContent: 'flex-end' }}>
+                <Text style={{ fontWeight: 'bold' }}>
+                  {product[this.state.retailer_selected - 1].product.price_weight} €/{product[this.state.retailer_selected - 1].product.type_weight} </Text>
+                </View>
+              </View>
                 {this.renderQuantity(
                   product[3].product_id,
                   product[this.state.retailer_selected - 1].product.price,
@@ -861,9 +932,6 @@ class ShoppingCart extends Component {
               <Text>
                 ({product[product[3].retailer_id - 1].product.weight}{" "}
                 {product[product[3].retailer_id - 1].product.weight_type})
-              </Text>
-              <Text style={{ fontWeight: "bold" }}>
-                {product[product[3].retailer_id - 1].product.price} €
               </Text>
               {this.renderReplace(
                 product[3].product_id,
@@ -941,7 +1009,7 @@ class ShoppingCart extends Component {
   }
 
   render() {
-    if (this.state.noProducts) {
+    if (this.state.noProducts || JSON.parse(this.state.products).length == 0 ) {
       return (
         <View style={{ flex: 1 }}>
           {this.renderHeader("Carrinho")}

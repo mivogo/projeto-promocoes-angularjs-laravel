@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import {
   Text,
   View,
+  Alert,
   AsyncStorage,
   TextInput,
   ActivityIndicator,
+  NetInfo,
   Modal
 } from "react-native";
 import * as Animatable from "react-native-animatable";
@@ -27,16 +29,25 @@ class Login extends Component {
   };
 
   state = {
-    name: "",
-    email: "pedro@mail.com",
-    password: "kim1414",
-    token: "",
+    name: '',
+    isConnected: false,
+    email: 'pedro@mail.com',
+    password: 'kim1414',
+    token: '',
     isLogged: false,
     isLoading: false,
     visibleRegister: false
   };
+ 
 
   componentWillMount() {
+    NetInfo.isConnected.fetch().then(isConnected => {
+      this.setState({ isConnected: isConnected});
+    });
+    NetInfo.isConnected.addEventListener(
+      'connectionChange',
+      this.handleOnline.bind(this)
+    );
     const jsonObj = {
       products: []
     };
@@ -47,6 +58,11 @@ class Login extends Component {
   setRegisterMenuVisible(visible) {
     this.setState({ visibleRegister: visible });
   }
+ 
+  handleOnline(isConnected) {
+    
+    this.setState({ isConnected: isConnected });
+  }
 
   loginPost() {
     this.setState({ isLoading: true });
@@ -55,9 +71,6 @@ class Login extends Component {
     const url = "http://vps415122.ovh.net/api/login";
     jsonRequest += '{"email": "' + this.state.email + '",';
     jsonRequest += '"password": "' + this.state.password + '"}';
-
-    
-    
 
     fetch(url, {
       method: "POST",
@@ -106,10 +119,6 @@ class Login extends Component {
     jsonRequest += '{"name": "' + this.state.name + '",';
     jsonRequest += '"email": "' + this.state.email + '",';
     jsonRequest += '"password": "' + this.state.password + '"}';
-
-    
-    
-
     fetch(url, {
       method: "POST",
       headers: {
@@ -131,15 +140,43 @@ class Login extends Component {
           AsyncStorage.setItem("@SelectedRetailer", "1");
           this.props.navigation.navigate("Pesquisar");
         } else {
-          this.setState({
-            token: responseJson.token,
-            isLogged: false,
-            isLoading: false
-          });
           
+          
+          if (responseJson.error.email != null) {
+          Alert.alert(
+            'Erro de Registo',
+            'O e-mail não é válido',
+            [
+              {text: 'OK', onPress: () => {
+                this.setState({
+                token: responseJson.token,
+                isLogged: false,
+                isLoading: false
+                });
+              } }
+            ]
+          );
+          }
+          else {
+              Alert.alert(
+                'Erro de Registo',
+                'A password é inválida, tem que conter pelo menos 6 caracteres ',
+                [
+                  {text: 'OK', onPress: () => {
+                    this.setState({
+                    token: responseJson.token,
+                    isLogged: false,
+                    isLoading: false
+                    });
+                  } }
+                ]
+              );
+        }
         }
       })
       .catch(error => {
+        
+        
         this.setState({ isLoading: false });
         
       });
@@ -152,12 +189,10 @@ class Login extends Component {
         <View
           style={{
             padding: 10,
-            borderColor: "blue",
-            borderWidth: 1,
             backgroundColor: "white"
           }}
         >
-          <Text>Registar:</Text>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Registar:</Text>
           <TextInput
             style={styles.inputRegisterStyle}
             onChangeText={text => this.setState({ name: text })}
@@ -195,18 +230,18 @@ class Login extends Component {
   }
 
   render() {
+    if(this.state.isConnected){
     return (
       <View
         style={{
           flex: 1,
           justifyContent: "center",
-          alignItems: "center",
-          borderWidth: 1
+          alignItems: "center"
         }}
       >
         {/* Register Modal */}
         <Modal
-          animationType={"slide"}
+          animationType={'fade'}
           visible={this.state.visibleRegister}
           onRequestClose={() =>
             this.setRegisterMenuVisible(!this.state.visibleRegister)}
@@ -279,8 +314,8 @@ class Login extends Component {
 
           {/* Login - Visitor Button */}
           <Button
-            style={{ borderColor: "green" }}
-            textStyle={{ color: "green" }}
+            style={{ borderColor: 'green' }}
+            textStyle={{ color: 'green' }}
             onPress={() => {
               AsyncStorage.setItem("@LogMode", "Visitor");
               AsyncStorage.setItem("@SelectedRetailer", "1");
@@ -293,6 +328,32 @@ class Login extends Component {
       </View>
     );
   }
+  return <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center"}}>
+      <View style={{flex:1, justifyContent: "flex-end", alignItems: "center" }}>
+      {/* Login - Text */}
+      <Text style={{ fontSize: 30, alignSelf: "center" }}>PROMOS</Text>
+
+      {/* Login - Animated Logo */}
+      <Animatable.View animation="pulse" iterationCount="infinite" style={{ alignSelf: "center" }}>
+        <MaterialIcons name="shopping-basket" size={200} />
+      </Animatable.View>
+      </View>
+      <View style={{ height: 50 }} />
+      <View style={{ flex: 0.7, justifyContent: "flex-start", alignItems: "center" }}>
+          <View>
+            <MaterialIcons name="warning" size={50} style={{ color: "red" }} />
+          </View>
+
+          <View>
+            <Text style={{ fontSize: 20, textAlign: "center" }}>
+              Não se encontra conectado à Internet
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>;
+}
 }
 
 const styles = {
@@ -302,9 +363,9 @@ const styles = {
     padding: 10
   },
   inputRegisterStyle: {
-    width: 300,
     height: 40,
-    alignSelf: "center"
+    alignSelf: 'center',
+    width: 390,
   },
   modalRegisterStyle: {
     flex: 1,

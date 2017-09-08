@@ -50,7 +50,6 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 		for (var i=0; i<(products.to-products.from)+1; i++) {
 			var item = products.data[i];
 			var product = Product.build(item);
-			console.log(product);
 			$scope.data.push(product);
 
 		}

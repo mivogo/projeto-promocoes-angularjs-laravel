@@ -4,7 +4,7 @@
 
 'use strict';
 
-app.controller('ShoppingListsController', function ($scope, $state, $uibModal, CartService, ModalService, ProfileFactory, FilterbarService, shoppingListsRequest) {
+app.controller('ShoppingListsController', function ($scope, $state, $uibModal, CartService, ModalService, ProfileFactory, FilterbarService, PDFFactory, shoppingListsRequest) {
 	//console.log("Shopping Lists Controller reporting for duty.");
 
 	var lists = shoppingListsRequest;
@@ -68,6 +68,25 @@ app.controller('ShoppingListsController', function ($scope, $state, $uibModal, C
 	$scope.viewList = function(id){
 		ModalService.setShoppingListId(id);
 		ModalService.shoppingListForm();
+	}
+
+	$scope.createPDF = function(id, total){
+		ProfileFactory.shoppingListProducts(id)            
+		.then(function (response) {
+			var retailerName = FilterbarService.getRetailer().name;
+			var list = response.data.list;
+			var products = response.data.products;
+			console.log(list);
+			console.log(products);
+			var date = new Date();
+			var dateFormat = date.getDate().toString()+(date.getMonth()+1).toString()+date.getFullYear().toString()+'_'+date.getHours().toString()+date.getMinutes().toString();
+
+			var dd = PDFFactory.createSavedListPDF(list,products,retailerName,total);
+			pdfMake.createPdf(dd).download('PromoSite_'+list.name.replace(/ /g, '_')+'_'+retailerName+'_'+dateFormat+'.pdf');
+
+		}, function (error) {
+			console.log('Unable to get shoppping list products: ' + error);
+		});
 	}
 
 });

@@ -13,6 +13,7 @@
 							<th></th>
 							<th></th>
 							<th></th>
+							<th></th>
 							<th>Nome</th>
 							<th>Descrição</th>
 							<th>Retailer</th>
@@ -26,6 +27,7 @@
 							<td> <span data-ng-click="removeList(list.id)" class="glyphicon glyphicon-remove pointer noselect"><md-tooltip md-direction="top">Remover</md-tooltip>
 							</span></td>
 							<td><span data-ng-click="modifyList(list.id)" class="glyphicon glyphicon-edit pointer noselect"><md-tooltip md-direction="top">Modificar</md-tooltip></span></td>
+							<td><span data-ng-click="createPDF(list.id,list.total_price)" class="fa fa-file-pdf-o pointer noselect"><md-tooltip md-direction="top">Download PDF</md-tooltip></span></td>
 							<td><span data-ng-click="viewList(list.id)" class="glyphicon glyphicon-list pointer noselect"><md-tooltip md-direction="top">Listar</md-tooltip></span></td>
 							<td><span>{{ list.name }}</span></td>
 							<td><span>{{ list.description }}</span></td>

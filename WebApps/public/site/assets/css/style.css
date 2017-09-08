@@ -1980,7 +1980,7 @@ body {
 
  .cart-table-footer .cart-table-buttons .btn{
  	margin-top: 5px;
- 	width: 135px;
+ 	width: 145px;
  }
 
  .cart-table-footer .cart-table-buttons .cart-add-button{
@@ -2002,6 +2002,15 @@ body {
  .cart-retailer .cart-table-total .total .value {
  	font-size: 1.40em;
  	color: var(--color-blue);
+ }
+
+ .btn-cart{
+ 	color:#fff;
+ }
+
+ .btn-cart:focus,
+ .btn-cart:hover{
+ 	color:#fff;
  }
 
 

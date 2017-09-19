@@ -470,7 +470,7 @@ class ShoppingCart extends Component {
     const multPrice = (price * quantity)
       .toFixed(2)
       .toString()
-      .replace(".", ",");
+      .replace('.', ',');
     return (
       <View style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
         <Button
@@ -836,7 +836,7 @@ class ShoppingCart extends Component {
                 </Text>
                 <Text>
                   ({
-                    product[this.state.retailer_selected - 1].product.weight
+                    (product[this.state.retailer_selected - 1].product.weight).toString().replace('.', ',')
                   }{" "}
                   {
                     product[this.state.retailer_selected - 1].product
@@ -846,13 +846,13 @@ class ShoppingCart extends Component {
                 <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-end'}}>
                   <View style={{ justifyContent: 'flex-end' }}>
                     <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20 }}>
-                    {product[this.state.retailer_selected - 1].product.price} €
+                    {(product[this.state.retailer_selected - 1].product.price).toString().replace('.', ',')} €
                     </Text>
                   </View>
                   <View style={{ flex: 1 }} />
                   <View style={{ justifyContent: 'flex-end' }}>
                   <Text style={{ fontWeight: 'bold' }}>
-                    {product[this.state.retailer_selected - 1].product.price_weight} €/{product[this.state.retailer_selected - 1].product.type_weight} </Text>
+                    {(product[this.state.retailer_selected - 1].product.price_weight).toString().replace('.', ',')} €/{product[this.state.retailer_selected - 1].product.type_weight} </Text>
                   </View>
                 </View>
                 {this.renderQuantity(
@@ -893,13 +893,13 @@ class ShoppingCart extends Component {
                 <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-end'}}>
                 <View style={{ justifyContent: 'flex-end' }}>
                   <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20 }}>
-                  {product[this.state.retailer_selected - 1].product.price} €
+                  {(product[this.state.retailer_selected - 1].product.price.toString().replace('.', ','))} €
                   </Text>
                 </View>
                 <View style={{ flex: 1 }} />
                 <View style={{ justifyContent: 'flex-end' }}>
                 <Text style={{ fontWeight: 'bold' }}>
-                  {product[this.state.retailer_selected - 1].product.price_weight} €/{product[this.state.retailer_selected - 1].product.type_weight} </Text>
+                  {(product[this.state.retailer_selected - 1].product.price_weight.toString().replace('.', ','))} €/{product[this.state.retailer_selected - 1].product.type_weight} </Text>
                 </View>
               </View>
                 {this.renderQuantity(
@@ -935,7 +935,7 @@ class ShoppingCart extends Component {
               </Text>
               {this.renderReplace(
                 product[3].product_id,
-                product[product[3].retailer_id - 1].product.price,
+                product[product[3].retailer_id - 1].product.price.toString().replace('.', ','),
                 product[3].quantity,
                 product[this.state.retailer_selected - 1].suggestions.length
               )}
@@ -967,9 +967,18 @@ class ShoppingCart extends Component {
                 <Text>
                   ({suggestion.weight} {suggestion.weight_type})
                 </Text>
-                <Text style={{ fontWeight: 'bold', color: 'red' }}>
-                  {suggestion.price} €
-                </Text>
+                <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-end'}}>
+                <View style={{ justifyContent: 'flex-end' }}>
+                  <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20 }}>
+                  {(suggestion.price.toString().replace('.', ','))} €
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }} />
+                <View style={{ justifyContent: 'flex-end' }}>
+                <Text style={{ fontWeight: 'bold' }}>
+                  {(suggestion.price_weight.toString().replace('.', ','))} €/{suggestion.type_weight} </Text>
+                </View>
+              </View>
                 <View
                   style={{
                     flexDirection: 'row',

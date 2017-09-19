@@ -31,8 +31,8 @@ class Login extends Component {
   state = {
     name: '',
     isConnected: false,
-    email: 'pedro@mail.com',
-    password: 'kim1414',
+    email: '',
+    password: '',
     token: '',
     isLogged: false,
     isLoading: false,
@@ -93,16 +93,20 @@ class Login extends Component {
           AsyncStorage.setItem("@LogMode", "Logged");
           AsyncStorage.setItem("@SelectedRetailer", "1");
           this.props.navigation.navigate("Pesquisar");
-          {
-            /*setTimeout(() => { this.props.navigation.navigate('Pesquisar'); }, 10000); */
-          }
         } else {
-          this.setState({
-            token: responseJson.token,
-            isLogged: false,
-            isLoading: false
-          });
-          
+          Alert.alert(
+            'Erro de Login',
+            'Os dados inseridos não correspondem a de um utilizador existente ',
+            [
+              {text: 'OK', onPress: () => {
+                this.setState({
+                  token: '',
+                  isLogged: false,
+                  isLoading: false
+                });
+              } }
+            ]
+          );
         }
       })
       .catch(error => {

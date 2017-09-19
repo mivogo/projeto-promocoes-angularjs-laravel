@@ -30,7 +30,7 @@ class SearchScreen extends Component {
     isSearchMenuVisible: false,
     isFilterMenuVisible: false,
     retailer: 1,
-    searchQuery: 'banana',
+    searchQuery: '',
     searchOrder: 'relevance',
     searchBrand: '',
     category: '',
@@ -126,7 +126,11 @@ class SearchScreen extends Component {
 
   componentWillMount() {
     AsyncStorage.setItem('@MenuAvailable', 'Yes');
-    this.productsPost(false, 1);
+    if (this.state.searchQuery == ''){
+      this.setState({
+        isSearchMenuVisible: true
+      });
+    }
   }
 
   setSearchMenuVisible(visible) {

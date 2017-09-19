@@ -4,7 +4,6 @@ import {
   View,
   Text,
   Image,
-  Linking,
   Dimensions
 } from "react-native";
 import Card from "./Card";
@@ -317,6 +316,7 @@ class ProductDetail extends Component {
 
     const newPrice = price.toString().replace(".", ",");
     const newPriceWeight = price_weight.toString().replace(".", ",");
+    const newBasePrice = base_price.toString().replace(".", ",");
     if(hasDiscount == 1){
     return (
       <Card>
@@ -363,14 +363,14 @@ class ProductDetail extends Component {
                 <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-end'}}>
                 <View style={{ justifyContent: 'flex-end' }}>
                   <Text style={{ textDecorationLine: 'line-through' }}>
-                    {base_price} €</Text>
+                    {newBasePrice} €</Text>
                   </View>
                   <View style={{ flex: 1 }} />
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-end'}}>
                   <View style={{ justifyContent: 'flex-end' }}>
                     <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20 }}>
-                    {price} €
+                    {newPrice} €
                     </Text>
                   </View>
                   
@@ -378,7 +378,7 @@ class ProductDetail extends Component {
 
                   <View style={{ justifyContent: 'flex-end' }}>
                   <Text style={{ fontWeight: 'bold' }}>
-                    {price_weight} €/{type_weight} </Text>
+                    {newPriceWeight} €/{type_weight} </Text>
                   </View>
                 </View>
           </View>
@@ -418,14 +418,14 @@ class ProductDetail extends Component {
                 <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'flex-end'}}>
                   <View style={{ justifyContent: 'flex-end' }}>
                     <Text style={{ fontWeight: 'bold', color: 'red', fontSize: 20 }}>
-                    {price} €
+                    {newPrice} €
                     </Text>
                   </View>
                   
                   <View style={{ flex: 1 }} />
                   <View style={{ justifyContent: 'flex-end' }}>
                   <Text style={{ fontWeight: 'bold' }}>
-                   {price_weight} €/{type_weight}</Text>
+                   {newPriceWeight} €/{type_weight}</Text>
                   </View>
                 </View>
           </View>

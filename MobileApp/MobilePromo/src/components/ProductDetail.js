@@ -21,13 +21,13 @@ class ProductDetail extends Component {
   addRemoveFavorite() {
     if (this.state.isFavorite) {
       const url =
-        "http://vps415122.ovh.net/api/profile/favorites/delete/" +
+        "http://vps415122.ovh.net/api/profile/favorites/" +
         this.props.product.product_id;
       const auth = "bearer " + this.state.token;
       
       
       fetch(url, {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: auth

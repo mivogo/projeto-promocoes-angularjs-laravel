@@ -105,10 +105,10 @@ class UserListProducts extends Component {
   userListDeletePost(id) {
     this.setState({ isLoadingList: true });
     const url =
-      "http://vps415122.ovh.net/api/profile/shoppinglist/delete/" + id;
+      "http://vps415122.ovh.net/api/profile/shoppinglist/" + id;
     const auth = "bearer " + this.state.token;
     fetch(url, {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: auth

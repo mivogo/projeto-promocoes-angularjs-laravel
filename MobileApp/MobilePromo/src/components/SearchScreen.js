@@ -58,8 +58,8 @@ class SearchScreen extends Component {
     }
     jsonRequest += '"subcategory": "' + this.state.subcategory + '"}';
 
-    console.log("Pedido:");
-    console.log(jsonRequest);
+    
+    
     fetch(url, {
       method: "POST",
       headers: {
@@ -71,8 +71,8 @@ class SearchScreen extends Component {
       .then(responseJson => {
         if (filterMode) {
           if (responseJson.products.total == 0) {
-            console.log("Resposta 1:");
-            console.log(responseJson);
+            
+            
             this.setState({
               products: responseJson.products,
               page: 1,
@@ -80,8 +80,8 @@ class SearchScreen extends Component {
               isLoading: false,
             });
           } else {
-            console.log("Resposta 2:");
-            console.log(responseJson);
+            
+            
             this.setState({
               products: responseJson.products,
               page: responseJson.products.current_page,
@@ -91,8 +91,8 @@ class SearchScreen extends Component {
           }
         } else {
           if (responseJson.products.total == 0) {
-            console.log("Resposta 3:");
-            console.log(responseJson);
+            
+            
             this.setState({
               products: responseJson.products,
               brands: responseJson.brands,
@@ -102,8 +102,8 @@ class SearchScreen extends Component {
               isLoading: false
             });
           } else {
-            console.log("Resposta 4:");
-            console.log(responseJson);
+            
+            
             this.setState({
               products: responseJson.products,
               brands: responseJson.brands,
@@ -566,9 +566,9 @@ class SearchScreen extends Component {
   }
 
   renderProductList() {
-    console.log(' SearchScreen - renderProductList ');
-    console.log(this.state.products.data);
-    console.log(this.state.products.total);
+    
+    
+    
     if (this.state.products.data != null && this.state.products.total > 0) {
       if (this.state.products.data.total != 0) {
       return (
@@ -626,12 +626,12 @@ class SearchScreen extends Component {
   }
 
   render() {
-    console.log(' Search Screen - Render ');
-    console.log(this.state.products);
-    console.log(this.state.brands);
-    console.log(this.state.categories);
-    console.log(this.state.page);
-    console.log(this.state.total_pages);
+    
+    
+    
+    
+    
+    
 
     if(this.state.isLoading){
       return (

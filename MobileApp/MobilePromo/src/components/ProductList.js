@@ -42,11 +42,11 @@ class ProductList extends Component {
   width = Dimensions.get("window").width;
 
   renderProducts() {
-    console.log(' ProductList - RenderProducts ');
+    
     const data = this.props.products;
     const retailer = this.props.retailer;
-    console.log(data);
-    console.log(retailer);
+    
+    
       return data.map(product => (
         <ProductDetail
           retailer={retailer}

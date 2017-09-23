@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Dimensions,
   Image,
   Text,
   View,
@@ -123,9 +122,9 @@ class ShoppingCart extends Component {
             }
           }
         }
-        console.log(' Debug Shopping Cart !!!');
-        console.log(newJson);
-        console.log(newData);
+        
+        
+        
         cart.products = newJson;
 
         AsyncStorage.setItem("@Cart", JSON.stringify(cart));
@@ -543,25 +542,45 @@ class ShoppingCart extends Component {
     );
   }
 
+  calculatePrice(product, responseJson){
+    let newPrice1 = 0;
+    let newPrice2 = 0;
+    let newPrice3 = 0;
+    if (responseJson[0].available) {
+      newPrice1 =
+        this.state.price_1 +
+        responseJson[0].product.price * responseJson[3].quantity;
+      this.setState({ price_1: newPrice1 });
+    }
+    if (responseJson[1].available) {
+      newPrice2 =
+        this.state.price_2 +
+        responseJson[1].product.price * responseJson[3].quantity;
+      this.setState({ price_2: newPrice2 });
+    }
+    if (responseJson[2].available) {
+      newPrice3 =
+        this.state.price_3 +
+        responseJson[2].product.price * responseJson[3].quantity;
+      this.setState({ price_3: newPrice3 });
+    }
+  }
+
   componentWillMount() {
     AsyncStorage.setItem('@MenuAvailable', 'Yes');
     this.setState({ isLoading: true, price_1: 0, price_2: 0, price_3: 0 });
     AsyncStorage.getItem("@LogMode").then(logMode => {
-      console.log(' DEBUG LOGMODE ');
-      console.log(logMode);
       this.setState({ logMode: logMode });
     });
 
     AsyncStorage.getItem("@Token").then(rtoken => {
-      console.log(' DEBUG TOKEN ');
-      console.log(rtoken);
       this.setState({ token: rtoken });
     });
 
     AsyncStorage.getItem("@Cart").then(
       cart => {
-        console.log(' DEBUG CART ');
-        console.log(cart);
+        
+        
         cart = JSON.parse(cart);
         const json = cart.products;
         if (json.length == 0) {
@@ -586,27 +605,7 @@ class ShoppingCart extends Component {
                 retailer_id: json[i].retailer_id
               });
               newState.push(responseJson);
-              let newPrice1 = 0;
-              let newPrice2 = 0;
-              let newPrice3 = 0;
-              if (responseJson[0].available) {
-                newPrice1 =
-                  this.state.price_1 +
-                  responseJson[0].product.price * responseJson[3].quantity;
-                this.setState({ price_1: newPrice1 });
-              }
-              if (responseJson[1].available) {
-                newPrice2 =
-                  this.state.price_2 +
-                  responseJson[1].product.price * responseJson[3].quantity;
-                this.setState({ price_2: newPrice2 });
-              }
-              if (responseJson[2].available) {
-                newPrice3 =
-                  this.state.price_3 +
-                  responseJson[2].product.price * responseJson[3].quantity;
-                this.setState({ price_3: newPrice3 });
-              }
+              this.calculatePrice(json[i], responseJson);
               if (i == json.length - 1) {
                 newState.sort();
                 this.setState({
@@ -629,7 +628,7 @@ class ShoppingCart extends Component {
     const url = "http://vps415122.ovh.net/api/profile/shoppinglist/nameTaken";
     const auth = "bearer " + this.state.token;
     const name = '{ "name": "' + this.state.name + '" }';
-    console.log(name);
+    
 
     fetch(url, {
       method: "POST",
@@ -641,8 +640,8 @@ class ShoppingCart extends Component {
     })
       .then(response => response.json())
       .then(responseJson => {
-      console.log('SAVELIST ACEITOU');
-      console.log(responseJson.error);
+      
+      
       if (responseJson.error == null) {
         Alert.alert(
           'Lista repetida',
@@ -659,7 +658,7 @@ class ShoppingCart extends Component {
       }
       })
       .catch(error => {
-      console.log('SAVELIST REJEITOU');      
+            
         Alert.alert(
           'Lista repetida',
           'Já existe uma lista com nome igual, deseja substituí-la? ',

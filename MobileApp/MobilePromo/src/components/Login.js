@@ -5,7 +5,6 @@ import {
   Alert,
   AsyncStorage,
   TextInput,
-  ActivityIndicator,
   NetInfo,
   Modal
 } from "react-native";

@@ -165,6 +165,24 @@ class ProductDetail extends Component {
     }
   }
 
+  addNewProduct(){
+    AsyncStorage.getItem("@Cart").then(
+      cart => {
+        cart = JSON.parse(cart);
+        let products = JSON.parse(
+          '{ "quantity": ' +
+            1 +
+            ', "product_id": "' +
+            this.props.product.product_id + 
+            '", "retailer_id": ' + this.convertRetailer(this.props.product.retailer) +
+            ' }'
+        );
+        cart['products'].push(products);
+        AsyncStorage.setItem("@Cart", JSON.stringify(cart));
+        this.setState({ quantity: 1 });
+      });
+  }
+
   renderButtonCart() {
     const newPrice = this.props.product.price.toString().replace(".", ",");
     const multPrice = (this.props.product.price * this.state.quantity)
@@ -176,26 +194,8 @@ class ProductDetail extends Component {
         <Button
           style={{ borderColor: "green" }}
           onPress={() => {
-            AsyncStorage.getItem("@Cart").then(
-              cart => {
-                cart = JSON.parse(cart);
-                let products = JSON.parse(
-                  '{ "quantity": ' +
-                    1 +
-                    ', "product_id": "' +
-                    this.props.product.product_id + 
-                    '", "retailer_id": ' + this.convertRetailer(this.props.product.retailer) +
-                    ' }'
-                );
-                cart['products'].push(products);
-                AsyncStorage.setItem("@Cart", JSON.stringify(cart));
-                this.setState({ quantity: 1 });
-              },
-              error => {
-                
-              }
-            );
-          }}
+              this.addNewProduct();
+              }}
         >
           <MaterialIcons
             name="add-shopping-cart"

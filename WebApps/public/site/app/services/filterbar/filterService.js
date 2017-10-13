@@ -60,6 +60,11 @@ app.service('FilterbarService', function ($cookies, CartService) {
     }
   }
 
+  service.clearCategoryAndBrand = function(){
+    service.setCategory('');
+    service.setBrand('');
+  }
+
   service.addRetailerListItem = function(item){
     service.retailerListItems.push(item);
   }
@@ -111,10 +116,6 @@ app.service('FilterbarService', function ($cookies, CartService) {
     service.setRetailer(retailer);
   }
 
-  service.getRetailersList = function(){
-    return service.retailerListItems;
-  }
-
   service.getRetailerWithId = function (id){
     var retailer;
 
@@ -151,6 +152,18 @@ app.service('FilterbarService', function ($cookies, CartService) {
 
   service.getCategory = function(){
     return service.category;
+  }
+
+  service.getRetailersList = function(){
+    return service.retailerListItems;
+  }
+
+  service.getCategoriesList = function(){
+    return service.categoryListItems;
+  }
+
+  service.getBrandsList = function(){
+    return service.brandListItems;
   }
 
 });

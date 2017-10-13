@@ -6,7 +6,7 @@
 app.controller('MenuController', function ($scope, $location, $http, $rootScope, $state, MenuService, SearchService, FilterbarService) {
 	//console.log("Menu Controller reporting for duty.");
 
-	$scope.categories = MenuService.categoryItems;
+	$scope.categories = MenuService.categoriesList();
 
 	var countCategories = 0;
 	var halfCategories = $scope.categories.length/2;
@@ -32,7 +32,7 @@ app.controller('MenuController', function ($scope, $location, $http, $rootScope,
 		return newArr;
 	}
 
-	$scope.changeView = function(catName,subName){
+	$scope.searchProducts = function(catName,subName){
 		SearchService.setSearch('');
 		FilterbarService.setCategory({name: catName, checked:true});
 		MenuService.setSubcategory(subName);

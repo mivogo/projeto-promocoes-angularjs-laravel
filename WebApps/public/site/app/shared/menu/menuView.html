@@ -7,7 +7,7 @@
                 <ul class="dropdown-menu">
                     <div class="menu-table">
                         <ul class="cell">
-                            <li data-ng-repeat="sub in category.subcategories"><a data-ng-click="changeView(category.name,sub.name)" class="pointer">{{sub.name}}</a></li>
+                            <li data-ng-repeat="sub in category.subcategories"><a data-ng-click="searchProducts(category.name,sub.name)" class="pointer">{{sub.name}}</a></li>
                         </ul>
                     </div>
                 </ul>
@@ -30,14 +30,14 @@
                         <ul data-ng-if="!changeDirection(chunk.count)" class="dropdown-menu">
                             <div class="menu-table">
                                 <ul class="cell" data-ng-repeat="subs in chunk.array">
-                                    <li data-ng-repeat="sub in subs"><a data-ng-click="changeView(category.name,sub.name)" class="pointer">{{sub.name}}</a></li>
+                                    <li data-ng-repeat="sub in subs"><a data-ng-click="searchProducts(category.name,sub.name)" class="pointer">{{sub.name}}</a></li>
                                 </ul>
                             </div>
                         </ul>
                         <ul data-ng-if="changeDirection(chunk.count)" class="dropdown-menu dropdown-menu-right">
                             <div class="menu-table">
                                 <ul class="cell" data-ng-repeat="subs in chunk.array">
-                                    <li data-ng-repeat="sub in subs"><a data-ng-click="changeView(category.name,sub.name)" class="pointer">{{sub.name}}</a></li>
+                                    <li data-ng-repeat="sub in subs"><a data-ng-click="searchProducts(category.name,sub.name)" class="pointer">{{sub.name}}</a></li>
                                 </ul>
                             </div>
                         </ul>

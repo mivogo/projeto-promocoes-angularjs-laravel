@@ -32,6 +32,4 @@ app.controller('NotificationController', function ($scope, $state, FilterbarServ
 		$state.go('search', {q:data.product_name,brand:data.brand_name}, {reload:true});
 	}
 
-
-
 });

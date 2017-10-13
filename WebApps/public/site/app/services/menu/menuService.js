@@ -30,12 +30,20 @@ app.service('MenuService', function () {
     }
   }
 
+  service.clearSubcategory = function(){
+    service.setSubcategory('');
+  }
+
   service.setSubcategory = function(subcategory){
     service.subcategory = subcategory;
   }
 
   service.getSubcategory = function(){
     return service.subcategory;
+  }
+
+  service.categoriesList = function(){
+    return service.categoryItems;
   }
   
 });

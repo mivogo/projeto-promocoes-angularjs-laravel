@@ -300,10 +300,24 @@ body {
 	width: 49px;
 }
 
-.btn-profile-wrapper {
-	margin-bottom: 15px;
+.profile-areas{
+	font-size: 20px;
 }
 
+.profile-areas .fa{
+	color: var(--color-darkblue);
+	margin-right: 5px;
+}
+
+.profile-areas-text{
+	font-size: 13px;
+	color: var(--color-darkgrey);
+}
+
+.btn-profile-wrapper {
+	margin-bottom: 15px;
+	margin-top: 10px;
+}
 
 .filter-menu .badge{
 	margin: 5px 0;
@@ -540,9 +554,17 @@ body {
 	padding: 45px 50px;
 }
 
+.footer-distributed .footer-left{
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	margin-top: 6px;
+}
+
 .footer-distributed .footer-left p{
-	color:  #8f9296;
-	font-size: 14px;
+    color: var(--color-grey);
+    font-size: 15px;
 	margin: 0;
 }
 
@@ -2549,6 +2571,11 @@ body {
  	.footer-distributed .footer-right{
  		float: none;
  		margin: 0 auto 20px;
+ 	}
+
+ 	.footer-distributed .footer-left{
+ 		float: none;
+ 		margin: 0 auto;
  	}
 
  	.footer-distributed .footer-left p.footer-links{

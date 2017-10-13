@@ -3,7 +3,7 @@
 */
 'use strict';
 
-app.service('AuthService', function ($auth, $state, toastr) {
+app.service('AuthService', function ($auth, $state, toastr, CartService) {
 
   var service = this;
 
@@ -26,7 +26,7 @@ app.service('AuthService', function ($auth, $state, toastr) {
   service.logout = function(){
     $auth.logout()
     .then(function() {
-      localStorage.removeItem('user');
+      clearLocalStorageData();
       $state.go('home');
     });
   };
@@ -37,6 +37,12 @@ app.service('AuthService', function ($auth, $state, toastr) {
 
   service.changeUser = function(user){
     localStorage.setItem('user', user);
+  }
+
+  function clearLocalStorageData(){
+    localStorage.removeItem('user');    
+    localStorage.removeItem('notificationsNotRead');
+    CartService.clearListData();
   }
 
 });

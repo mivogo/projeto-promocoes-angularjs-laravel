@@ -28,15 +28,14 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 	$scope.pageSize = {
 		"type": "select", 
 		"name": "pageSize",
-		"value": SearchService.pageSize.value, 
-		"values": SearchService.pageSize.values
+		"value": SearchService.pageSizeValue(), 
+		"values": SearchService.pageSizeValuesList()
 	};
 
 	$scope.data = [];
-	$scope.q = '';
 
-	$scope.orderOptions = SearchService.orderOptions;
-	$scope.orderSelectedOption = SearchService.selectedOrderOption;
+	$scope.orderOptions = SearchService.orderOptionsList();
+	$scope.orderSelectedOption = SearchService.getSelectedOrderOption();
 
 	if(products.data.length>0){
 		if(products.to == null){
@@ -85,7 +84,6 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 		FilterbarService.setCategory({name: category, checked: true});
 	}
 
-
 	if(brands.length > 0){
 		FilterbarService.clearBrandListItems();
 		angular.forEach(brands, function(value, key) {
@@ -98,49 +96,56 @@ app.controller('SearchController', function ($scope, $location, $http, $window, 
 
 	if($stateParams.brand){
 		var brand = $stateParams.brand;
-
 		
 		FilterbarService.clearBrandListItems();
 		FilterbarService.addBrandListItem({name: brand, checked: true});
 		FilterbarService.setBrand({name: brand, checked: true});
 	}
 
-	$scope.brandFilter = function(){
-		return FilterbarService.getBrand();
-	}
-
-	$scope.categoryFilter = function(){
-		return FilterbarService.getCategory();
-	}
-
 	$scope.numberOfPages = function(){
 		return products.last_page;                
 	}
 
-	$scope.productDetails = function(id,prid){
-		SearchService.setProductId(id);
-		SearchService.setProductRetailerId(prid);
-		ModalService.productForm();
+	$scope.productDetails = function(id, prid){
+		if(id && prid){
+			SearchService.setProductId(id);
+			SearchService.setProductRetailerId(prid);
+			ModalService.productForm();
+		}else{
+			console.log("Invalid product parameters")
+		}
 	}
 
 	$scope.changeOrder = function(option){
-		SearchService.selectedOrderOption = option;
+		SearchService.changeSelectedOrderOption(option);
 		$state.reload();
 	}
 
-	$scope.changePageSize= function(value){
-		SearchService.pageSize.value = value;
+	$scope.changePageSize = function(value){
+		SearchService.changePageSizeValue(value);
 		$state.reload();
 	}
 
 	$scope.previousPage = function(){
-		SearchService.url = $scope.prevPageUrl;
+		SearchService.changeNavigationUrl($scope.prevPageUrl);
 		$state.reload();
 	}
 
 	$scope.nextPage = function(){
-		SearchService.url = $scope.nextPageUrl;
+		SearchService.changeNavigationUrl($scope.nextPageUrl);
 		$state.reload();
+	}
+
+	$scope.addProductToCart = function(item){
+		CartService.addItem(item);
+	}
+
+	$scope.updateProductQuantity = function(item, qt){
+		CartService.updateItemQuantity(item,qt);
+	}
+
+	$scope.productInCart = function (item){
+		return CartService.hasItem(item);
 	}
 
 	function sortDropDownListByText(selectId) {

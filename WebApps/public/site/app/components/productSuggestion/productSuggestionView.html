@@ -61,7 +61,7 @@
 										<span class="price-weight">{{item.price_weight | currency}}/{{item.type_weight | lowercase}}</span>
 									</div>
 									<div class="buttons">
-										<a data-ng-if="!cart.hasItem(item)" data-ng-click="replaceWithSuggestion(item)" class="btn btn-primary pointer cart-add-button"><i class="glyphicon glyphicon-refresh"></i> Trocar</a>
+										<a data-ng-if="!productInCart(item)" data-ng-click="replaceWithSuggestion(item)" class="btn btn-primary pointer cart-add-button"><i class="glyphicon glyphicon-refresh"></i> Trocar</a>
 									</div>
 								</div>
 							</div>

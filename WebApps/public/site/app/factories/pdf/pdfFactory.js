@@ -80,7 +80,7 @@ app.factory('PDFFactory', function(AuthService) {
 			return {
 				table: {
 					headerRows: 1,
-					widths: [300, 50, '*', 25, '*'],
+					widths: [285, 65, '*', 25, '*'],
 					body: buildTableBody(data, columns)
 
 				},
@@ -172,7 +172,7 @@ app.factory('PDFFactory', function(AuthService) {
 			return {
 				table: {
 					headerRows: 1,
-					widths: [300, 50, '*', 25, '*'],
+					widths: [285, 65, '*', 25, '*'],
 					body: buildTableBody(data, columns)
 
 				},

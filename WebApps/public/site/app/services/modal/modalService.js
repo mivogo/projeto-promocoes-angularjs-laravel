@@ -12,8 +12,8 @@ app.service('ModalService', function ($uibModal, SearchService, ProductFactory, 
   var modalInstance = null;
 
   var productRequest = function(){
-    var pid = SearchService.productid;
-    var prid = SearchService.productretailerid;
+    var pid = SearchService.getProductId();
+    var prid = SearchService.getProductRetailerId();
 
     return ProductFactory.product(pid,prid)            
     .then(function (response) {

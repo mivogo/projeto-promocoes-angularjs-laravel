@@ -4,11 +4,10 @@
 
 'use strict';
 
-app.controller('ProfileNotificationsController', function ($scope, $state, FilterbarService, allNotificationsRequest, NotificationService) {
+app.controller('ProfileNotificationsController', function ($scope, $state, FilterbarService, NotificationService) {
 	//console.log("Profile Notification Controller reporting for duty.");
 
-	$scope.notifications = allNotificationsRequest;
-
+	$scope.notifications = NotificationService.getNotifications();
 
 	$scope.numberNotifications = function(){
 		return $scope.notifications.length;
@@ -16,10 +15,6 @@ app.controller('ProfileNotificationsController', function ($scope, $state, Filte
 
 	$scope.markAsRead = function(id){
 		NotificationService.markAsRead(id);
-	}
-
-	$scope.markAllAsRead = function(){
-		NotificationService.markAllAsRead();
 	}
 
 	$scope.searchProduct = function(data){

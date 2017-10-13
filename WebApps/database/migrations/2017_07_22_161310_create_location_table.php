@@ -1,11 +1,11 @@
-<?php
+    <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+    use Illuminate\Support\Facades\Schema;
+    use Illuminate\Database\Schema\Blueprint;
+    use Illuminate\Database\Migrations\Migration;
 
-class CreateLocationTable extends Migration
-{
+    class CreateLocationTable extends Migration
+    {
     /**
      * Run the migrations.
      *
@@ -13,12 +13,16 @@ class CreateLocationTable extends Migration
      */
     public function up()
     {
-        Schema::create('locations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('zipcode');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('locations')) {
+
+            Schema::create('locations', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->string('zipcode');
+                $table->timestamps();
+            });
+            
+        }
     }
 
         /**

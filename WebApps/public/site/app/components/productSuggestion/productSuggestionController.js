@@ -6,12 +6,12 @@
 
 app.controller('ProductSuggestionController', function ($scope, $uibModal, $state, CartService, ModalService, Product, replaceIndex, suggestionsRequest) {
 	//console.log("Product Suggestion Controller reporting for duty.");
+	
 	var suggestionsList = suggestionsRequest.suggestions;
 	var data = suggestionsRequest.product;
 
 	$scope.suggestions = [];
 	$scope.suggestionsCount = 0;
-	$scope.cart = CartService;
 	$scope.item = Product.build(data);
 
 	angular.forEach(suggestionsList, function(item){
@@ -21,6 +21,10 @@ app.controller('ProductSuggestionController', function ($scope, $uibModal, $stat
 		}
 		$scope.suggestionsCount +=1;
 	});
+
+	$scope.productInCart = function (item){
+		return CartService.hasItem(item);
+	}
 
 	$scope.replaceWithSuggestion = function(item){
 		var modal = $uibModal.open({

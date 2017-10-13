@@ -76,8 +76,6 @@ app.controller('ShoppingListsController', function ($scope, $state, $uibModal, C
 			var retailerName = FilterbarService.getRetailer().name;
 			var list = response.data.list;
 			var products = response.data.products;
-			console.log(list);
-			console.log(products);
 			var date = new Date();
 			var dateFormat = date.getDate().toString()+(date.getMonth()+1).toString()+date.getFullYear().toString()+'_'+date.getHours().toString()+date.getMinutes().toString();
 

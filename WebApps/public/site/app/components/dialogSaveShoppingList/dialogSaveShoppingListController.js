@@ -55,6 +55,7 @@ app.controller('DialogSaveShoppingListController', function ($scope, $state, $ui
   function saveListToServer(){
     var items = CartService.getItems();
     var products = [];
+    
     angular.forEach(items, function(item){
       if(item.available){
         products.push({id:item.id,quantity:item.quantity});
@@ -67,8 +68,6 @@ app.controller('DialogSaveShoppingListController', function ($scope, $state, $ui
       retailer_id: FilterbarService.getRetailer().id,
       products: products
     }
-
-    console.log(request);
 
     ProfileFactory.saveShoppingList(request)            
     .then(function (response) {

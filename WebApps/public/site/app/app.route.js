@@ -51,8 +51,8 @@ var categoriesRequest = function(ProductFactory, MenuService){
 };
 
 
-var retailerRequest = function(ProductFactory, FilterbarService, CartService){
-	return 	ProductFactory.retailers()            
+var retailerRequest = function(RetailerFactory, FilterbarService, CartService){
+	return RetailerFactory.retailers()            
 	.then(function (response) {
 		var retailers = response.data;
 		var first = true;
@@ -120,20 +120,9 @@ var shoppingListsRequest = function(ProfileFactory){
 
 var notificationsRequest = function(ProfileFactory, AuthService, NotificationService){
 	if (AuthService.isAuthenticated()) {
-		return ProfileFactory.notificationsNotRead()            
-		.then(function (response) {
-			NotificationService.addNotificationNotReadList(response.data);
-		}, function (error) {
-			console.log('Unable to load notifications data: ' + error.data);
-		});
-	}
-}
-
-var allNotificationsRequest = function(ProfileFactory, AuthService, NotificationService){
-	if (AuthService.isAuthenticated()) {
 		return ProfileFactory.notifications()            
 		.then(function (response) {
-			return response.data;
+			NotificationService.addNotificationList(response.data);
 		}, function (error) {
 			console.log('Unable to load notifications data: ' + error.data);
 		});
@@ -237,8 +226,7 @@ var notificationState = {
 	controller: 'ProfileNotificationsController',
 	resolve: {
 		loginRequired: loginRequired,
-		notificationsRequest: notificationsRequest,
-		allNotificationsRequest: allNotificationsRequest,
+		notificationsRequest: notificationsRequest
 	}
 }
 

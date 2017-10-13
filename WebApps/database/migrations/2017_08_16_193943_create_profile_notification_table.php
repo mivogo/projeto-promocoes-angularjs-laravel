@@ -13,19 +13,21 @@ class CreateProfileNotificationTable extends Migration
      */
     public function up()
     {
-        Schema::create('notification_profile', function (Blueprint $table) {
-            $table->boolean('read');
+        if (!Schema::hasTable('notification_profile')) {
+            Schema::create('notification_profile', function (Blueprint $table) {
+                $table->boolean('read');
 
-            $table->integer('notification_id')->unsigned()->nullable();
-            $table->foreign('notification_id')->references('id')
-            ->on('notifications')->onDelete('cascade');
+                $table->integer('notification_id')->unsigned()->nullable();
+                $table->foreign('notification_id')->references('id')
+                ->on('notifications')->onDelete('cascade');
 
-            $table->integer('profile_id')->unsigned()->nullable();
-            $table->foreign('profile_id')->references('id')
-            ->on('profiles')->onDelete('cascade');
+                $table->integer('profile_id')->unsigned()->nullable();
+                $table->foreign('profile_id')->references('id')
+                ->on('profiles')->onDelete('cascade');
 
-            $table->timestamps();
-        });
+                $table->timestamps();
+            });
+        }
     }
 
     /**

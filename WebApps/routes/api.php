@@ -37,7 +37,7 @@ Route::group(['middleware' => 'cors'], function () {
 
 	//FAVORITE PRODUCTS
 	Route::post('/profile/favorites/{id}', 'API\FavoriteListController@addFavorite');
-	Route::post('/profile/favorites/delete/{id}', 'API\FavoriteListController@deleteFavorite');
+	Route::delete('/profile/favorites/{id}', 'API\FavoriteListController@deleteFavorite');
 	Route::get('/profile/favorites', 'API\FavoriteListController@showFavorites');
 
 	//SHOPPING LISTS
@@ -45,7 +45,7 @@ Route::group(['middleware' => 'cors'], function () {
 	Route::get('/profile/shoppinglist', 'API\ShoppingListController@showLists');
 	Route::post('/profile/shoppinglist/nameTaken', 'API\ShoppingListController@nameTaken');
 	Route::post('/profile/shoppinglist/{id}', 'API\ShoppingListController@showListProducts');
-	Route::post('/profile/shoppinglist/delete/{id}', 'API\ShoppingListController@deleteList');
+	Route::delete('/profile/shoppinglist/{id}', 'API\ShoppingListController@deleteList');
 
 	//NOTIFICATIONS
 	Route::get('/profile/notification', 'API\NotificationController@showAll');
@@ -62,7 +62,6 @@ Route::group(['middleware' => 'cors'], function () {
 	Route::get('/categories', 'API\CategoryController@showAll');
 	Route::get('/brands', 'API\BrandController@showAll');
 
-
-	Route::post('/testeNotification/{id}', 'API\ProductController@testeNotification');
+	Route::post('/createTestNotification/{id}','API\ProductController@testeNotification');
 
 });

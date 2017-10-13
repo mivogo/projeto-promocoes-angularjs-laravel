@@ -16,14 +16,12 @@ app.controller('FavoriteProductsController', function ($scope, $state, Product, 
 
 	angular.forEach(dataFavorites, function(data, key){
 		var product = Product.build(data);
-
 		$scope.favorites.push(product);
 
 		$scope.favorites[i].retailerPrices = [];
 
 		angular.forEach(data.retailers_prices, function(value, key){
 			var retailer = FilterbarService.getRetailerWithId(value.retailer_id);
-			console.log(FilterbarService.getRetailerWithId(value.retailer_id));
 			$scope.favorites[i].retailerPrices.push({retailer:retailer,price:value.price,base_price:value.base_price,hasDiscount:value.hasDiscount});
 		});
 
@@ -41,6 +39,18 @@ app.controller('FavoriteProductsController', function ($scope, $state, Product, 
 		}, function (error) {
 			console.log('Unable to remove favorite product: ' + error);
 		});
+	}
+
+	$scope.addProductToCart = function(item){
+		CartService.addItem(item);
+	}
+
+	$scope.updateProductQuantity = function(item, qt){
+		CartService.updateItemQuantity(item,qt);
+	}
+
+	$scope.productInCart = function (item){
+		return CartService.hasItem(item);
 	}
 
 });

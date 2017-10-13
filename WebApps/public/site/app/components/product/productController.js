@@ -68,5 +68,16 @@ app.controller('ProductController', function ($scope, $state, CartService, Modal
 		SearchService.setProductRetailerId(prid);
 		ModalService.productForm();
 	}
+	
+	$scope.addProductToCart = function(item){
+		CartService.addItem(item);
+	}
 
+	$scope.updateProductQuantity = function(item, qt){
+		CartService.updateItemQuantity(item,qt);
+	}
+
+	$scope.productInCart = function (item){
+		return CartService.hasItem(item);
+	}
 });

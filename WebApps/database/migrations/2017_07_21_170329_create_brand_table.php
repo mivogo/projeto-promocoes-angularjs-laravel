@@ -13,14 +13,16 @@ class CreateBrandTable extends Migration
      */
     public function up()
     {
-        Schema::create('brands', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('simple');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('brands')) {
+            Schema::create('brands', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->string('simple');
+                $table->timestamps();
+            });
 
-        DB::statement('ALTER TABLE brands ADD FULLTEXT search(name)');
+            DB::statement('ALTER TABLE brands ADD FULLTEXT search(name)');
+        }
     }
 
     /**

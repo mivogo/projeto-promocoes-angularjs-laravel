@@ -2,38 +2,34 @@
 
 app.factory('ProductFactory', function($http, $auth, FilterbarService, SearchService, APIService, MenuService) {
 
-	var urlBase = APIService.apiUrl();
+	var apiURL = APIService.apiUrl();
 	var productFactory = {};
 
-	productFactory.retailers = function () {
-		return $http.get(urlBase + '/retailers');
-	};
-
 	productFactory.categories = function () {
-		return $http.get(urlBase + '/categories');
+		return $http.get(apiURL + '/categories');
 	};
 
 	productFactory.products = function (param) {
 
-		var rid = FilterbarService.retailer.id;
-		var url = SearchService.url;
+		var rid = FilterbarService.getRetailer().id;
+		var url = SearchService.getNavigationUrl();
 		var request = buildRequest(param);
 
 		if(url){
 			return $http.post(url, request);
 		}
 
-		return $http.post(urlBase+'/productsFromRetailer/'+rid,request);
+		return $http.post(apiURL + '/productsFromRetailer/' + rid, request);
 	};
 
 	productFactory.product = function (pid,prid) {
-		return $http.get(urlBase + '/products/'+pid+'&pr='+prid);
+		return $http.get(apiURL + '/products/' + pid + '&pr=' + prid);
 	};
 
 	function buildRequest(param){
 
-		var orderby = SearchService.selectedOrderOption.value;
-		var pageSize = SearchService.pageSize.value;
+		var orderby = SearchService.getSelectedOrderOption().value;
+		var pageSize = SearchService.pageSizeValue();
 		var search;
 		var brand;
 		var category

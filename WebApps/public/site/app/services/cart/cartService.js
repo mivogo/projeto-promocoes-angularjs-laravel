@@ -6,13 +6,13 @@
 app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerFactory, CartProduct) {
 
   var service = this;
-  var observerCallbacks = [];
 
   service.listName = localStorage.getItem('listName');
   service.listDescription = localStorage.getItem('listDescription');
   service.productRetailerId = null;
 
   service.carts = JSON.parse(localStorage.getItem('carts'));
+  
   if(service.carts == null){
     service.carts = new Array();
   }
@@ -34,7 +34,7 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
   service.activateCart = function(id){
     service.activeCart = service.carts[id-1];
     updateLocalStorageActiveCart(id-1);
-    notifyObservers();
+    verifyTotalItems();
   }
 
   service.getActiveCart = function(){
@@ -126,6 +126,7 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
     }
 
     updateLocalStorageCarts();
+    verifyTotalItems();
   }
 
   service.hasItem = function (item){
@@ -185,7 +186,7 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
     }
 
     updateLocalStorageCarts();
-    notifyObservers();
+    verifyTotalItems();
   }
 
   service.itemPrice = function (item){  
@@ -237,7 +238,7 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
     arr.splice(index, 1, cartp);
 
     updateLocalStorageCarts();
-    notifyObservers();
+    verifyTotalItems();
   }
 
   service.replaceCartWithList = function(list){
@@ -264,7 +265,7 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
     });
 
     updateLocalStorageCarts();
-    notifyObservers();
+    verifyTotalItems();
   }
 
   service.retailerTotalCost = function(id){
@@ -277,6 +278,11 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
 
     totalCost = calculateTotalCost(arr);
     return totalCost;
+  }
+
+  service.clearListData = function(){
+    service.setListName('');
+    service.setListDescription('');
   }
 
   service.clearProductRetailerId = function(){
@@ -309,15 +315,11 @@ app.service('CartService', ['RetailerFactory','CartProduct', function (RetailerF
     return service.listDescription;
   }
 
-  service.registerObserverCallback = function(callback){
-    observerCallbacks.push(callback);
-  };
-
-  var notifyObservers = function(){
-    angular.forEach(observerCallbacks, function(callback){
-      callback();
-    });
-  };
+  function verifyTotalItems(){
+    if(service.getTotalItems() == 0){
+      service.clearListData();
+    }
+  }
 
   function updateLocalStorageCarts(){
     localStorage.setItem('carts', JSON.stringify(service.carts));

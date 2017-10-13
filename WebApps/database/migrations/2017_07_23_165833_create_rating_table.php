@@ -13,18 +13,20 @@ class CreateRatingTable extends Migration
      */
     public function up()
     {
-        Schema::create('ratings', function (Blueprint $table) {
-            $table->increments('id');
-            $table->double('value');
-            $table->timestamps();
+        if (!Schema::hasTable('ratings')) {
+            Schema::create('ratings', function (Blueprint $table) {
+                $table->increments('id');
+                $table->double('value');
+                $table->timestamps();
 
-            $table->integer('profile_id')->unsigned()->nullable();
-            $table->foreign('profile_id')
-            ->references('id')->on('profiles')->onDelete('cascade');
-            $table->integer('product_id')->unsigned()->nullable();
-            $table->foreign('product_id')->references('id')
-            ->on('products')->onDelete('cascade');
-        });
+                $table->integer('profile_id')->unsigned()->nullable();
+                $table->foreign('profile_id')
+                ->references('id')->on('profiles')->onDelete('cascade');
+                $table->integer('product_id')->unsigned()->nullable();
+                $table->foreign('product_id')->references('id')
+                ->on('products')->onDelete('cascade');
+            });
+        }
     }
 
     /**
@@ -36,6 +38,6 @@ class CreateRatingTable extends Migration
     {
 
         Schema::dropIfExists('ratings');
- 
+        
     }
 }

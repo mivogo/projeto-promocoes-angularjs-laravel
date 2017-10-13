@@ -47,12 +47,12 @@ class ProductController extends Controller
 
 		$percentage = $this->calculatePricePercentageDifference($pr);
 		if($percentage >= 0.25){
-			$this->dispatch((new CreatePriceNotification($pr,$percentage)));
+			CreatePriceNotification::dispatch($pr,$percentage)->onQueue('default')->delay(60);
 		}
 
 		$pr->price = $aux;
 
-		return response()->json($percentage);
+		return response()->json([$pr,$percentage]);
 	}
 
 	public function createFromList(Request $request)
@@ -62,6 +62,7 @@ class ProductController extends Controller
 		
 		$i = $inc = $inc2 = $inc3 = 0;
 		$idArr = [];
+		$notifiedArr = [];
 
 		$req_retailer = $request->get('Retailer');
 
@@ -93,7 +94,6 @@ class ProductController extends Controller
 			if(!empty($productRetailer)){
 				$inc++;
 				$finalProductRetailer = $this->updateProductRetailer($productRetailer,$item);
-
 			}else{
 
 				$brand = $this->findBrand($item['Brand']);
@@ -136,10 +136,11 @@ class ProductController extends Controller
 			Brand::reguard();
 			Product::reguard();
 
-			if(!empty($finalProductRetailer) && $finalProductRetailer->updated_at->toDateString() == Carbon::today()->toDateString() && $finalProductRetailer->base_price > $finalProductRetailer->price){
+			if($this->verifyProductRetailerForNotification($finalProductRetailer,$notifiedArr)){
 				$percentage = $this->calculatePricePercentageDifference($finalProductRetailer);
-				if($percentage >= 0.25){
-					$this->dispatch((new CreatePriceNotification($finalProductRetailer,$percentage)));
+				if($percentage >= 0.15){
+					CreatePriceNotification::dispatch($finalProductRetailer,$percentage)->onQueue('default')->delay(60);
+					array_push($notifiedArr, $finalProductRetailer->id);
 				}
 			}
 		}
@@ -168,7 +169,7 @@ class ProductController extends Controller
 		if ($validator->fails()) {
 			return response()->json(['error'=>$validator->errors()], 401);            
 		}
-		
+
 		$direction = 'asc';
 		$order = $request->order;
 		if(strcmp($order, '-price') == 0){
@@ -310,7 +311,7 @@ class ProductController extends Controller
 
 		return $newProductRetailer;
 	}
-	
+
 	private function addRetailerToProduct($retailer,$selectedProduct,$item){
 		$newProductRetailer = $this->createNewProductRetailer($item);
 
@@ -421,7 +422,7 @@ class ProductController extends Controller
 		$dt1 = new DateTime($pdate);
 		$dt2 = new DateTime($sdate);
 
-		return $dt2->format("Ymd")-$dt1->format("Ymd");
+		return $dt1->diff($dt2)->days;
 	}
 
 	private function itemFix($item, $retailer){
@@ -719,5 +720,12 @@ class ProductController extends Controller
 
 		return 0;
 	} 
-	
+
+	private function verifyProductRetailerForNotification($productRetailer, $notifiedArr){
+		return !empty($productRetailer)
+		&& !in_array($productRetailer->id, $notifiedArr, true) 
+		&& $productRetailer->updated_at->toDateString() == Carbon::today()->toDateString() 
+		&& $productRetailer->base_price > $productRetailer->price;
+	}
+
 }

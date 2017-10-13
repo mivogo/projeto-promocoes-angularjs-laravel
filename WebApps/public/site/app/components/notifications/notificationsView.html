@@ -2,12 +2,12 @@
 	<div class="panel panel-default profile-card col-sm-12 col-lg-12">
 		<div class="row">
 			<div class="panel-heading profile-title col-sm-12 col-lg-12 col-sm-12 col-xs-12">
-				<h3><i class="fa fa-user fa-fw"></i>Notificações</h3>
+				<h3><i class="fa fa-bell fa-fw"></i>Notificações</h3>
 			</div>
 		</div>
 		<div class="panel-body profile-body profile-notifications col-sm-12 col-lg-12">
 			<div class="col-lg-12" data-ng-if="numberNotifications() > 0">
-				<div data-ng-repeat="notification in notifications | orderBy:['read','created']">
+				<div data-ng-repeat="notification in notifications | orderBy:['read','-created']">
 					<div class="content pointer" data-ng-click="markAsRead(notification.id)">
 						<div data-ng-if="notification.read === 1" class="notification-item">
 							<h4 class="item-title">{{notification.created}}</h4>

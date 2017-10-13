@@ -50,7 +50,7 @@ class NotificationController extends Controller
 
 		$user = $this->jwtauth->toUser($token);
 
-		$notifications = $user->profile->notification()->wherePivot('read',false)->get();
+		$notifications = $user->profile->notification()->wherePivot('read',false)->orderBy('created_at','desc')->get();
 		
 		return response()->json((new NotificationTransformer)->transformArray($notifications));
 	}

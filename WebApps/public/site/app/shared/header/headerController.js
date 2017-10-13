@@ -34,12 +34,11 @@ app.controller('HeaderController', function ($scope, $location, $http, $rootScop
 		$scope.user = null;
 	};
 
-	$scope.changeView = function(view){
+	$scope.searchProduct = function(view){
 		if($scope.searchterm){
 			SearchService.setSearch($scope.searchterm);
-			FilterbarService.setCategory('');
-			FilterbarService.setBrand('');
-			MenuService.setSubcategory('');
+			FilterbarService.clearCategoryAndBrand();
+			MenuService.clearSubcategory();
 
 			$state.go('search', {q: $scope.searchterm, brand:null,category:null,menuCategory:null,menuSubcategory:null}, { reload: true });
 			$scope.searchterm = null;
@@ -50,8 +49,7 @@ app.controller('HeaderController', function ($scope, $location, $http, $rootScop
 	};
 
 	$scope.notification = function(){
-		console.log("lol");
-		 jQuery('#notifications-menu').collapse('show');//getting element sibling
+		jQuery('#notifications-menu').collapse('show');
 	}
 
 });

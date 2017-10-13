@@ -13,20 +13,23 @@ class CreateShoppingListTable extends Migration
      */
     public function up()
     {
-        Schema::create('shopping_lists', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->timestamps();
 
-            $table->integer('retailer_id')->unsigned()->nullable();
-            $table->foreign('retailer_id')
-            ->references('id')->on('retailers')->onDelete('cascade');
+        if (!Schema::hasTable('shopping_lists')) {
+            Schema::create('shopping_lists', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->string('description')->nullable();
+                $table->timestamps();
 
-            $table->integer('profile_id')->unsigned()->nullable();
-            $table->foreign('profile_id')
-            ->references('id')->on('profiles')->onDelete('cascade');
-        });
+                $table->integer('retailer_id')->unsigned()->nullable();
+                $table->foreign('retailer_id')
+                ->references('id')->on('retailers')->onDelete('cascade');
+
+                $table->integer('profile_id')->unsigned()->nullable();
+                $table->foreign('profile_id')
+                ->references('id')->on('profiles')->onDelete('cascade');
+            });
+        }
     }
 
     /**

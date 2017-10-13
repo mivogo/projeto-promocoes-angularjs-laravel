@@ -6,11 +6,11 @@
 app.controller('FilterController', function ($scope, $location, $state, $http, $rootScope, FilterbarService) {
 	//console.log("Filter Controller reporting for duty.");
 
-	$scope.brands = FilterbarService.brandListItems;
-	$scope.categories = FilterbarService.categoryListItems;
-	$scope.retailers = FilterbarService.retailerListItems;
+	$scope.brands = FilterbarService.getBrandsList();
+	$scope.categories = FilterbarService.getCategoriesList();
+	$scope.retailers = FilterbarService.getRetailersList();
 	$scope.retailer = {}; 
-	$scope.retailer.selected = FilterbarService.retailer;
+	$scope.retailer.selected = FilterbarService.getRetailer();
 
 	$scope.updateCategory = function(category, position, entitie, state){
 		if(state){

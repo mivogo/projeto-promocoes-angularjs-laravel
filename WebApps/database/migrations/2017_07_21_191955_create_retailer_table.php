@@ -13,11 +13,13 @@ class CreateRetailerTable extends Migration
      */
     public function up()
     {
-        Schema::create('retailers', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('retailers')) {
+            Schema::create('retailers', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

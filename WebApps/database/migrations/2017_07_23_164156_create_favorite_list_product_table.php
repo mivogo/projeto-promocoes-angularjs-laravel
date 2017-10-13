@@ -13,17 +13,21 @@ class CreateFavoriteListProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_profile', function (Blueprint $table) {
-            $table->integer('profile_id')->unsigned()->nullable();
-            $table->foreign('profile_id')->references('id')
-            ->on('profiles')->onDelete('cascade');
+        if (!Schema::hasTable('product_profile')) {
 
-            $table->integer('product_id')->unsigned()->nullable();
-            $table->foreign('product_id')->references('id')
-            ->on('products')->onDelete('cascade');
+            Schema::create('product_profile', function (Blueprint $table) {
+                $table->integer('profile_id')->unsigned()->nullable();
+                $table->foreign('profile_id')->references('id')
+                ->on('profiles')->onDelete('cascade');
 
-            $table->timestamps();
-        });
+                $table->integer('product_id')->unsigned()->nullable();
+                $table->foreign('product_id')->references('id')
+                ->on('products')->onDelete('cascade');
+
+                $table->timestamps();
+            });
+
+        }
     }
 
     /**

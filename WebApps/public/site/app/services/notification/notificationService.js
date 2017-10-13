@@ -8,47 +8,26 @@ app.service('NotificationService', function ($rootScope, AuthService, ProfileFac
   var service = this;
   var observerCallbacks = [];
 
-  service.notificationsNotRead = [];
   service.notifications = [];
-
-  service.clearNotificationsNotRead = function() {
-    service.notificationsNotRead = [];
-  }
 
   service.clearNotifications = function() {
     service.notifications = [];
   }
 
-  service.addNotificationNotReadList = function(list){
-    service.clearNotificationsNotRead();
+  service.addNotificationList = function(list){
+    service.clearNotifications();
 
     angular.forEach(list, function(item){
-      service.addNotificationNotRead(item);
+      service.addNotification(item);
     })
 
-    localStorage.setItem('notificationsNotRead', service.notificationsNotRead.length);
+    localStorage.setItem('notificationsNotRead', service.totalNotificationsNotRead());
     notifyObservers();
-  }
-
-  service.addNotificationNotRead = function(item){
-    var exists = false;
-    angular.forEach(service.notificationsNotRead, function(value, key){
-      if(value.id == item.id){
-        exists = true;
-      }
-    });
-
-    if(!exists){
-      service.notificationsNotRead.push(item);
-      service.notificationsNotRead.sort(function (a, b) { 
-        return (a.created > b.created) ? 1 : ((b.created > a.created) ? -1 : 0); 
-      });
-    }
   }
 
   service.addNotification = function(item){
     var exists = false;
-    angular.forEach(service.notifications, function(value, key){
+    angular.forEach(service.notifications, function(value){
       if(value.id == item.id){
         exists = true;
       }
@@ -57,7 +36,10 @@ app.service('NotificationService', function ($rootScope, AuthService, ProfileFac
     if(!exists){
       service.notifications.push(item);
       service.notifications.sort(function (a, b) { 
-        return (a.created > b.created) ? 1 : ((b.created > a.created) ? -1 : 0); 
+        return (a.read < b.read) ? 1 : ((b.read < a.read) ? -1 : 0); 
+      });
+      service.notifications.sort(function (a, b) { 
+        return (a.created < b.created) ? 1 : ((b.created < a.created) ? -1 : 0); 
       });
     }
   }
@@ -66,22 +48,48 @@ app.service('NotificationService', function ($rootScope, AuthService, ProfileFac
     if (AuthService.isAuthenticated()) {
       ProfileFactory.markNotification(id)            
       .then(function (response) {
-        service.addNotificationNotReadList(response.data);
+        service.markNotificationInList(id);
       }, function (error) {
         console.log('Unable to load markd as read notification data: ' + error.data);
       });
     }
   }
 
+  service.markNotificationInList = function(id){
+    var arr = service.notifications;
+
+    for(var i = 0; i < arr.length; i++){
+      if(arr[i].id == id){
+        arr[i].read = 1;
+        break;
+      }
+    }
+
+    localStorage.setItem('notificationsNotRead', service.totalNotificationsNotRead());
+    notifyObservers();
+  }
+
   service.markAllAsRead = function(){
     if (AuthService.isAuthenticated()) {
       ProfileFactory.markAllNotifications()            
       .then(function (response) {
-        service.addNotificationNotReadList(response.data);
+        service.markAllNotificationsInList();
       }, function (error) {
         console.log('Unable to load markd as read notification data: ' + error.data);
       });
     }
+  }
+
+  service.markAllNotificationsInList = function(){
+    var arr = service.notifications;
+    for(var i = 0; i < arr.length; i++){
+      if(arr[i].read == false){
+        arr[i].read = 1;
+      }
+    }
+
+    localStorage.setItem('notificationsNotRead', service.totalNotificationsNotRead());
+    notifyObservers();
   }
 
   service.getNotifications = function(){
@@ -89,11 +97,18 @@ app.service('NotificationService', function ($rootScope, AuthService, ProfileFac
   }
 
   service.getNotificationsNotRead = function(){
-    return service.notificationsNotRead;
+    var notReadArr = [];
+
+    angular.forEach(service.notifications, function(value){
+      if(value.read == false)
+        notReadArr.push(value);
+    });
+
+    return notReadArr;
   }
 
   service.totalNotificationsNotRead = function(){
-    return service.notificationsNotRead.length;
+    return service.getNotificationsNotRead().length;
   }
 
   service.registerObserverCallback = function(callback){

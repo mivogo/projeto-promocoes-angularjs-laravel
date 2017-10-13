@@ -7,15 +7,6 @@
 app.controller('CartController', function ($scope, $uibModal, SearchService, ModalService, FilterbarService, CartService, AuthService, PDFFactory) {
 	//console.log("Cart Controller reporting for duty.");
 
-	var updateCart = function(){
-		if(CartService.getTotalItems() == 0){
-			CartService.setListName('');
-			CartService.setListDescription('');
-		}
-	};
-
-	CartService.registerObserverCallback(updateCart);
-
 	$scope.cart = CartService; 
 	$scope.arrItems = CartService.getItems();
 	$scope.activeRetailer = FilterbarService.getRetailer();
@@ -64,7 +55,6 @@ app.controller('CartController', function ($scope, $uibModal, SearchService, Mod
 				return true;
 			}
 		}
-
 		return false;
 	}
 

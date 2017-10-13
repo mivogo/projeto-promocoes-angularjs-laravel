@@ -13,13 +13,17 @@ class CreateCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('categories')) {
+            
+            Schema::create('categories', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->timestamps();
+            });
 
-        DB::statement('ALTER TABLE categories ADD FULLTEXT search(name)');
+            DB::statement('ALTER TABLE categories ADD FULLTEXT search(name)');
+
+        }
     }
 
     /**

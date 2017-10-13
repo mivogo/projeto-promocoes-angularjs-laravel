@@ -7,7 +7,7 @@ app.service('SearchService', function ($cookies) {
 
   var service = this;
 
-  service.url = null;
+  service.navigationUrl = null;
   service.search = '';
   
   service.pageSize = {};
@@ -32,7 +32,7 @@ app.service('SearchService', function ($cookies) {
   }
 
   service.clearUrl = function() {
-    service.url = null;
+    service.navigationUrl = null;
   }
 
   service.setProductId = function(productid){
@@ -43,12 +43,52 @@ app.service('SearchService', function ($cookies) {
     service.productretailerid = productretailerid;
   }
 
+  service.getProductId = function(){
+    return service.productid;
+  }
+
+  service.getProductRetailerId = function(){
+    return service.productretailerid;
+  }
+
   service.setSearch = function(search){
     service.search = search;
   }
 
   service.getSearch = function(){
     return service.search;
+  }
+
+  service.getSelectedOrderOption = function(){
+    return service.selectedOrderOption;
+  }
+
+  service.changeSelectedOrderOption = function (option){
+    service.selectedOrderOption = option;
+  }
+
+  service.pageSizeValue = function(value){
+    return service.pageSize.value;
+  }
+
+  service.changePageSizeValue = function(value){
+    service.pageSize.value = value;
+  }
+
+  service.pageSizeValuesList = function(value){
+    return service.pageSize.values;
+  }
+
+  service.orderOptionsList = function(){
+    return service.orderOptions;
+  }
+
+  service.changeNavigationUrl = function(url){
+    service.navigationUrl = url;
+  }
+
+  service.getNavigationUrl = function(){
+    return service.navigationUrl;
   }
 
 });

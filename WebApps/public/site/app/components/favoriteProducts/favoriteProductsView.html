@@ -25,16 +25,16 @@
 								</div>
 								<div class="buttons">
 									<a data-ng-click="removeFavorite(item.product_id)" class="btn btn-primary pointer cart-favorite-button"><i class="fa fa-heart"></i></a>
-									<a data-ng-if="!cart.hasItem(item)" data-ng-click="cart.addItem(item,5)" class="btn btn-primary pointer cart-add-button favorite-product-cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
-									<div data-ng-if="cart.hasItem(item)" class="cart-update favorite-product-cart-update">
-										<div data-ng-if="cart.hasItem(item)" class="cart-update-wrap">
-											<span class="btn-primary cart-remove noselect pointer" data-ng-click="cart.updateItemQuantity(item,-1)">-</span>
+									<a data-ng-if="!productInCart(item)" data-ng-click="addProductToCart(item)" class="btn btn-primary pointer cart-add-button favorite-product-cart-add-button"><i class="fa fa-shopping-cart"></i> Adicionar</a>
+									<div data-ng-if="productInCart(item)" class="cart-update favorite-product-cart-update">
+										<div class="cart-update-wrap">
+											<span class="btn-primary cart-remove noselect pointer" data-ng-click="updateProductQuantity(item,-1)">-</span>
 											<span class="cart-info noselect">
 												<span class="cart-qty noselect">{{cart.itemQuantity(item)}}</span> 
 												<span class="noselect">|</span>
 												<span class="cart-price noselect">{{cart.itemPrice(item) | currency}}</span>
 											</span>
-											<span class="btn-primary cart-add noselect pointer" data-ng-click="cart.updateItemQuantity(item,1)">+</span>
+											<span class="btn-primary cart-add noselect pointer" data-ng-click="updateProductQuantity(item,1)">+</span>
 										</div>
 									</div>
 								</div>

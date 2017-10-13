@@ -50,6 +50,7 @@ class CreatePriceNotification implements ShouldQueue
             if(!empty($found)){
 
                 if(is_null($created)){
+                    
                     $notification = Notification::create();
                     $notification->product_name = $this->productretailer->product->name;
                     $notification->brand_name = $this->productretailer->product->brand->name;

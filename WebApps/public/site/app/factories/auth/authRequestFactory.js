@@ -2,11 +2,11 @@
 
 app.factory('AuthFactory', function($http, $auth, APIService) {
 
-	var urlBase = APIService.apiUrl();
+	var apiURL = APIService.apiUrl();
 	var authFactory = {};
 
 	authFactory.changePassword = function (password) {
-		return $http.post(urlBase + '/password', password, {
+		return $http.post(apiURL + '/password', password, {
 			headers: {'Authorization': 'Bearer ' + $auth.getToken()}
 		});
 	};

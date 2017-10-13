@@ -13,18 +13,20 @@ class CreateStoreTable extends Migration
      */
     public function up()
     {
-        Schema::create('stores', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        if (!Schema::hasTable('stores')) {
+            Schema::create('stores', function (Blueprint $table) {
+                $table->increments('id');
+                $table->timestamps();
 
-            $table->integer('retailer_id')->unsigned();
-            $table->foreign('retailer_id')
-            ->references('id')->on('retailers')->onDelete('cascade');
+                $table->integer('retailer_id')->unsigned();
+                $table->foreign('retailer_id')
+                ->references('id')->on('retailers')->onDelete('cascade');
 
-            $table->integer('location_id')->unsigned()->nullable();
-            $table->foreign('location_id')
-            ->references('id')->on('locations')->onDelete('cascade');
-        });
+                $table->integer('location_id')->unsigned()->nullable();
+                $table->foreign('location_id')
+                ->references('id')->on('locations')->onDelete('cascade');
+            });
+        }
     }
 
     /**

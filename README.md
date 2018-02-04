@@ -1,12 +1,5 @@
-# Projeto Promoções #
-
-### Todo ###
+# Projeto Promoções - Aplicações Web #
 
 
-### Relatório ###
-
-* Referir problemas e limitações de associação do mesmo produto em diversos retailers
-
-### Autores ###
-* Pedro Fernandes
+### Autor ###
 * Marcelo Oliveira
